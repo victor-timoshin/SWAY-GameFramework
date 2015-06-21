@@ -1,4 +1,7 @@
+Gapi.Example01
+Gapi.Tests
 Debug/
+ipch/
 
 *.sdf
 *.opensdf

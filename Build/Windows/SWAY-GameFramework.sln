@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gapi.Example01", "Gapi.Example01\Gapi.Example01.vcxproj", "{B1E69996-94DE-4740-B627-9E97383BE148}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gapi.Tests", "Gapi.Tests\Gapi.Tests.vcxproj", "{BCC42117-6AED-4839-98B3-72C42B9F4DD2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GapiOpenGL", "GapiOpenGL\GapiOpenGL.vcxproj", "{BB9A7101-D974-47C3-A8C3-A11636C6ED22}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj", "{D5D63648-08C3-4990-9946-2789B248BA19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1E69996-94DE-4740-B627-9E97383BE148}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B1E69996-94DE-4740-B627-9E97383BE148}.Debug|Win32.Build.0 = Debug|Win32
+		{B1E69996-94DE-4740-B627-9E97383BE148}.Release|Win32.ActiveCfg = Release|Win32
+		{B1E69996-94DE-4740-B627-9E97383BE148}.Release|Win32.Build.0 = Release|Win32
+		{BCC42117-6AED-4839-98B3-72C42B9F4DD2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BCC42117-6AED-4839-98B3-72C42B9F4DD2}.Debug|Win32.Build.0 = Debug|Win32
+		{BCC42117-6AED-4839-98B3-72C42B9F4DD2}.Release|Win32.ActiveCfg = Release|Win32
+		{BCC42117-6AED-4839-98B3-72C42B9F4DD2}.Release|Win32.Build.0 = Release|Win32
+		{BB9A7101-D974-47C3-A8C3-A11636C6ED22}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BB9A7101-D974-47C3-A8C3-A11636C6ED22}.Debug|Win32.Build.0 = Debug|Win32
+		{BB9A7101-D974-47C3-A8C3-A11636C6ED22}.Release|Win32.ActiveCfg = Release|Win32
+		{BB9A7101-D974-47C3-A8C3-A11636C6ED22}.Release|Win32.Build.0 = Release|Win32
+		{D5D63648-08C3-4990-9946-2789B248BA19}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D5D63648-08C3-4990-9946-2789B248BA19}.Debug|Win32.Build.0 = Debug|Win32
+		{D5D63648-08C3-4990-9946-2789B248BA19}.Release|Win32.ActiveCfg = Release|Win32
+		{D5D63648-08C3-4990-9946-2789B248BA19}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

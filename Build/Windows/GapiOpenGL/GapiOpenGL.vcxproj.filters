@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Inc">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Inc\GL">
+      <UniqueIdentifier>{daaa9449-fb4b-4bac-9c05-b70b9419c6c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\GLES2">
+      <UniqueIdentifier>{1c6cc92f-4bbd-40df-910a-8e30cdac51ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\KHR">
+      <UniqueIdentifier>{07fc0a38-dbc2-4cd1-afb2-df6f7bb75a4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\IndexBuffer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\RenderDevice.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Shader.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\VertexBuffer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\IndexBuffer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\RenderDevice.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Shader.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\VertexBuffer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\KHR\khrplatform.h">
+      <Filter>Inc\KHR</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2.h">
+      <Filter>Inc\GLES2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2ext.h">
+      <Filter>Inc\GLES2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2platform.h">
+      <Filter>Inc\GLES2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glcorearb.h">
+      <Filter>Inc\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glext.h">
+      <Filter>Inc\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glxext.h">
+      <Filter>Inc\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Definitions.def" />
+  </ItemGroup>
+</Project>
