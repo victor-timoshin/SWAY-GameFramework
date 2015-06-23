@@ -5,8 +5,8 @@ namespace Gapi
 {
 	typedef struct VertexDiffuseStruct
 	{
+		float r, g, b, a; // unsigned char
 		float x, y, z;
-		unsigned long color;
 	} LVERTEXDIFFUSE_STRUCT, *PVERTEXDIFFUSE_STRUCT;
 
 	typedef struct VertexTexcoordStruct

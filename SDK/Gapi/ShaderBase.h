@@ -6,17 +6,17 @@
 
 namespace Gapi
 {
-	class IRenderDeviceBase;
+	class IDeviceBase;
 	class IShaderBase
 	{
 	public:
 		/** Constructor. */
-		IShaderBase(IRenderDeviceBase* device) {}
+		IShaderBase(IDeviceBase* device) {}
 
 		/** Destructor. */
 		virtual ~IShaderBase() {}
 
-		virtual bool CreateFromFile(const char* vertexSource, const char* pixelSource) = 0;
+		virtual bool CreateFromFile(const char* vertexSource, const char* fragmentSource) = 0;
 
 		virtual void SetVConstantByName(const char* name, const void* source) = 0;
 
@@ -25,7 +25,7 @@ namespace Gapi
 		virtual void UseActiveObject() = 0;
 	};
 
-	CORE_API IShaderBase* RegisterShader(IRenderDeviceBase* device);
+	CORE_API IShaderBase* RegisterShader(IDeviceBase* device);
 }
 
 #endif

@@ -6,12 +6,12 @@
 
 namespace Gapi
 {
-	class IRenderDeviceBase;
+	class IDeviceBase;
 	class ITextureBase
 	{
 	public:
 		/** Constructor. */
-		ITextureBase(IRenderDeviceBase* device) {}
+		ITextureBase(IDeviceBase* device) {}
 
 		/** Destructor. */
 		virtual ~ITextureBase() {}

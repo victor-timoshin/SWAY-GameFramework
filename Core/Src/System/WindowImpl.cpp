@@ -1,13 +1,13 @@
-#include "../../Core/Inc/Win32Window.h"
+#include "../../../Core/Inc/System/WindowImpl.h"
 
-namespace Gapi
+namespace Core
 {
-	namespace Win32
+	namespace System
 	{
-		const TCHAR Win32Window::AppWindowClass[] = TEXT("SWAYWindow");
+		const TCHAR WindowImpl::AppWindowClass[] = TEXT("SWAY_WindowClass");
 
 		/** Constructor. */
-		Win32Window::Win32Window(const LWINDOWDESC& desc) : IWindowBase(desc)
+		WindowImpl::WindowImpl(const LWINDOWDESC& desc) : IWindowBase(desc)
 			, windowDesc(desc)
 		{
 
@@ -34,7 +34,7 @@ namespace Gapi
 		}
 
 		/** Destructor. */
-		Win32Window::~Win32Window()
+		WindowImpl::~WindowImpl()
 		{
 #if defined(PLATFORM_WINDOWS)
 			UnregisterClass(AppWindowClass, hInstance);
@@ -46,7 +46,7 @@ namespace Gapi
 		}
 
 		/** Creates a new window. */
-		void Win32Window::Create()
+		void WindowImpl::Create()
 		{
 #if defined(PLATFORM_WINDOWS)
 			unsigned long windowExStyle = WS_EX_APPWINDOW;
@@ -93,7 +93,7 @@ namespace Gapi
 #endif
 		}
 
-		void Win32Window::Update()
+		void WindowImpl::Update()
 		{
 #if defined(PLATFORM_WINDOWS)
 			UpdateWindow(windowDesc.handle);
@@ -103,7 +103,7 @@ namespace Gapi
 #endif
 		}
 
-		bool Win32Window::MainLoop(bool isRequestingExit)
+		bool WindowImpl::MainLoop(bool isRequestingExit)
 		{
 #if defined(PLATFORM_WINDOWS)
 			MSG message;
@@ -133,78 +133,77 @@ namespace Gapi
 			return isRequestingExit != true;
 		}
 
-		void Win32Window::SetText(const TCHAR* text)
+		void WindowImpl::SetText(const TCHAR* text)
 		{
 #ifdef PLATFORM_WINDOWS
 			SetWindowText(windowDesc.handle, text);
 #endif
 		}
 
-		void Win32Window::Show()
+		void WindowImpl::Show()
 		{
 #ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_SHOW);
 #endif
 		}
 
-		void Win32Window::Hide()
+		void WindowImpl::Hide()
 		{
 #ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_HIDE);
 #endif
 		}
 
-		void Win32Window::Minimize()
+		void WindowImpl::Minimize()
 		{
 #ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_MINIMIZE);
 #endif
 		}
 
-		void Win32Window::Maximize()
+		void WindowImpl::Maximize()
 		{
 #ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_MAXIMIZE);
 #endif
 		}
 
-		const LWINDOWDESC& Win32Window::GetWindowDesc() const
+		const LWINDOWDESC& WindowImpl::GetWindowDesc() const
 		{
 			return windowDesc;
 		}
-	}
 
-	IWindowBase* RegisterWindow(const LWINDOWDESC& desc)
-	{
-		return new Win32::Win32Window(desc);
-	}
-
-#if defined(PLATFORM_WINDOWS)
-	LRESULT WINAPI ProcessEvent(HWND handle, UInt message, WPARAM wParam, LPARAM lParam)
-	{
-		PAINTSTRUCT paint;
-		HDC deviceContext;
-
-		switch (message)
+		IWindowBase* RegisterWindow(const LWINDOWDESC& desc)
 		{
-		case WM_CREATE:
-			break;
-		case WM_INPUT:
-			deviceContext = GetDC(handle);
-			ReleaseDC(handle, deviceContext);
-			break;
-		case WM_PAINT:
-			deviceContext = BeginPaint(handle, &paint);
-			EndPaint(handle, &paint);
-			break;
-
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
+			return new WindowImpl(desc);
 		}
 
-		return DefWindowProc(handle, message, wParam, lParam);
-	}
-#endif
+#if defined(PLATFORM_WINDOWS)
+		LRESULT WINAPI ProcessEvent(HWND handle, UInt message, WPARAM wParam, LPARAM lParam)
+		{
+			PAINTSTRUCT paint;
+			HDC deviceContext;
 
+			switch (message)
+			{
+			case WM_CREATE:
+				break;
+			case WM_INPUT:
+				deviceContext = GetDC(handle);
+				ReleaseDC(handle, deviceContext);
+				break;
+			case WM_PAINT:
+				deviceContext = BeginPaint(handle, &paint);
+				EndPaint(handle, &paint);
+				break;
+
+			case WM_DESTROY:
+				PostQuitMessage(0);
+				break;
+			}
+
+			return DefWindowProc(handle, message, wParam, lParam);
+		}
+#endif
+	}
 }

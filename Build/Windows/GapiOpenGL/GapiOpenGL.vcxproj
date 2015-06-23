@@ -11,11 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\IndexBuffer.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\RenderDevice.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\Shader.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLDevice.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLShader.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLTexture.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2.h" />
@@ -24,12 +23,11 @@
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glcorearb.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glext.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glxext.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\IndexBuffer.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\KHR\khrplatform.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\RenderDevice.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Shader.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\VertexBuffer.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLDevice.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLShader.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLBuffer.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>

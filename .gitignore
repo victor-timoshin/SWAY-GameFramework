@@ -1,7 +1,7 @@
-Gapi.Example01
-Gapi.Tests
 Debug/
+Bin/
 ipch/
 
 *.sdf
 *.opensdf
+*.suo

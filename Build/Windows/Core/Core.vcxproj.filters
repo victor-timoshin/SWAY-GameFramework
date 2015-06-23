@@ -9,19 +9,25 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Inc\System">
+      <UniqueIdentifier>{54740820-3f1a-48da-bf7c-3ca11b6c2bee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\System">
+      <UniqueIdentifier>{5f9d3084-9568-4e71-8eca-cbd55e0fb832}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Core\Src\Win32Window.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\Core\Inc\Win32Window.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
+    <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h">
+      <Filter>Inc\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp">
+      <Filter>Src\System</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

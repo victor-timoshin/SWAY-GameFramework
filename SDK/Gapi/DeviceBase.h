@@ -1,20 +1,20 @@
-#ifndef RENDER_DEVICE_BASE_H
-#define RENDER_DEVICE_BASE_H
+#ifndef DEVICE_BASE_H
+#define DEVICE_BASE_H
 
-#include "../../SDK/System/WindowBase.h"
+#include "../../SDK/Core/System/WindowBase.h"
 #include "../../SDK/Gapi/Types.h"
 #include "../../SDK/Platform.h"
 
 namespace Gapi
 {
-	class IRenderDeviceBase
+	class IDeviceBase
 	{
 	public:
 		/** Constructor. */
-		IRenderDeviceBase(IWindowBase* window) {}
+		IDeviceBase(Core::System::IWindowBase* window) {}
 
 		/** Destructor. */
-		virtual ~IRenderDeviceBase() {}
+		virtual ~IDeviceBase() {}
 
 		virtual void Initialize() = 0;
 
@@ -25,7 +25,7 @@ namespace Gapi
 		virtual void SetViewport(float width, float height) = 0;
 	};
 
-	CORE_API IRenderDeviceBase* RegisterRenderDevice(IWindowBase* window);
+	CORE_API IDeviceBase* RegisterDevice(Core::System::IWindowBase* window);
 }
 
 #endif

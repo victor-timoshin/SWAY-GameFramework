@@ -20,38 +20,20 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\IndexBuffer.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\RenderDevice.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLDevice.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\Shader.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLShader.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\VertexBuffer.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLTexture.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\IndexBuffer.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\RenderDevice.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Shader.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\VertexBuffer.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\KHR\khrplatform.h">
       <Filter>Inc\KHR</Filter>
     </ClInclude>
@@ -74,6 +56,18 @@
       <Filter>Inc\GL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLBuffer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLDevice.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLShader.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />

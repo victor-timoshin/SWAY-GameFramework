@@ -1,22 +1,22 @@
-#ifndef WIN32_WINDOW_H
-#define WIN32_WINDOW_H
+#ifndef WINDOW_IMPL_H
+#define WINDOW_IMPL_H
 
-#include "../../SDK/System/WindowBase.h"
+#include "../../../SDK/Core/System/WindowBase.h"
 
-namespace Gapi
+namespace Core
 {
-	namespace Win32
+	namespace System
 	{
-		class Win32Window : public IWindowBase
+		class WindowImpl : public IWindowBase
 		{
 		public:
 			static const TCHAR AppWindowClass[];
 
 			/** Constructor. */
-			Win32Window(const LWINDOWDESC& desc);
+			WindowImpl(const LWINDOWDESC& desc);
 
 			/** Destructor. */
-			virtual ~Win32Window();
+			virtual ~WindowImpl();
 
 			/** Creates a new window. */
 			virtual void Create();
