@@ -66,4 +66,4 @@ namespace Core
 	}
 }
 
-#endif
+#endif // WINDOW_BASE

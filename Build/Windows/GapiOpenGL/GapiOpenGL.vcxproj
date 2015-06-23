@@ -29,6 +29,11 @@
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLBuffer.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
+    <ClInclude Include="..\..\..\SDK\Gapi\BufferBase.h" />
+    <ClInclude Include="..\..\..\SDK\Gapi\DeviceBase.h" />
+    <ClInclude Include="..\..\..\SDK\Gapi\ShaderBase.h" />
+    <ClInclude Include="..\..\..\SDK\Gapi\TextureBase.h" />
+    <ClInclude Include="..\..\..\SDK\Gapi\Types.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />

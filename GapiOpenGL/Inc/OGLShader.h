@@ -53,4 +53,4 @@ namespace Gapi
 	};
 }
 
-#endif
+#endif // OGL_SHADER_H

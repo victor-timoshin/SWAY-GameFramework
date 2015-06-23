@@ -18,4 +18,4 @@ namespace Gapi
 	};
 }
 
-#endif
+#endif // TEXTURE_BASE_H

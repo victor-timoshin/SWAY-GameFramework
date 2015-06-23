@@ -1,3 +1,5 @@
 EXPORTS
+	RegisterLogger
+
 	RegisterWindow
 	ProcessEvent

@@ -49,4 +49,4 @@ namespace Core
 	}
 }
 
-#endif
+#endif // WINDOW_IMPL_H

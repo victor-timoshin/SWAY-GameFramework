@@ -47,4 +47,4 @@ namespace Gapi
 	};
 }
 
-#endif
+#endif // OGL_BUFFER_H

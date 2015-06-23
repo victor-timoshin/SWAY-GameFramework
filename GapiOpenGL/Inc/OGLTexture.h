@@ -21,4 +21,4 @@ namespace Gapi
 	};
 }
 
-#endif
+#endif // OGL_TEXTURE_H

@@ -15,11 +15,59 @@
     <Filter Include="Src\System">
       <UniqueIdentifier>{5f9d3084-9568-4e71-8eca-cbd55e0fb832}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_SDK">
+      <UniqueIdentifier>{9542cb38-81a4-4a7d-9820-8c58e28f1038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_SDK\Math">
+      <UniqueIdentifier>{2385bf2a-a1f0-4122-bc1f-bb9434027738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_SDK\System">
+      <UniqueIdentifier>{124771ae-e7e0-426e-8ccd-585f7fd54efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_SDK\Utils">
+      <UniqueIdentifier>{dab890a4-35f7-4c2d-9522-2965a68e2f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Utils">
+      <UniqueIdentifier>{f626ea77-b3e2-43cd-b1a2-bcdc0be094f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utils">
+      <UniqueIdentifier>{d3168372-4116-4915-b24d-9254262434c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
     <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h">
       <Filter>Inc\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\MathCommon.h">
+      <Filter>_SDK\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector2.h">
+      <Filter>_SDK\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h">
+      <Filter>_SDK\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h">
+      <Filter>_SDK\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h">
+      <Filter>_SDK\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\System\WindowBase.h">
+      <Filter>_SDK\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\StreamFile.h">
+      <Filter>Inc\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\Log.h">
+      <Filter>Inc\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Utils\StreamBase.h">
+      <Filter>_SDK\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Utils\LogBase.h">
+      <Filter>_SDK\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -28,6 +76,12 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp">
       <Filter>Src\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Utils\StreamFile.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Utils\Log.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

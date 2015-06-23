@@ -69,4 +69,4 @@ namespace Gapi
 	} MAP_TYPE;
 }
 
-#endif
+#endif // TYPES_H

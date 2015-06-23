@@ -28,4 +28,4 @@ namespace Gapi
 	CORE_API IShaderBase* RegisterShader(IDeviceBase* device);
 }
 
-#endif
+#endif // SHADER_BASE_H

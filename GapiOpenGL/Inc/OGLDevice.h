@@ -38,4 +38,4 @@ namespace Gapi
 	};
 }
 
-#endif
+#endif // OGL_DEVICE_H

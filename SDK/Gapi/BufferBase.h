@@ -30,4 +30,4 @@ namespace Gapi
 	CORE_API IBufferBase* RegisterBuffer(IDeviceBase* device);
 }
 
-#endif
+#endif // BUFFER_BASE_H

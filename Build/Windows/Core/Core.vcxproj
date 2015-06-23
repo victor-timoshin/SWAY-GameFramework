@@ -72,13 +72,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Utils\Log.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Utils\StreamFile.h" />
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\MathCommon.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector2.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h" />
+    <ClInclude Include="..\..\..\SDK\Core\System\WindowBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Utils\LogBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Utils\StreamBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Utils\Log.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Utils\StreamFile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

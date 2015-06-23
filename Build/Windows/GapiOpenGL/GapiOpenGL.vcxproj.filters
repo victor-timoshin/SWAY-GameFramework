@@ -18,6 +18,9 @@
     <Filter Include="Inc\KHR">
       <UniqueIdentifier>{07fc0a38-dbc2-4cd1-afb2-df6f7bb75a4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_SDK">
+      <UniqueIdentifier>{2eba24e1-cf42-4bc7-a674-72688efc95ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp">
@@ -67,6 +70,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h">
       <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Gapi\BufferBase.h">
+      <Filter>_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Gapi\DeviceBase.h">
+      <Filter>_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Gapi\ShaderBase.h">
+      <Filter>_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Gapi\TextureBase.h">
+      <Filter>_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Gapi\Types.h">
+      <Filter>_SDK</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

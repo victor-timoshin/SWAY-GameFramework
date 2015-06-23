@@ -28,4 +28,4 @@ namespace Gapi
 	CORE_API IDeviceBase* RegisterDevice(Core::System::IWindowBase* window);
 }
 
-#endif
+#endif // DEVICE_BASE_H
