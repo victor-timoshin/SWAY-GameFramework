@@ -9,7 +9,6 @@ namespace Gapi
 	class OGLShader : public IShaderBase
 	{
 	public:
-#ifdef PLATFORM_WINDOWS
 		static PFNGLCREATEPROGRAMOBJECTARBPROC glCreateProgramObjectARB;
 		static PFNGLDELETEPROGRAMSARBPROC glDeleteProgramsARB;
 		static PFNGLATTACHOBJECTARBPROC glAttachObjectARB;
@@ -25,7 +24,6 @@ namespace Gapi
 		static PFNGLVALIDATEPROGRAMARBPROC glValidateProgramARB;
 		static PFNGLGETUNIFORMLOCATIONARBPROC glGetUniformLocationARB;
 		static PFNGLUNIFORMMATRIX4FVARBPROC glUniformMatrix4fvARB;
-#endif
 
 		/** Constructor. */
 		OGLShader(IDeviceBase* device);
@@ -37,7 +35,7 @@ namespace Gapi
 
 		virtual void SetVConstantByName(const char* name, const void* source);
 
-		virtual void SetPConstantByName(const char* name, const void* source);
+		virtual void SetPConstantByName(const char* name, const void* source) {}
 
 		virtual void UseActiveObject();
 

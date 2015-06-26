@@ -9,8 +9,7 @@ namespace Gapi
 	class OGLDevice : public IDeviceBase
 	{
 	public:
-		static unsigned char Get(PRIMITIVE_TYPE Type);
-		static unsigned char primitiveType[];
+		static UByte Get(PRIMITIVE_TYPE type);
 
 		/** Constructor. */
 		OGLDevice(Core::System::IWindowBase* window);
@@ -28,13 +27,8 @@ namespace Gapi
 	private:
 		Core::System::LWINDOWDESC windowDesc;
 
-#ifdef PLATFORM_WINDOWS
 		HDC deviceContext;
 		HGLRC renderContext;
-#else
-		XVisualInfo* visualInfo;
-		GLXContext context;
-#endif
 	};
 }
 

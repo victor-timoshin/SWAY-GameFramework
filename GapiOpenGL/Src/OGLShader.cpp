@@ -5,7 +5,6 @@
 
 namespace Gapi
 {
-#ifdef PLATFORM_WINDOWS
 	PFNGLCREATEPROGRAMOBJECTARBPROC OGLShader::glCreateProgramObjectARB = 0L;
 	PFNGLDELETEPROGRAMSARBPROC OGLShader::glDeleteProgramsARB = 0L;
 	PFNGLATTACHOBJECTARBPROC OGLShader::glAttachObjectARB = 0L;
@@ -21,15 +20,11 @@ namespace Gapi
 	PFNGLVALIDATEPROGRAMARBPROC OGLShader::glValidateProgramARB = 0L;
 	PFNGLGETUNIFORMLOCATIONARBPROC OGLShader::glGetUniformLocationARB = 0L;
 	PFNGLUNIFORMMATRIX4FVARBPROC OGLShader::glUniformMatrix4fvARB = 0L;
-#endif
 
 	/** Constructor. */
 	OGLShader::OGLShader(IDeviceBase* device) : IShaderBase(device)
-		, program(0)
-		, vertexShader(0)
-		, pixelShader(0)
+		, program(0), vertexShader(0), pixelShader(0)
 	{
-#ifdef PLATFORM_WINDOWS
 		LOAD_EXTENSION(PFNGLCREATEPROGRAMOBJECTARBPROC, glCreateProgramObjectARB);
 		LOAD_EXTENSION(PFNGLDELETEPROGRAMSARBPROC, glDeleteProgramsARB);
 		LOAD_EXTENSION(PFNGLATTACHOBJECTARBPROC, glAttachObjectARB);
@@ -45,7 +40,6 @@ namespace Gapi
 		LOAD_EXTENSION(PFNGLVALIDATEPROGRAMARBPROC, glValidateProgramARB);
 		LOAD_EXTENSION(PFNGLGETUNIFORMLOCATIONARBPROC, glGetUniformLocationARB);
 		LOAD_EXTENSION(PFNGLUNIFORMMATRIX4FVARBPROC, glUniformMatrix4fvARB);
-#endif
 	}
 
 	/** Destructor. */
@@ -85,11 +79,6 @@ namespace Gapi
 	void OGLShader::SetVConstantByName(const char* name, const void* source)
 	{
 		glUniformMatrix4fvARB(glGetUniformLocationARB(program, name), 1, GL_TRUE, (float*)source);
-	}
-
-	void OGLShader::SetPConstantByName(const char* name, const void* source)
-	{
-
 	}
 
 	void OGLShader::UseActiveObject()

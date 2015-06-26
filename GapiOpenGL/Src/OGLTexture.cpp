@@ -5,10 +5,7 @@ namespace Gapi
 {
 	/** Constructor. */
 	OGLTexture::OGLTexture(IDeviceBase* device) : ITextureBase(device)
-		, texture(0)
-		, pixels(0L)
-	{
-	}
+		, texture(0), pixels(0L) {}
 
 	/** Destructor. */
 	OGLTexture::~OGLTexture()

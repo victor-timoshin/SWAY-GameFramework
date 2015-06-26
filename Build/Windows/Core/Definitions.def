@@ -3,3 +3,9 @@ EXPORTS
 
 	RegisterWindow
 	ProcessEvent
+
+	RegisterRenderSystem
+
+	RegisterSceneManagement
+	RegisterSceneGraph
+	RegisterSceneNode

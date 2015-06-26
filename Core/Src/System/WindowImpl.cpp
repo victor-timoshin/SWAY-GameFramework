@@ -10,12 +10,10 @@ namespace Core
 		WindowImpl::WindowImpl(const LWINDOWDESC& desc) : IWindowBase(desc)
 			, windowDesc(desc)
 		{
-
-#if defined(_WINDOWS)
 			hInstance = GetModuleHandle(0);
 
 			WNDCLASSEX windowClassEx;
-			windowClassEx.cbSize = sizeof(WNDCLASSEX);
+			windowClassEx.cbSize = sizeof WNDCLASSEX;
 			windowClassEx.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 			windowClassEx.lpfnWndProc = (WNDPROC)windowDesc.proc;
 			windowClassEx.cbClsExtra = 0;
@@ -28,29 +26,20 @@ namespace Core
 			windowClassEx.lpszMenuName = 0L;
 			windowClassEx.lpszClassName = AppWindowClass;
 			RegisterClassEx(&windowClassEx);
-#else
-			windowDesc.display = XOpenDisplay(0L);
-#endif
 		}
 
 		/** Destructor. */
 		WindowImpl::~WindowImpl()
 		{
-#if defined(PLATFORM_WINDOWS)
 			UnregisterClass(AppWindowClass, hInstance);
 			DestroyWindow(windowDesc.handle);
-#else
-			XDestroyWindow(windowDesc.display, windowDesc.handle);
-			XCloseDisplay(windowDesc.display);
-#endif
 		}
 
 		/** Creates a new window. */
 		void WindowImpl::Create()
 		{
-#if defined(PLATFORM_WINDOWS)
-			unsigned long windowExStyle = WS_EX_APPWINDOW;
-			unsigned long windowStyle = WS_OVERLAPPEDWINDOW;
+			UInt32 windowExStyle = WS_EX_APPWINDOW;
+			UInt32 windowStyle = WS_OVERLAPPEDWINDOW;
 			int x, y, h, w;
 
 			if (windowDesc.mode == WINDOWMODE::Fullscreen)
@@ -72,42 +61,19 @@ namespace Core
 				AdjustWindowRectEx(&windowRect, windowStyle, false, windowExStyle);
 			}
 
-			windowDesc.handle = CreateWindowEx(
-				windowExStyle,
-				AppWindowClass,
-				windowDesc.title,
-				windowStyle,
-				x, y,
-				w, h,
-				0L,
-				0L, hInstance, 0L);
-#else
-			XSetWindowAttributes Attributes;
-			Attributes.background_pixel = XWhitePixel(windowDesc.display, 0);
-
-			windowDesc.handle = XCreateWindow(windowDesc.display, XRootWindow(windowDesc.display, 0), 0, 0,windowDesc.width, windowDesc.height,
-				0, DefaultDepth(windowDesc.display, 0), InputOutput, DefaultVisual(windowDesc.display, 0), CWBackPixel, &Attributes);
-
-			XStoreName(windowDesc.display, windowDesc.handle, windowDesc.title);
-			XSelectInput(windowDesc.display, windowDesc.handle, ExposureMask | KeyPressMask);
-#endif
+			windowDesc.handle = CreateWindowEx(windowExStyle, AppWindowClass,
+				windowDesc.title, windowStyle, x, y, w, h, 0L, 0L, hInstance, 0L);
 		}
 
 		void WindowImpl::Update()
 		{
-#if defined(PLATFORM_WINDOWS)
 			UpdateWindow(windowDesc.handle);
-#else
-			XMapWindow(windowDesc.display, m_WindowDesc.handle);
-			XFlush(m_WindowDesc.display);
-#endif
 		}
 
 		bool WindowImpl::MainLoop(bool isRequestingExit)
 		{
-#if defined(PLATFORM_WINDOWS)
 			MSG message;
-			ZeroMemory(&message, sizeof(MSG));
+			ZeroMemory(&message, sizeof MSG);
 
 			while (PeekMessage(&message, 0L, 0, 0, PM_REMOVE))
 			{
@@ -117,55 +83,33 @@ namespace Core
 				TranslateMessage(&message);
 				DispatchMessage(&message);
 			}
-#else
-			XNextEvent(windowDesc.display, &report);
-			switch (report.type)
-			{
-			case Expose:
-				break;
-			case KeyPress:
-				isRequestingExit = true;
-				XCloseDisplay(display);
-				exit(0);
-			}
-#endif
 
 			return isRequestingExit != true;
 		}
 
 		void WindowImpl::SetText(const TCHAR* text)
 		{
-#ifdef PLATFORM_WINDOWS
 			SetWindowText(windowDesc.handle, text);
-#endif
 		}
 
 		void WindowImpl::Show()
 		{
-#ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_SHOW);
-#endif
 		}
 
 		void WindowImpl::Hide()
 		{
-#ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_HIDE);
-#endif
 		}
 
 		void WindowImpl::Minimize()
 		{
-#ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_MINIMIZE);
-#endif
 		}
 
 		void WindowImpl::Maximize()
 		{
-#ifdef PLATFORM_WINDOWS
 			ShowWindow(windowDesc.handle, SW_MAXIMIZE);
-#endif
 		}
 
 		const LWINDOWDESC& WindowImpl::GetWindowDesc() const
@@ -178,7 +122,6 @@ namespace Core
 			return new WindowImpl(desc);
 		}
 
-#if defined(PLATFORM_WINDOWS)
 		LRESULT WINAPI ProcessEvent(HWND handle, UInt message, WPARAM wParam, LPARAM lParam)
 		{
 			PAINTSTRUCT paint;
@@ -204,6 +147,5 @@ namespace Core
 
 			return DefWindowProc(handle, message, wParam, lParam);
 		}
-#endif
 	}
 }

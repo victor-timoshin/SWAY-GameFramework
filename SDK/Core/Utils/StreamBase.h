@@ -9,8 +9,8 @@ namespace Core
 	{
 		typedef enum StreamMode
 		{
-			Read = 0,
-			Write = 1
+			Read = 0x7641,
+			Write = 0xD97F
 		} STREAM_MODE;
 
 		class IStreamBase

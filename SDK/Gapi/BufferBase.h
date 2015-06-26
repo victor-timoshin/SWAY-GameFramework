@@ -18,7 +18,7 @@ namespace Gapi
 
 		virtual void Create(UInt stride, UInt count) = 0;
 
-		virtual void SetData(void* data) = 0;
+		virtual void SetData(void* sourceData) = 0;
 
 		virtual void* Lock() = 0;
 

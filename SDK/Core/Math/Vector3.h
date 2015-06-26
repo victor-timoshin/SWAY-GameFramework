@@ -12,27 +12,15 @@ namespace Core
 		public:
 			/** Constructor. */
 			Vector3()
-				: _x(0.0f)
-				, _y(0.0f)
-				, _z(0.0f)
-			{
-			}
+				: _x(0.0f), _y(0.0f), _z(0.0f) {}
 
 			/** Construct from coordinates. */
 			Vector3(float x, float y, float z)
-				: _x(x)
-				, _y(y)
-				, _z(z)
-			{
-			}
+				: _x(x), _y(y), _z(z) {}
 
 			/** Construct from a float array. */
 			Vector3(const float* dataArray)
-				: _x(dataArray[0])
-				, _y(dataArray[1])
-				, _z(dataArray[2])
-			{
-			}
+				: _x(dataArray[0]), _y(dataArray[1]), _z(dataArray[2]) {}
 
 			/** Return length. */
 			float Length()

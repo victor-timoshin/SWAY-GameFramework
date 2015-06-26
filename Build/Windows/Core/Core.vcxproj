@@ -71,6 +71,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometry.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderSystem.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\Shape.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneManagement.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneGraph.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneComponent.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneNode.h" />
     <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\Log.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\StreamFile.h" />
@@ -80,14 +87,30 @@
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Render\RenderGeometryBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Render\RenderSystemBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneComponentBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneManagementBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneNodeBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneGraphBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneStateBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\System\WindowBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Utils\Hierarchy.h" />
     <ClInclude Include="..\..\..\SDK\Core\Utils\LogBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Utils\Singleton.h" />
     <ClInclude Include="..\..\..\SDK\Core\Utils\StreamBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Core\Src\Render\RenderGeometry.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Render\RenderSystem.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\Shape.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\SceneManagement.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\SceneGraph.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\SceneComponent.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\SceneNode.cpp" />
     <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\Log.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\StreamFile.cpp" />

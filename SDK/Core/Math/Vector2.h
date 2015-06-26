@@ -12,37 +12,31 @@ namespace Core
 		public:
 			/** Constructor. */
 			Vector2()
-				: _x(0.0f)
-				, _y(0.0f)
-			{
-			}
+				: _x(0.0f), _y(0.0f) {}
 
 			/** Construct from coordinates. */
 			Vector2(float x, float y)
-				: _x(x)
-				, _y(y)
-			{
-			}
+				: _x(x), _y(y) {}
 
 			/** Construct from a float array. */
 			Vector2(const float* dataArray)
-				: _x(dataArray[0])
-				, _y(dataArray[1])
-			{
-			}
+				: _x(dataArray[0]), _y(dataArray[1]) {}
 
 			/** Return length. */
-			float Length() {
+			float Length()
+			{
 				return sqrtf((_x * _x) + (_y * _y));
 			}
 
 			/** Return squared length. */
-			float LengthSquared() const {
+			float LengthSquared() const
+			{
 				return (_x * _x) + (_y * _y);
 			}
 
 			/** Normalize to unit length. */
-			void Normalize() {
+			void Normalize()
+			{
 				float lenSquared = LengthSquared();
 
 				if (!Equals(lenSquared, 1.0f) && lenSquared > 0.0f)

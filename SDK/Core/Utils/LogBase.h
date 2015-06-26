@@ -9,10 +9,10 @@ namespace Core
 	{
 		typedef enum LoggerLevel
 		{
-			Critical = 0,
-			Error = 1,
-			Info = 2,
-			Debug = 3
+			Critical = 0x07D9,
+			Error = 0x254B,
+			Info = 0x90E3,
+			Debug = 0xDE67
 		} LOGGER_LEVEL;
 
 		class ILogBase
@@ -26,7 +26,7 @@ namespace Core
 
 			virtual void Write(LOGGER_LEVEL type, const char* format, ...) = 0;
 		};
-		 
+
 		CORE_API ILogBase* RegisterLogger(const char* fileName);
 	}
 }

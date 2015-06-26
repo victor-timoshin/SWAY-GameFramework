@@ -9,21 +9,15 @@ namespace Core
 	{
 		typedef enum WindowMode
 		{
-			Windowed,
-			Fullscreen
+			Windowed = 0xB2C0,
+			Fullscreen = 0x9D44
 		} WINDOWMODE;
 
 		typedef struct WindowDesc
 		{
-#ifdef _WINDOWS
 			HWND handle;
 			WNDPROC proc;
 			WINDOWMODE mode;
-#else
-			Window handle;
-			Display* display;
-#endif
-
 			const char* title;
 			UInt clientWidth;
 			UInt clientHeight;
@@ -59,10 +53,7 @@ namespace Core
 		};
 
 		CORE_API IWindowBase* RegisterWindow(const LWINDOWDESC& desc);
-
-#if defined(_WINDOWS)
 		CORE_API LRESULT WINAPI ProcessEvent(HWND handle, UInt message, WPARAM wParam, LPARAM lParam);
-#endif
 	}
 }
 

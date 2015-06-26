@@ -6,14 +6,10 @@ namespace Core
 	{
 		/** Constructor. */
 		StreamFile::StreamFile()
-			: file(0)
-		{
-		}
+			: file(0) {}
 
 		/** Destructor. */
-		StreamFile::~StreamFile()
-		{
-		}
+		StreamFile::~StreamFile() {}
 
 		void StreamFile::Open(const char* fileName, STREAM_MODE mode, bool binary)
 		{
@@ -37,9 +33,7 @@ namespace Core
 			file = 0;
 		}
 
-		void StreamFile::Seek()
-		{
-		}
+		void StreamFile::Seek() {}
 
 		void StreamFile::Print(const char* str)
 		{

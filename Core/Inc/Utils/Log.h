@@ -22,9 +22,8 @@ namespace Core
 
 		private:
 			IStreamBase* stream;
-			bool timeLine;
 		};
 	}
 }
 
-#endif // STREAM_FILE_H
+#endif // LOG_H

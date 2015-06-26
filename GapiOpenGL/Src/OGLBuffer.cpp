@@ -3,49 +3,41 @@
 
 namespace Gapi
 {
-#ifdef PLATFORM_WINDOWS
 	PFNGLGENBUFFERSARBPROC OGLBuffer::glGenBuffersARB = 0L;
 	PFNGLBINDBUFFERARBPROC OGLBuffer::glBindBufferARB = 0L;
 	PFNGLBUFFERDATAARBPROC OGLBuffer::glBufferDataARB = 0L;
 	PFNGLBUFFERSUBDATAARBPROC OGLBuffer::glBufferSubDataARB = 0L;
 	PFNGLMAPBUFFERARBPROC OGLBuffer::glMapBufferARB = 0L;
 	PFNGLUNMAPBUFFERARBPROC OGLBuffer::glUnmapBufferARB = 0L;
-#endif
 
 	/** Constructor. */
 	OGLBuffer::OGLBuffer(IDeviceBase* device) : IBufferBase(device)
-		, bufferId(0)
-		, byteStride(0)
-		, numComponents(0)
+		, bufferId(0), byteStride(0), numElements(0)
 	{
-#ifdef PLATFORM_WINDOWS
 		LOAD_EXTENSION(PFNGLGENBUFFERSARBPROC, glGenBuffersARB);
 		LOAD_EXTENSION(PFNGLBINDBUFFERARBPROC, glBindBufferARB);
 		LOAD_EXTENSION(PFNGLBUFFERDATAARBPROC, glBufferDataARB);
 		LOAD_EXTENSION(PFNGLBUFFERSUBDATAARBPROC, glBufferSubDataARB);
 		LOAD_EXTENSION(PFNGLMAPBUFFERARBPROC, glMapBufferARB);
 		LOAD_EXTENSION(PFNGLUNMAPBUFFERARBPROC, glUnmapBufferARB);
-#endif
 	}
 
 	/** Destructor. */
-	OGLBuffer::~OGLBuffer()
-	{
-	}
+	OGLBuffer::~OGLBuffer() {}
 
 	void OGLBuffer::Create(UInt stride, UInt count)
 	{
 		byteStride = stride;
-		numComponents = count;
+		numElements = count;
 
 		glGenBuffersARB(1, &bufferId);
 		glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferId);
-		glBufferDataARB(GL_ARRAY_BUFFER_ARB, numComponents * byteStride, 0L, GL_STREAM_DRAW_ARB);
+		glBufferDataARB(GL_ARRAY_BUFFER_ARB, numElements * byteStride, 0L, GL_STREAM_DRAW_ARB);
 	}
 
-	void OGLBuffer::SetData(void* data)
+	void OGLBuffer::SetData(void* sourceData)
 	{
-		glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, numComponents * byteStride, data);
+		glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, 0, numElements * byteStride, sourceData);
 	}
 
 	void* OGLBuffer::Lock()
@@ -80,7 +72,7 @@ namespace Gapi
 			glEnableClientState(GL_INDEX_ARRAY);
 			glIndexPointer(GL_UNSIGNED_SHORT, 0, 0);
 
-			glDrawElements(Gapi::OGLDevice::Get(primitiveType), indexBuffer->GetComponentCount(), GL_UNSIGNED_SHORT, 0);
+			glDrawElements(Gapi::OGLDevice::Get(primitiveType), indexBuffer->GetElementCount(), GL_UNSIGNED_SHORT, 0);
 
 			glDisableClientState(GL_INDEX_ARRAY);
 			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
@@ -102,9 +94,9 @@ namespace Gapi
 		return bufferId;
 	}
 
-	UInt OGLBuffer::GetComponentCount()
+	UInt OGLBuffer::GetElementCount()
 	{
-		return numComponents;
+		return numElements;
 	}
 
 	IBufferBase* RegisterBuffer(IDeviceBase* device)

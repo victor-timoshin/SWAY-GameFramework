@@ -8,17 +8,15 @@
 
 namespace Gapi
 {
-	class OGLBuffer: public IBufferBase
+	class OGLBuffer : public IBufferBase
 	{
 	public:
-#ifdef PLATFORM_WINDOWS
 		static PFNGLGENBUFFERSARBPROC glGenBuffersARB;
 		static PFNGLBINDBUFFERARBPROC glBindBufferARB;
 		static PFNGLBUFFERDATAARBPROC glBufferDataARB;
 		static PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB;
 		static PFNGLMAPBUFFERARBPROC glMapBufferARB;
 		static PFNGLUNMAPBUFFERARBPROC glUnmapBufferARB;
-#endif
 
 		/** Constructor. */
 		OGLBuffer(IDeviceBase* device);
@@ -28,7 +26,7 @@ namespace Gapi
 
 		virtual void Create(UInt stride, UInt count);
 
-		virtual void SetData(void* data);
+		virtual void SetData(void* sourceData);
 
 		virtual void* Lock();
 
@@ -38,12 +36,12 @@ namespace Gapi
 
 		UInt GetBuffer();
 
-		UInt GetComponentCount();
+		UInt GetElementCount();
 
 	private:
 		UInt bufferId;
 		UInt byteStride;
-		UInt numComponents;
+		UInt numElements;
 	};
 }
 

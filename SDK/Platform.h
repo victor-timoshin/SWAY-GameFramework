@@ -1,40 +1,14 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-/** ONLY WINDOWS
-*/
-
-#if defined(WIN32) || defined(WIN64)
-	#define PLATFORM_WINDOWS
-
-	#ifdef BUILDING_CORE
-		#define CORE_API __declspec(dllexport)
-	#else
-		#define CORE_API __declspec(dllimport)
-	#endif
-
-	#include <windows.h>
-	#include <windowsx.h>
-#elif defined(__linux__) /* POSIX */
-	#define PLATFORM_LINUX
-
-	#ifdef __cplusplus
-		#define CORE_API extern "C"
-	#else
-		#define CORE_API extern
-	#endif
-
-	#include <stdlib.h>
-	#include <dirent.h>
-	#include <dlfcn.h>
-
-	#include <GL/glx.h>
-	#include <GL/gl.h>
-
-	#include <X11/X.h>
-	#include <X11/Xlib.h>
-	#include <X11/Xutil.h>
+#ifdef BUILDING_CORE
+	#define CORE_API __declspec(dllexport)
+#else
+	#define CORE_API __declspec(dllimport)
 #endif
+
+#include <windows.h>
+#include <windowsx.h>
 
 #include <stdlib.h>
 #include <string>
@@ -55,4 +29,4 @@ typedef long int RESULT;
 #define SAFE_DELETE(x) if(x != 0L) { delete x; x = 0L; }
 #define SAFE_DELETE_ARRAY(x) if(x != 0L) { delete[] x; x = 0L; }
 
-#endif
+#endif // PLATFORM_H

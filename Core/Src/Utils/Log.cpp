@@ -11,7 +11,6 @@ namespace Core
 		/** Constructor. */
 		Log::Log(const char* fileName) : ILogBase(fileName)
 			, stream(0L)
-			, timeLine(false)
 		{
 			stream = new StreamFile();
 			stream->Open(fileName, STREAM_MODE::Write, false);
@@ -52,16 +51,13 @@ namespace Core
 					vsprintf_s(bufferMessage, format, args);
 				va_end(args);
 
-				if (timeLine)
-				{
-					time_t now = time(NULL);
-					struct tm localTime;
-					char str[12];
+				//time_t now = time(0L);
+				//struct tm localTime;
+				//char str[12];
 
-					localtime_s(&localTime, &now);
-					strftime(str, sizeof str, "%H:%M:%S", &localTime);
-					fprintf(file, "%s|", str);
-				}
+				//localtime_s(&localTime, &now);
+				//strftime(str, sizeof str, "%H:%M:%S", &localTime);
+				//fprintf(file, "%s|", str);
 
 				fprintf(file, "%s%s\n", priority, bufferMessage);
 			}

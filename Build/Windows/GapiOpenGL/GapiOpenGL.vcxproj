@@ -17,13 +17,6 @@
     <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2ext.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GLES2\gl2platform.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glcorearb.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glext.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GL\glxext.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\KHR\khrplatform.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLDevice.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLShader.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h" />

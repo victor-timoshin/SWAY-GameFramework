@@ -39,12 +39,7 @@ namespace Core
 
 		private:
 			LWINDOWDESC windowDesc;
-
-#if defined(PLATFORM_WINDOWS)
 			HINSTANCE hInstance; // Win32 application instance handle.
-#else
-			XEvent report;
-#endif
 		};
 	}
 }

@@ -1,6 +1,7 @@
 #ifndef VERTEX_H
 #define VERTEX_H
 
+#include "Vector4.h"
 #include "Vector3.h"
 #include "Vector2.h"
 
@@ -14,14 +15,14 @@ namespace Core
 			float x, y, z;
 		} LVERTEXDIFFUSE_STRUCT, *PVERTEXDIFFUSE_STRUCT;
 
-		inline LVERTEXDIFFUSE_STRUCT VertexDiffuse(const Vector3& position, const float* color)
+		inline LVERTEXDIFFUSE_STRUCT VertexDiffuse(const Vector3& position, const Vector4& color)
 		{
 			LVERTEXDIFFUSE_STRUCT vertex;
 
-			vertex.r = color[0];
-			vertex.g = color[1];
-			vertex.b = color[2];
-			vertex.a = color[3];
+			vertex.r = color._x;
+			vertex.g = color._y;
+			vertex.b = color._z;
+			vertex.a = color._w;
 
 			vertex.x = position._x;
 			vertex.y = position._y;
