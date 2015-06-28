@@ -17,7 +17,11 @@ namespace Scene
 		/** Destructor. */
 		virtual ~SceneGraph();
 
+		virtual ISceneComponentBase* CreateSprite(const char* name);
+
 		virtual ISceneComponentBase* CreateBox(const char* name);
+
+		virtual ISceneComponentBase* CreateSphere(const char* name);
 
 		virtual void Clear();
 

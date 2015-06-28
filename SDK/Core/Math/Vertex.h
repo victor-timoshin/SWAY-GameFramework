@@ -9,15 +9,15 @@ namespace Core
 {
 	namespace Math
 	{
-		typedef struct VertexDiffuseStruct
+		typedef struct VertexColor
 		{
-			float r, g, b, a; // unsigned char
 			float x, y, z;
-		} LVERTEXDIFFUSE_STRUCT, *PVERTEXDIFFUSE_STRUCT;
+			float r, g, b, a; // unsigned char
+		} LVERTEX_COLOR, *PVERTEX_COLOR;
 
-		inline LVERTEXDIFFUSE_STRUCT VertexDiffuse(const Vector3& position, const Vector4& color)
+		inline LVERTEX_COLOR VertexColor(const Vector3& position, const Vector4& color)
 		{
-			LVERTEXDIFFUSE_STRUCT vertex;
+			LVERTEX_COLOR vertex;
 
 			vertex.r = color._x;
 			vertex.g = color._y;
@@ -31,15 +31,15 @@ namespace Core
 			return vertex;
 		}
 
-		typedef struct VertexTexcoordStruct
+		typedef struct VertexTexcoord
 		{
 			float x, y, z;
 			float u, v;
-		} LVERTEXTEXCOORD_STRUCT, *PVERTEXTEXCOORD_STRUCT;
+		} LVERTEX_TEXCOORD, *PVERTEX_TEXCOORD;
 
-		inline LVERTEXTEXCOORD_STRUCT VertexTexCoord(const Vector3& position, const Vector2& texCoord)
+		inline LVERTEX_TEXCOORD VertexTexCoord(const Vector3& position, const Vector2& texCoord)
 		{
-			LVERTEXTEXCOORD_STRUCT vertex;
+			LVERTEX_TEXCOORD vertex;
 
 			vertex.x = position._x;
 			vertex.y = position._y;
@@ -51,16 +51,16 @@ namespace Core
 			return vertex;
 		}
 
-		typedef struct VertexNormalStruct
+		typedef struct VertexNormal
 		{
 			float position[3];
 			float textureCoordinates[2];
 			float normal[3];
-		} LVERTEXNORMAL_STRUCT, *PVERTEXNORMAL_STRUCT;
+		} LVERTEX_NORMAL, *PVERTEX_NORMAL;
 
-		inline LVERTEXNORMAL_STRUCT VertexNormal(const Vector3& position, const Vector2& texCoord, const Vector3& normal = Vector3(0.0f, 0.0f, 0.0f))
+		inline LVERTEX_NORMAL VertexNormal(const Vector3& position, const Vector2& texCoord, const Vector3& normal = Vector3(0.0f, 0.0f, 0.0f))
 		{
-			LVERTEXNORMAL_STRUCT vertex;
+			LVERTEX_NORMAL vertex;
 
 			vertex.position[0] = position._x;
 			vertex.position[1] = position._y;

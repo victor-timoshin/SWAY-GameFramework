@@ -23,7 +23,7 @@ namespace Gapi
 
 		virtual bool Swap();
 
-		virtual void SetViewport(float width, float height);
+		virtual void SetViewport(UInt width, UInt height);
 	private:
 		Core::System::LWINDOWDESC windowDesc;
 

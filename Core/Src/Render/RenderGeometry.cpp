@@ -17,16 +17,22 @@ namespace Core
 			SAFE_DELETE(vertexBuffer);
 		}
 
-		void RenderGeometry::CreateBuffer(void* library, Gapi::IShaderBase* shader)
+		void RenderGeometry::BuildVBOs(void* library, Gapi::IShaderBase* shader)
 		{
 			const Scene::LGEOMETRYPACKET& geometryPacket = sceneComponent->GetGeometryPacket();
 
+			Gapi::LVERTEX_ELEMENT_DESC elementDesc[] = {
+				{ 0, Gapi::TYPE_POSITION, Gapi::FORMAT_FLOAT },
+				{ 0, Gapi::TYPE_COLOR,    Gapi::FORMAT_UBYTE }
+			};
+
 			typedef Gapi::IBufferBase* VertexBufferCallback(void*);
 			vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))(renderDevice);
-			vertexBuffer->Create(sizeof Math::LVERTEXDIFFUSE_STRUCT, geometryPacket.numVertices);
+			vertexBuffer->SetVertexDeclaration(elementDesc, 2);
+			vertexBuffer->Create(sizeof Math::LVERTEX_COLOR, geometryPacket.numVertices);
 
 			void* lockedVertexData = vertexBuffer->Lock();
-			memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * sizeof Math::LVERTEXDIFFUSE_STRUCT);
+			memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * sizeof Math::LVERTEX_COLOR);
 			vertexBuffer->Unlock();
 
 			typedef Gapi::IBufferBase* IndexBufferCallback(void*);
@@ -41,9 +47,7 @@ namespace Core
 		void RenderGeometry::Draw()
 		{
 			const Scene::LGEOMETRYPACKET& geometryPacket = sceneComponent->GetGeometryPacket();
-
-			vertexBuffer->Render(geometryPacket.primitiveType, indexBuffer, 0,
-				geometryPacket.numVertices, geometryPacket.numPrimitives);
+			vertexBuffer->Render(geometryPacket.primitiveType, indexBuffer, 0, geometryPacket.numVertices, geometryPacket.numPrimitives);
 		}
 
 		void RenderGeometry::SetInstanceId(UInt id)

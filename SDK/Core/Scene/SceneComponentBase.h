@@ -21,7 +21,7 @@ namespace Scene
 
 	typedef struct GeometryPacket
 	{
-		Core::Math::PVERTEXDIFFUSE_STRUCT vertices;
+		void* vertices;
 		UInt16* indices;
 		UInt numVertices;
 		UInt numIndices;

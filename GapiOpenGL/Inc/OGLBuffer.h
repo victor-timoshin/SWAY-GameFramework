@@ -17,6 +17,8 @@ namespace Gapi
 		static PFNGLBUFFERSUBDATAARBPROC glBufferSubDataARB;
 		static PFNGLMAPBUFFERARBPROC glMapBufferARB;
 		static PFNGLUNMAPBUFFERARBPROC glUnmapBufferARB;
+		static PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB;
+		static PFNGLGETBUFFERPARAMETERIVARBPROC glGetBufferParameterivARB;
 
 		/** Constructor. */
 		OGLBuffer(IDeviceBase* device);
@@ -24,7 +26,9 @@ namespace Gapi
 		/** Destructor. */
 		virtual ~OGLBuffer();
 
-		virtual void Create(UInt stride, UInt count);
+		virtual void SetVertexDeclaration(const PVERTEX_ELEMENT_DESC elementDesc, UInt numElements);
+
+		virtual UInt Create(UInt stride, UInt count);
 
 		virtual void SetData(void* sourceData);
 
@@ -32,14 +36,15 @@ namespace Gapi
 
 		virtual void Unlock();
 
-		virtual void Render(PRIMITIVE_TYPE primitiveType, IBufferBase* indexBuffer, UInt baseVertexIndex, UInt numberOfVertices, UInt primitiveCount);
+		virtual void Render(PRIMITIVE_TYPE primitiveType, IBufferBase* indexBuffer, UInt baseVertexIndex, UInt numVertices, UInt primitiveCount);
 
-		UInt GetBuffer();
+		UInt GetIndexBuffer();
 
 		UInt GetElementCount();
 
 	private:
-		UInt bufferId;
+		UInt bufferIdx;
+		LVERTEX_FORMAT_DESC vertexFormatDesc;
 		UInt byteStride;
 		UInt numElements;
 	};

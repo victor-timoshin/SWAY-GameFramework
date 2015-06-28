@@ -20,7 +20,7 @@ namespace Core
 			/** Destructor. */
 			virtual ~IRenderGeometryBase() {}
 
-			virtual void CreateBuffer(void* library, Gapi::IShaderBase* shader) = 0;
+			virtual void BuildVBOs(void* library, Gapi::IShaderBase* shader) = 0;
 
 			virtual void Draw() = 0;
 

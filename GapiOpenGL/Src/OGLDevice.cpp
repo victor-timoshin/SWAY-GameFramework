@@ -89,7 +89,7 @@ namespace Gapi
 		return true;
 	}
 
-	void OGLDevice::SetViewport(float width, float height)
+	void OGLDevice::SetViewport(UInt width, UInt height)
 	{
 		glViewport(0, 0, width, height);
 	}

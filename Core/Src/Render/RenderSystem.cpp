@@ -29,7 +29,7 @@ namespace Render
 	{
 		Core::Render::IRenderGeometryBase* geometry = 0L;
 		geometry = new Core::Render::RenderGeometry(component, renderDevice);
-		geometry->CreateBuffer(library, 0L);
+		geometry->BuildVBOs(library, 0L);
 
 		renderGeometries.push_back(geometry);
 	}

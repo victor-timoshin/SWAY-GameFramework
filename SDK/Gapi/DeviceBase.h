@@ -22,7 +22,7 @@ namespace Gapi
 
 		virtual bool Swap() = 0;
 
-		virtual void SetViewport(float width, float height) = 0;
+		virtual void SetViewport(UInt width, UInt height) = 0;
 	};
 
 	CORE_API IDeviceBase* RegisterDevice(Core::System::IWindowBase* window);

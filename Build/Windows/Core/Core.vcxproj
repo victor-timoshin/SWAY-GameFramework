@@ -72,23 +72,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometry.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometryUtils.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderSystem.h" />
     <ClInclude Include="..\..\..\Core\Inc\Scene\Shape.h" />
     <ClInclude Include="..\..\..\Core\Inc\Scene\SceneManagement.h" />
     <ClInclude Include="..\..\..\Core\Inc\Scene\SceneGraph.h" />
     <ClInclude Include="..\..\..\Core\Inc\Scene\SceneComponent.h" />
     <ClInclude Include="..\..\..\Core\Inc\Scene\SceneNode.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Scene\UniversalCamera.h" />
     <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\Log.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\StreamFile.h" />
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\MathCommon.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Matrix4.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Math\Quaternion.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector2.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h" />
     <ClInclude Include="..\..\..\SDK\Core\Render\RenderGeometryBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Render\RenderSystemBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\Scene\CameraBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Scene\SceneComponentBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Scene\SceneManagementBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Scene\SceneNodeBase.h" />
@@ -111,6 +116,7 @@
     <ClCompile Include="..\..\..\Core\Src\Scene\SceneGraph.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Scene\SceneComponent.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Scene\SceneNode.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Scene\UniversalCamera.cpp" />
     <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\Log.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\StreamFile.cpp" />

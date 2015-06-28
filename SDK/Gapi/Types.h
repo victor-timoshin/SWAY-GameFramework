@@ -8,29 +8,16 @@ namespace Gapi
 	typedef enum VertexElementType
 	{
 		TYPE_POSITION = 0x0605,
-		TYPE_POSITIONT = 0x7DA8,
-		TYPE_DIFFUSE = 0x3407,
+		TYPE_COLOR = 0x3407,
 		TYPE_TEXCOORD = 0x309F,
-		TYPE_NORMAL = 0x8CB7,
-		TYPE_TANGENT = 0x8DB9,
-		TYPE_BINORMAL = 0x23D0
+		TYPE_NORMAL = 0x8CB7
 	} VERTEX_ELEMENT_TYPE;
 
 	typedef enum VertexElementFormat
 	{
-		FORMAT_FLOAT1 = 0x0D65,
-		FORMAT_FLOAT2 = 0x14A1,
-		FORMAT_FLOAT3 = 0xF497,
-		FORMAT_FLOAT4 = 0xAE66,
-		FORMAT_COLOR = 0xBF9A
+		FORMAT_FLOAT = 0x0D65,
+		FORMAT_UBYTE = 0x14A1
 	} VERTEX_ELEMENT_FORMAT;
-
-	typedef struct VertexDescStruct
-	{
-		UInt16 stream;
-		UByte type;
-		UByte format;
-	} LVERTEXDESC_STRUCT, *PVERTEXDESC_STRUCT;
 
 	typedef enum FillType
 	{

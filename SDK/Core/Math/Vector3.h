@@ -113,6 +113,10 @@ namespace Core
 				return	*this;
 			}
 
+			Vector3 operator*(float scalar) const {
+				return Vector3(_x * scalar, _y * scalar, m_z * scalar);
+			}
+
 		public:
 			float _x; // X coordinate.
 			float _y; // Y coordinate.

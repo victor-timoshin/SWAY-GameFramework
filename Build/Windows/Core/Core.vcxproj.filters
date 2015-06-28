@@ -147,6 +147,21 @@
     <ClInclude Include="..\..\..\Core\Inc\Scene\Shape.h">
       <Filter>Inc\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Matrix4.h">
+      <Filter>Inc\Math\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\Quaternion.h">
+      <Filter>Inc\Math\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometryUtils.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Scene\CameraBase.h">
+      <Filter>Inc\Scene\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Scene\UniversalCamera.h">
+      <Filter>Inc\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -180,6 +195,9 @@
       <Filter>Src\Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Scene\Shape.cpp">
+      <Filter>Src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Scene\UniversalCamera.cpp">
       <Filter>Src\Scene</Filter>
     </ClCompile>
   </ItemGroup>
