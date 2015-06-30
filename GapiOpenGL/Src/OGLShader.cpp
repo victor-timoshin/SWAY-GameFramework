@@ -76,9 +76,10 @@ namespace Gapi
 		return true;
 	}
 
-	void OGLShader::SetVConstantByName(const char* name, const void* source)
+	void OGLShader::SetVConstantByName(const char* uniform_name, const void* source)
 	{
-		glUniformMatrix4fvARB(glGetUniformLocationARB(program, name), 1, GL_TRUE, (float*)source);
+		int location = glGetUniformLocationARB(program, uniform_name);
+		glUniformMatrix4fvARB(location, 1, GL_TRUE, (float*)source);
 	}
 
 	void OGLShader::UseActiveObject()
@@ -122,10 +123,7 @@ namespace Gapi
 		glCompileShaderARB(object);
 
 		if (CheckStatus(object, GL_OBJECT_COMPILE_STATUS_ARB) != GL_TRUE)
-		{
-			MessageBox(0L, "Shader not compiled:\n", "GLERROR", MB_OK);
 			return 0;
-		}
 
 		return object;
 	}

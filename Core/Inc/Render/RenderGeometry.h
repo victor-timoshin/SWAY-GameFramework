@@ -23,6 +23,8 @@ namespace Core
 			virtual void SetInstanceId(UInt id);
 
 			virtual UInt GetInstanceId();
+
+			virtual Scene::ISceneComponentBase* GetSceneComponent();
 		private:
 			Scene::ISceneComponentBase* sceneComponent;
 

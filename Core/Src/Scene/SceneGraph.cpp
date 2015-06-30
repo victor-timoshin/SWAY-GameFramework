@@ -1,6 +1,7 @@
 #include "../../../Core/Inc/Scene/SceneGraph.h"
 #include "../../../Core/Inc/Scene/SceneNode.h"
 #include "../../../Core/Inc/Scene/Shape.h"
+#include "../../../Core/Inc/Scene/UniversalCamera.h"
 #include "../../../Core/Inc/Render/RenderGeometryUtils.h"
 #include "../../../SDK/Gapi/Types.h"
 
@@ -17,6 +18,39 @@ namespace Scene
 	SceneGraph::~SceneGraph()
 	{
 		SAFE_DELETE(rootSceneNode);
+	}
+
+	ICameraBase* SceneGraph::CreateCamera(const char* name)
+	{
+		if (cameras.find(name) != cameras.end()) {}
+
+		ICameraBase* camera = new UniversalCamera(name);
+		cameras.insert(ICameraMap::value_type(name, camera));
+
+		if (activeCamera == 0L)
+			activeCamera = camera;
+
+		return camera;
+	}
+
+	void SceneGraph::DestroyCamera(const char* name)
+	{
+		ICameraMap::iterator i = cameras.find(name);
+		if (i != cameras.end())
+		{
+			SAFE_DELETE(i->second);
+			cameras.erase(i);
+		}
+	}
+
+	void SceneGraph::SetActiveCamera(ICameraBase* camera)
+	{
+		activeCamera = camera;
+	}
+
+	ICameraBase* SceneGraph::GetActiveCamera()
+	{
+		return activeCamera;
 	}
 
 	ISceneComponentBase* SceneGraph::CreateSprite(const char* name)

@@ -23,7 +23,7 @@ namespace Scene
 
 		virtual void Resume() = 0;
 
-		virtual void FrameStarted(float timeStep) = 0;
+		virtual void FrameStarted(OIS::IInputEventBase* event, float timeStep) = 0;
 
 		virtual void FrameEnded() = 0;
 	};

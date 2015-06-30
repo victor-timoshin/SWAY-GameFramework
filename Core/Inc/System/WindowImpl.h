@@ -37,6 +37,8 @@ namespace Core
 
 			virtual const LWINDOWDESC& GetWindowDesc() const;
 
+			virtual OIS::IInputEventBase* GetInputDevice();
+
 		private:
 			LWINDOWDESC windowDesc;
 			HINSTANCE hInstance; // Win32 application instance handle.

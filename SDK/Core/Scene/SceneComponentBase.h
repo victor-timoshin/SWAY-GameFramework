@@ -2,6 +2,8 @@
 #define SCENE_COMPONENT_BASE_H
 
 #include "../../../SDK/Gapi/Types.h"
+#include "../../../SDK/Core/Math/BoundingVolume.h"
+#include "../../../SDK/Core/Math/Matrix4.h"
 #include "../../../SDK/Core/Math/Vertex.h"
 #include "../../../SDK/Platform.h"
 
@@ -9,8 +11,8 @@ namespace Scene
 {
 	typedef struct AttributePacket
 	{
-		void* matrixWorld;
-		void* boundingBox;
+		Core::Math::Matrix4 matrixWorld;
+		Core::Math::BoundingVolume boundingBox;
 
 		bool IsValue()
 		{
@@ -21,7 +23,7 @@ namespace Scene
 
 	typedef struct GeometryPacket
 	{
-		void* vertices;
+		UInt16* vertices;
 		UInt16* indices;
 		UInt numVertices;
 		UInt numIndices;
@@ -54,13 +56,13 @@ namespace Scene
 
 		virtual ISceneNodeBase* GetSceneNode() = 0;
 
-		virtual const LATTRIBUTEPACKET& GetAttributePacket() const = 0;
+		virtual LATTRIBUTEPACKET GetAttributePacket() = 0;
 
-		virtual void SetAttributePacket(const LATTRIBUTEPACKET& packet) = 0;
+		virtual void SetAttributePacket(LATTRIBUTEPACKET packet) = 0;
 
-		virtual const LGEOMETRYPACKET& GetGeometryPacket() const = 0;
+		virtual LGEOMETRYPACKET GetGeometryPacket() = 0;
 
-		virtual void SetGeometryPacket(const LGEOMETRYPACKET& packet) = 0;
+		virtual void SetGeometryPacket(LGEOMETRYPACKET packet) = 0;
 
 		virtual void SetComponentName(std::string name)
 		{

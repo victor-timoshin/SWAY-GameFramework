@@ -1,4 +1,7 @@
 #include "../../../Core/Inc/System/WindowImpl.h"
+#include "../../../Core/Inc/OIS/InputDevice.h"
+
+OIS::IInputBase* inputDevice;
 
 namespace Core
 {
@@ -11,6 +14,7 @@ namespace Core
 			, windowDesc(desc)
 		{
 			hInstance = GetModuleHandle(0);
+			inputDevice = OIS::RegisterInputDevice();
 
 			WNDCLASSEX windowClassEx;
 			windowClassEx.cbSize = sizeof WNDCLASSEX;
@@ -117,6 +121,11 @@ namespace Core
 			return windowDesc;
 		}
 
+		OIS::IInputEventBase* WindowImpl::GetInputDevice()
+		{
+			return inputDevice;
+		}
+
 		IWindowBase* RegisterWindow(const LWINDOWDESC& desc)
 		{
 			return new WindowImpl(desc);
@@ -130,11 +139,15 @@ namespace Core
 			switch (message)
 			{
 			case WM_CREATE:
+				inputDevice->RegisterDevices(handle);
 				break;
+
 			case WM_INPUT:
 				deviceContext = GetDC(handle);
+				inputDevice->HandleMessage(deviceContext, lParam);
 				ReleaseDC(handle, deviceContext);
 				break;
+
 			case WM_PAINT:
 				deviceContext = BeginPaint(handle, &paint);
 				EndPaint(handle, &paint);

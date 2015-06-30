@@ -18,7 +18,7 @@ namespace Scene
 		/** Destructor. */
 		virtual ~SceneManagement();
 
-		virtual void FrameStarted(float timeStep);
+		virtual void FrameStarted(OIS::IInputEventBase* event, float timeStep);
 		virtual void FrameEnded();
 
 		virtual void ChangeState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph);

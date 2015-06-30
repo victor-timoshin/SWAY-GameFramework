@@ -1,23 +1,17 @@
 #ifndef MATH_COMMON_H
 #define MATH_COMMON_H
 
-#include "Vector3.h"
-
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+
+#include "Vector3.h"
 
 namespace Core
 {
 	namespace Math
 	{
 		static const float REAL_PI = 3.141592654f;
-		static const float EPSILON = 0.000001f;
-
-		inline bool Equals(float lhs, float rhs)
-		{
-			return lhs + EPSILON >= rhs && lhs - EPSILON <= rhs;
-		}
 
 		inline int RandomInteger(int minimum, int maximum)
 		{
@@ -25,14 +19,14 @@ namespace Core
 			return (rand() % (maximum - minimum)) + minimum;
 		}
 
-		inline Vector3 Cross(const Vector3& A, const Vector3& B)
+		inline Vector3 Cross(const Vector3& a, const Vector3& b)
 		{
-			return Vector3((A._y * B._z) - (A._z * B._y), (A._z * B._x) - (A._x * B._z), (A._x * B._y) - (A._y * B._x));
+			return Vector3((a._y * b._z) - (a._z * b._y), (a._z * b._x) - (a._x * b._z), (a._x * b._y) - (a._y * b._x));
 		}
 
-		inline float DotProduct(const Vector3& A, const Vector3& B)
+		inline float DotProduct(const Vector3& a, const Vector3& b)
 		{
-			return (A._x * B._x) + (A._y * B._y) + (A._z * B._z);
+			return (a._x * b._x) + (a._y * b._y) + (a._z * b._z);
 		}
 
 		inline float Length(const Vector3& v)

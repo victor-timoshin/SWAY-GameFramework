@@ -8,6 +8,7 @@ namespace Scene
 {
 	class ISceneNodeBase;
 	class ISceneComponentBase;
+	class ICameraBase;
 	class ISceneGraphBase
 	{
 	public:
@@ -16,6 +17,14 @@ namespace Scene
 
 		/** Destructor. */
 		virtual ~ISceneGraphBase() {}
+
+		virtual ICameraBase* CreateCamera(const char* name) = 0;
+
+		virtual void DestroyCamera(const char* name) = 0;
+
+		virtual void SetActiveCamera(ICameraBase* camera) = 0;
+
+		virtual ICameraBase* GetActiveCamera() = 0;
 
 		virtual ISceneComponentBase* CreateSprite(const char* name) = 0;
 

@@ -1,9 +1,10 @@
 #ifndef SCENE_MANAGEMENT_BASE_H
 #define SCENE_MANAGEMENT_BASE_H
 
-#include "../../../SDK/Core/Scene/SceneGraphBase.h"
-#include "../../../SDK/Core/Utils/Singleton.h"
-#include "../../../SDK/Platform.h"
+#include "../../Core/OIS/InputEventBase.h"
+#include "../../Core/Scene/SceneGraphBase.h"
+#include "../../Core/Utils/Singleton.h"
+#include "../../Platform.h"
 
 namespace Scene
 {
@@ -17,7 +18,7 @@ namespace Scene
 		/** Destructor. */
 		virtual ~ISceneManagementBase() {}
 
-		virtual void FrameStarted(float timeStep) = 0;
+		virtual void FrameStarted(OIS::IInputEventBase* event, float timeStep) = 0;
 
 		virtual void FrameEnded() = 0;
 

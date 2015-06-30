@@ -3,6 +3,7 @@ EXPORTS
 
 	RegisterWindow
 	ProcessEvent
+	RegisterInputDevice
 
 	RegisterRenderSystem
 

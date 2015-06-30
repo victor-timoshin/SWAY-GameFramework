@@ -59,5 +59,10 @@ namespace Core
 		{
 			return instanceId;
 		}
+
+		Scene::ISceneComponentBase* RenderGeometry::GetSceneComponent()
+		{
+			return sceneComponent;
+		}
 	}
 }

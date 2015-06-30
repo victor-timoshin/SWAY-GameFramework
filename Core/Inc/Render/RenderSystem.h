@@ -4,6 +4,7 @@
 #include "../../../SDK/Core/Render/RenderSystemBase.h"
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../SDK/Gapi/DeviceBase.h"
+#include "../../../SDK/Gapi/ShaderBase.h"
 #include "../../../SDK/Platform.h"
 
 #include <vector>
@@ -27,10 +28,11 @@ namespace Render
 
 		virtual Core::Render::IRenderGeometryBase* GetGeometryBy(int id);
 
-		virtual void FrameDrawed();
+		virtual void FrameDrawed(Scene::ICameraBase* camera);
 
 	private:
 		Gapi::IDeviceBase* renderDevice;
+		Gapi::IShaderBase* shader;
 		void* library;
 
 		std::vector<Core::Render::IRenderGeometryBase*> renderGeometries;

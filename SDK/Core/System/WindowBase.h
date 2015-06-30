@@ -1,7 +1,8 @@
 #ifndef WINDOW_BASE
 #define WINDOW_BASE
 
-#include "../../../SDK/Platform.h"
+#include "../OIS/InputBase.h"
+#include "../../Platform.h"
 
 namespace Core
 {
@@ -50,6 +51,8 @@ namespace Core
 			virtual void Maximize() = 0;
 
 			virtual const LWINDOWDESC& GetWindowDesc() const = 0;
+
+			virtual OIS::IInputEventBase* GetInputDevice() = 0;
 		};
 
 		CORE_API IWindowBase* RegisterWindow(const LWINDOWDESC& desc);

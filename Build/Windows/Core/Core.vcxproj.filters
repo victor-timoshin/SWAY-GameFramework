@@ -63,6 +63,15 @@
     <Filter Include="Src\Renderer\Light">
       <UniqueIdentifier>{d928fdbc-8db0-4f12-bc30-01593dfe9d74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\OIS">
+      <UniqueIdentifier>{8a22ce12-8255-497c-8d99-c49a64252128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\OIS">
+      <UniqueIdentifier>{7a901bd0-f60c-48bf-9aab-f218e2f5ab80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\OIS\_SDK">
+      <UniqueIdentifier>{0547bea7-b632-485e-94d8-b02941ec20e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
@@ -162,6 +171,18 @@
     <ClInclude Include="..\..\..\Core\Inc\Scene\UniversalCamera.h">
       <Filter>Inc\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\Math\BoundingVolume.h">
+      <Filter>Inc\Math\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\OIS\InputDevice.h">
+      <Filter>Inc\OIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\OIS\InputBase.h">
+      <Filter>Inc\OIS\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\OIS\InputEventBase.h">
+      <Filter>Inc\OIS\_SDK</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -199,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Scene\UniversalCamera.cpp">
       <Filter>Src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\OIS\InputDevice.cpp">
+      <Filter>Src\OIS</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

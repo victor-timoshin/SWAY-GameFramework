@@ -8,6 +8,7 @@ namespace Scene
 {
 	class ISceneNodeBase;
 	class ISceneComponentBase;
+	class ICameraBase;
 	class SceneGraph : public ISceneGraphBase
 	{
 	public:
@@ -16,6 +17,14 @@ namespace Scene
 
 		/** Destructor. */
 		virtual ~SceneGraph();
+
+		virtual ICameraBase* CreateCamera(const char* name);
+
+		virtual void DestroyCamera(const char* name);
+
+		virtual void SetActiveCamera(ICameraBase* camera);
+
+		virtual ICameraBase* GetActiveCamera();
 
 		virtual ISceneComponentBase* CreateSprite(const char* name);
 
@@ -30,6 +39,10 @@ namespace Scene
 	private:
 		Render::IRenderSystemBase* renderSystem;
 		ISceneNodeBase* rootSceneNode;
+
+		typedef std::map<std::string, ICameraBase*> ICameraMap;
+		ICameraMap cameras;
+		ICameraBase* activeCamera;
 	};
 }
 

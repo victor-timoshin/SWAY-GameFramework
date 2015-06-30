@@ -1,4 +1,5 @@
 #include "../../../Core/Inc/Scene/SceneComponent.h"
+#include "../../../SDK/Core/Scene/SceneNodeBase.h"
 
 namespace Scene
 {
@@ -19,22 +20,44 @@ namespace Scene
 		return attachedSceneNode;
 	}
 
-	const LATTRIBUTEPACKET& SceneComponent::GetAttributePacket() const
+	LATTRIBUTEPACKET SceneComponent::GetAttributePacket()
 	{
+		Core::Math::Matrix4 matrixWorld;
+		Core::Math::BoundingVolume boundingBox;
+
+		if (attachedSceneNode != 0L)
+			matrixWorld = attachedSceneNode->GetMatrixWorldTransform();
+		else
+			matrixWorld.Identity();
+
+		for (UInt i = 0; i < geometryPacket.numVertices; i++)
+		{
+			UInt16* vertex = &geometryPacket.vertices[i];
+			Core::Math::Vector3 totalSize = Core::Math::Vector3(
+				vertex[0] * matrixWorld[0][0],
+				vertex[1] * matrixWorld[1][1],
+				vertex[2] * matrixWorld[2][2]);
+
+			boundingBox.AddPoint(totalSize);
+		}
+
+		attributePacket.matrixWorld = matrixWorld;
+		attributePacket.boundingBox = boundingBox;
+
 		return attributePacket;
 	}
 
-	void SceneComponent::SetAttributePacket(const LATTRIBUTEPACKET& packet)
+	void SceneComponent::SetAttributePacket(LATTRIBUTEPACKET packet)
 	{
 		attributePacket = packet;
 	}
 
-	const LGEOMETRYPACKET& SceneComponent::GetGeometryPacket() const
+	LGEOMETRYPACKET SceneComponent::GetGeometryPacket()
 	{
 		return geometryPacket;
 	}
 
-	void SceneComponent::SetGeometryPacket(const LGEOMETRYPACKET& packet)
+	void SceneComponent::SetGeometryPacket(LGEOMETRYPACKET packet)
 	{
 		geometryPacket = packet;
 	}

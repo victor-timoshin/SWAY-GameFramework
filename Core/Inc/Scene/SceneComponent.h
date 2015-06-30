@@ -19,13 +19,13 @@ namespace Scene
 
 		virtual ISceneNodeBase* GetSceneNode();
 
-		virtual const LATTRIBUTEPACKET& GetAttributePacket() const;
+		virtual LATTRIBUTEPACKET GetAttributePacket();
 
-		virtual void SetAttributePacket(const LATTRIBUTEPACKET& packet);
+		virtual void SetAttributePacket(LATTRIBUTEPACKET packet);
 
-		virtual const LGEOMETRYPACKET& GetGeometryPacket() const;
+		virtual LGEOMETRYPACKET GetGeometryPacket();
 
-		virtual void SetGeometryPacket(const LGEOMETRYPACKET& packet);
+		virtual void SetGeometryPacket(LGEOMETRYPACKET packet);
 
 	private:
 		ISceneNodeBase* attachedSceneNode;

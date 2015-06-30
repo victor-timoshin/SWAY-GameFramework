@@ -27,6 +27,8 @@ namespace Core
 			virtual void SetInstanceId(UInt id) = 0;
 
 			virtual UInt GetInstanceId() = 0;
+
+			virtual Scene::ISceneComponentBase* GetSceneComponent() = 0;
 		};
 	}
 }

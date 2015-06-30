@@ -10,6 +10,7 @@ namespace Render
 	/** Destructor. */
 	RenderSystem::~RenderSystem()
 	{
+		SAFE_DELETE(shader);
 		SAFE_DELETE(renderDevice);
 		FreeLibrary((HMODULE)library);
 	}
@@ -23,6 +24,13 @@ namespace Render
 		typedef Gapi::IDeviceBase* FunctionCallback(Core::System::IWindowBase*);
 		renderDevice = reinterpret_cast<FunctionCallback*>(GetProcAddress((HMODULE)library, "RegisterDevice"))(window);
 		renderDevice->Initialize();
+
+
+		typedef Gapi::IShaderBase* IShaderBaseCallback(void*);
+		shader = reinterpret_cast<IShaderBaseCallback*>(GetProcAddress((HMODULE)library, "RegisterShader"))(renderDevice);
+		shader->CreateFromFile(
+			"../../../Assets/Shaders/basic.vs",
+			"../../../Assets/Shaders/basic.fs");
 	}
 
 	void RenderSystem::CreateBuffer(Scene::ISceneComponentBase* component)
@@ -53,14 +61,26 @@ namespace Render
 		return renderGeometries[id];
 	}
 
-	void RenderSystem::FrameDrawed()
+	void RenderSystem::FrameDrawed(Scene::ICameraBase* camera)
 	{
 		renderDevice->Clear(0.0f, 0.0f, 0.0f, 0.0f);
 		renderDevice->SetViewport(800, 600);
 
 		for (UInt i = 0; i < renderGeometries.size(); ++i)
 		{
-			renderGeometries[i]->Draw();
+			Scene::ISceneComponentBase* component = renderGeometries[i]->GetSceneComponent();
+			Scene::LATTRIBUTEPACKET attributes = component->GetAttributePacket();
+
+			shader->SetVConstantByName("matrixWorld", &attributes.matrixWorld);
+			shader->SetVConstantByName("matrixView", &camera->GetMatrixView());
+			shader->SetVConstantByName("matrixProjection", &camera->GetMatrixProjection());
+
+			//if (camera->ContainsBoundingVolume(attributes.boundingBox,
+			//	Core::Math::Vector3(attributes.matrixWorld[3][0], attributes.matrixWorld[3][1], attributes.matrixWorld[3][2])))
+			//{
+				shader->UseActiveObject();
+				renderGeometries[i]->Draw();
+			//}
 		}
 
 		renderDevice->Swap();

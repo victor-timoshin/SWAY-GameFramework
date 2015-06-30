@@ -1,14 +1,21 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include "MathCommon.h"
+#include <math.h>
 
 namespace Core
 {
 	namespace Math
 	{
+		static const float EPSILON = 0.000001f;
+		inline bool Equals(float lhs, float rhs)
+		{
+			return lhs + EPSILON >= rhs && lhs - EPSILON <= rhs;
+		}
+
 		class Vector3
 		{
+			friend Vector3 operator*(float value, const Vector3& v);
 		public:
 			/** Constructor. */
 			Vector3()
@@ -113,8 +120,16 @@ namespace Core
 				return	*this;
 			}
 
-			Vector3 operator*(float scalar) const {
-				return Vector3(_x * scalar, _y * scalar, m_z * scalar);
+			Vector3 operator+(const Vector3& v) const
+			{
+				Vector3 temp(*this);
+				temp += v;
+				return temp;
+			}
+
+			Vector3 operator*(float scalar) const
+			{
+				return Vector3(_x * scalar, _y * scalar, _z * scalar);
 			}
 
 		public:
@@ -122,6 +137,10 @@ namespace Core
 			float _y; // Y coordinate.
 			float _z; // Z coordinate.
 		};
+
+		inline Vector3 operator*(float value, const Vector3& v) {
+			return Vector3(value * v._x, value * v._y, value * v._z);
+		}
 	}
 }
 

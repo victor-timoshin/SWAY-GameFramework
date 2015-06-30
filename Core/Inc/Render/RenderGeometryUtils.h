@@ -26,7 +26,7 @@ namespace Core
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = 4;
-			geometryPacket.vertices = vertices;
+			geometryPacket.vertices = (UInt16*)vertices;
 			geometryPacket.numIndices = 6;
 			geometryPacket.indices = Indices;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
@@ -86,7 +86,7 @@ namespace Core
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = 24;
-			geometryPacket.vertices = vertices;
+			geometryPacket.vertices = (UInt16*)vertices;
 			geometryPacket.numIndices = 36;
 			geometryPacket.indices = indices;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
@@ -151,7 +151,7 @@ namespace Core
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = (numRings + 1) * (numSegments + 1);
-			geometryPacket.vertices = vertices;
+			geometryPacket.vertices = (UInt16*)vertices;
 			geometryPacket.numIndices = 6 * numRings * (numSegments + 1);
 			geometryPacket.indices = indices;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;

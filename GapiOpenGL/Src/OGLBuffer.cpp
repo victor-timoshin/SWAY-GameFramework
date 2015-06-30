@@ -110,8 +110,6 @@ namespace Gapi
 		{
 			glDeleteBuffersARB(1, &bufferIdx);
 			bufferIdx = 0;
-
-			MessageBox(0L, "[createVBO()] Data size is mismatch with input array\n", "", MB_OK);
 		}
 
 		return bufferIdx;
