@@ -174,14 +174,26 @@
     <ClInclude Include="..\..\..\SDK\Core\Math\BoundingVolume.h">
       <Filter>Inc\Math\_SDK</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\InputDevice.h">
-      <Filter>Inc\OIS</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\SDK\Core\OIS\InputBase.h">
       <Filter>Inc\OIS\_SDK</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\OIS\InputEventBase.h">
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawKeyboard.h">
+      <Filter>Inc\OIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\OIS\Keyboard.h">
       <Filter>Inc\OIS\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SDK\Core\OIS\Mouse.h">
+      <Filter>Inc\OIS\_SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputDevice.h">
+      <Filter>Inc\OIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawMouse.h">
+      <Filter>Inc\OIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputManagement.h">
+      <Filter>Inc\OIS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +233,13 @@
     <ClCompile Include="..\..\..\Core\Src\Scene\UniversalCamera.cpp">
       <Filter>Src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\OIS\InputDevice.cpp">
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawKeyboard.cpp">
+      <Filter>Src\OIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawMouse.cpp">
+      <Filter>Src\OIS</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawInputManagement.cpp">
       <Filter>Src\OIS</Filter>
     </ClCompile>
   </ItemGroup>

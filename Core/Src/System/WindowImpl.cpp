@@ -1,7 +1,7 @@
 #include "../../../Core/Inc/System/WindowImpl.h"
-#include "../../../Core/Inc/OIS/InputDevice.h"
+#include "../../../Core/Inc/OIS/RawInputManagement.h"
 
-OIS::IInputBase* inputDevice;
+OIS::IInputBase* inputManagement;
 
 namespace Core
 {
@@ -14,7 +14,7 @@ namespace Core
 			, windowDesc(desc)
 		{
 			hInstance = GetModuleHandle(0);
-			inputDevice = OIS::RegisterInputDevice();
+			inputManagement = OIS::RegisterInputManagement();
 
 			WNDCLASSEX windowClassEx;
 			windowClassEx.cbSize = sizeof WNDCLASSEX;
@@ -46,7 +46,7 @@ namespace Core
 			UInt32 windowStyle = WS_OVERLAPPEDWINDOW;
 			int x, y, h, w;
 
-			if (windowDesc.mode == WINDOWMODE::Fullscreen)
+			if (windowDesc.mode == WINDOWMODE::TYPE_FULLSCREEN)
 			{
 				windowStyle |= WS_POPUP;
 
@@ -121,9 +121,14 @@ namespace Core
 			return windowDesc;
 		}
 
-		OIS::IInputEventBase* WindowImpl::GetInputDevice()
+		//OIS::IInputEventBase* WindowImpl::GetInputManagement()
+		//{
+		//	return inputManagement;
+		//}
+
+		OIS::IInputBase* WindowImpl::GetInputManagement()
 		{
-			return inputDevice;
+			return inputManagement;
 		}
 
 		IWindowBase* RegisterWindow(const LWINDOWDESC& desc)
@@ -139,12 +144,12 @@ namespace Core
 			switch (message)
 			{
 			case WM_CREATE:
-				inputDevice->RegisterDevices(handle);
+				inputManagement->RegisterDevices(handle);
 				break;
 
 			case WM_INPUT:
 				deviceContext = GetDC(handle);
-				inputDevice->HandleMessage(deviceContext, lParam);
+				inputManagement->HandleMessage(deviceContext, lParam);
 				ReleaseDC(handle, deviceContext);
 				break;
 

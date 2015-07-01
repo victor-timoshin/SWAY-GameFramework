@@ -25,7 +25,6 @@ namespace Render
 		renderDevice = reinterpret_cast<FunctionCallback*>(GetProcAddress((HMODULE)library, "RegisterDevice"))(window);
 		renderDevice->Initialize();
 
-
 		typedef Gapi::IShaderBase* IShaderBaseCallback(void*);
 		shader = reinterpret_cast<IShaderBaseCallback*>(GetProcAddress((HMODULE)library, "RegisterShader"))(renderDevice);
 		shader->CreateFromFile(

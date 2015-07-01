@@ -37,7 +37,8 @@ namespace Core
 
 			virtual const LWINDOWDESC& GetWindowDesc() const;
 
-			virtual OIS::IInputEventBase* GetInputDevice();
+			//virtual OIS::IInputEventBase* GetInputManagement();
+			virtual OIS::IInputBase* GetInputManagement();
 
 		private:
 			LWINDOWDESC windowDesc;

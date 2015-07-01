@@ -1,26 +1,33 @@
 #ifndef INPUT_BASE_H
 #define INPUT_BASE_H
 
-#include "InputEventBase.h"
+#include "Keyboard.h"
+#include "Mouse.h"
 #include "../../Platform.h"
 
 namespace OIS
 {
-	class IInputBase : public IInputEventBase
+	class IInputBase
 	{
 	public:
+		/* Constructor. */
 		IInputBase() { }
 
+		/* Destructor. */
 		virtual ~IInputBase() { }
 
-		virtual bool RegisterDevices(HWND handle) = 0;
+		virtual int RegisterDevices(HWND handle) = 0;
 
-		virtual bool UnregisterDevices() = 0;
+		virtual int UnregisterDevices() = 0;
 
 		virtual bool HandleMessage(HDC deviceContext, LPARAM lParam) = 0;
+
+		virtual IKeyboard* GetKeyboard() = 0;
+
+		virtual IMouse* GetMouse() = 0;
 	};
 
-	CORE_API IInputBase* RegisterInputDevice();
+	CORE_API IInputBase* RegisterInputManagement();
 }
 
 #endif // INPUT_BASE_H

@@ -10,10 +10,10 @@ namespace Scene
 	{
 	public:
 		/** Constructor. */
-		SceneComponent();
+		SceneComponent(void);
 
 		/** Destructor. */
-		virtual ~SceneComponent();
+		virtual ~SceneComponent(void) { }
 
 		virtual void Notify(ISceneNodeBase* sceneNode);
 

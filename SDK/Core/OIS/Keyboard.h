@@ -1,12 +1,11 @@
-#ifndef INPUT_EVENT_BASE_H
-#define INPUT_EVENT_BASE_H
+#ifndef KEYBOARD_H
+#define KEYBOARD_H
 
-#include "../Math/Vector2.h"
 #include "../../Platform.h"
 
 namespace OIS
 {
-	enum
+	typedef enum KeyCode
 	{
 		KEY_0 = 48,
 		KEY_1 = 49,
@@ -113,23 +112,21 @@ namespace OIS
 		KEY_NUMPAD_7 = 103,
 		KEY_NUMPAD_8 = 104,
 		KEY_NUMPAD_9 = 105,
-	};
+	} KEYCODE;
 
-	class IInputEventBase
+	class IKeyboard
 	{
 	public:
-		virtual bool KeyDown(const UInt16& key) const = 0;
+		/* Constructor. */
+		IKeyboard(void) { }
 
-		virtual bool KeyUp(const UInt16& key) const = 0;
+		/* Destructor. */
+		virtual ~IKeyboard(void) { }
 
-		virtual void SetCursorPosition(UInt x, UInt y) = 0;
+		virtual bool KeyDown(const KEYCODE& key) const = 0;
 
-		virtual void SetCursorSensitivity(int value) = 0;
-
-		virtual Core::Math::Vector2 GetCursorPositionAbsolute() = 0;
-
-		virtual Core::Math::Vector2 GetCursorPositionRelative() = 0;
+		virtual bool KeyUp(const KEYCODE& key) const = 0;
 	};
 }
 
-#endif // INPUT_EVENT_BASE_H
+#endif // KEYBOARD_H

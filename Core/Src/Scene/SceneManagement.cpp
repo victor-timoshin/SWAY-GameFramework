@@ -15,7 +15,7 @@ namespace Scene
 		}
 	}
 
-	void SceneManagement::FrameStarted(OIS::IInputEventBase* event, float timeStep)
+	void SceneManagement::FrameStarted(OIS::IInputBase* event, float timeStep)
 	{
 		stateStack.back()->FrameStarted(event, timeStep);
 	}

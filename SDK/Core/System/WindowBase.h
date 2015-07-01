@@ -10,8 +10,8 @@ namespace Core
 	{
 		typedef enum WindowMode
 		{
-			Windowed = 0xB2C0,
-			Fullscreen = 0x9D44
+			TYPE_WINDOWED = 0xB2C0,
+			TYPE_FULLSCREEN = 0x9D44
 		} WINDOWMODE;
 
 		typedef struct WindowDesc
@@ -24,6 +24,7 @@ namespace Core
 			UInt clientHeight;
 		} LWINDOWDESC, *PWINDOWDESC;
 
+		//Win32Api
 		class IWindowBase
 		{
 		public:
@@ -52,7 +53,8 @@ namespace Core
 
 			virtual const LWINDOWDESC& GetWindowDesc() const = 0;
 
-			virtual OIS::IInputEventBase* GetInputDevice() = 0;
+			//virtual OIS::IInputEventBase* GetInputManagement() = 0;
+			virtual OIS::IInputBase* GetInputManagement() = 0;
 		};
 
 		CORE_API IWindowBase* RegisterWindow(const LWINDOWDESC& desc);

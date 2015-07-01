@@ -4,11 +4,8 @@
 namespace Scene
 {
 	/** Constructor. */
-	SceneComponent::SceneComponent()
+	SceneComponent::SceneComponent(void)
 		: attachedSceneNode(0L) {}
-
-	/** Destructor. */
-	SceneComponent::~SceneComponent() {}
 
 	void SceneComponent::Notify(ISceneNodeBase* sceneNode)
 	{

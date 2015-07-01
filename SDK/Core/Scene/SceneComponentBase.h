@@ -47,10 +47,10 @@ namespace Scene
 	{
 	public:
 		/** Constructor. */
-		ISceneComponentBase() {}
+		ISceneComponentBase(void) {}
 
 		/** Destructor. */
-		virtual ~ISceneComponentBase() {}
+		virtual ~ISceneComponentBase(void) {}
 
 		virtual void Notify(ISceneNodeBase* sceneNode) = 0;
 

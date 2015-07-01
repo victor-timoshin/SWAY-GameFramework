@@ -71,7 +71,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\InputDevice.h" />
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputManagement.h" />
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputDevice.h" />
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawKeyboard.h" />
+    <ClInclude Include="..\..\..\Core\Inc\OIS\RawMouse.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometry.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometryUtils.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderSystem.h" />
@@ -93,8 +96,9 @@
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h" />
     <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h" />
+    <ClInclude Include="..\..\..\SDK\Core\OIS\Keyboard.h" />
     <ClInclude Include="..\..\..\SDK\Core\OIS\InputBase.h" />
-    <ClInclude Include="..\..\..\SDK\Core\OIS\InputEventBase.h" />
+    <ClInclude Include="..\..\..\SDK\Core\OIS\Mouse.h" />
     <ClInclude Include="..\..\..\SDK\Core\Render\RenderGeometryBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Render\RenderSystemBase.h" />
     <ClInclude Include="..\..\..\SDK\Core\Scene\CameraBase.h" />
@@ -113,7 +117,9 @@
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Core\Src\OIS\InputDevice.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawInputManagement.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawKeyboard.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\OIS\RawMouse.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\RenderGeometry.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Scene\Shape.cpp" />
