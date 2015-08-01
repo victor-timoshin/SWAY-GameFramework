@@ -1,21 +1,23 @@
-#ifndef TEXTURE_BASE_H
-#define TEXTURE_BASE_H
+#ifndef TEXTUREBASE_H
+#define TEXTUREBASE_H
 
-#include "../../SDK/Gapi/Types.h"
 #include "../../SDK/Platform.h"
 
 namespace Gapi
 {
-	class IDeviceBase;
 	class ITextureBase
 	{
 	public:
-		/** Constructor. */
-		ITextureBase(IDeviceBase* device) {}
+		/// <summary>Конструктор класса.</summary>
+		ITextureBase(void) {}
 
-		/** Destructor. */
-		virtual ~ITextureBase() {}
+		/// <summary>Деструктор класса.</summary>
+		virtual ~ITextureBase(void) {}
+
+		virtual void Create(int format, int width, int height, const void* data, int mipCount) = 0;
+
+		virtual void Set(int slot) = 0;
 	};
 }
 
-#endif // TEXTURE_BASE_H
+#endif // TEXTUREBASE_H

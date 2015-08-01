@@ -1,5 +1,5 @@
-#ifndef SCENE_MANAGEMENT_H
-#define SCENE_MANAGEMENT_H
+#ifndef SCENEMANAGEMENT_H
+#define SCENEMANAGEMENT_H
 
 #include "../../../SDK/Core/Scene/SceneManagementBase.h"
 #include "../../../SDK/Core/Scene/SceneStateBase.h"
@@ -12,20 +12,20 @@ namespace Scene
 	class SceneManagement: public ISceneManagementBase
 	{
 	public:
-		/** Constructor. */
-		SceneManagement();
+		/// <summary>Конструктор класса.</summary>
+		SceneManagement(void) { }
 
-		/** Destructor. */
-		virtual ~SceneManagement();
+		/// <summary>Деструктор класса.</summary>
+		virtual ~SceneManagement(void);
 
 		virtual void FrameStarted(OIS::IInputBase* event, float timeStep);
 		virtual void FrameEnded();
 
-		virtual void ChangeState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph);
+		virtual void ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
 
-		virtual void PushState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph);
+		virtual void PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
 
-		virtual void PopState();
+		virtual void PopState(void);
 
 	private:
 		std::vector<ISceneStateBase*> stateStack;
@@ -33,4 +33,4 @@ namespace Scene
 
 }
 
-#endif // SCENE_MANAGEMENT_H
+#endif // SCENEMANAGEMENT_H

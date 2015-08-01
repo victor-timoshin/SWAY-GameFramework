@@ -1,24 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#include "../Platform.h"
-
 namespace Gapi
 {
-	typedef enum VertexElementType
-	{
-		TYPE_POSITION = 0x0605,
-		TYPE_COLOR = 0x3407,
-		TYPE_TEXCOORD = 0x309F,
-		TYPE_NORMAL = 0x8CB7
-	} VERTEX_ELEMENT_TYPE;
-
-	typedef enum VertexElementFormat
-	{
-		FORMAT_FLOAT = 0x0D65,
-		FORMAT_UBYTE = 0x14A1
-	} VERTEX_ELEMENT_FORMAT;
-
 	typedef enum FillType
 	{
 		TYPE_SOLID = 0x1B2E,
@@ -41,15 +25,6 @@ namespace Gapi
 		TYPE_R32F = 0xAE18,
 		TYPE_A2R10G10B10 = 0xDF30
 	} FORMAT_TYPE;
-
-	typedef enum PrimitiveType
-	{
-		TYPE_POINTLIST =0xFE12,
-		TYPE_LINELIST = 0xFDBE,
-		TYPE_LINESTRIP = 0x6B83,
-		TYPE_TRIANGLELIST = 0x7DD0,
-		TYPE_TRIANGLESTRIP = 0x9FAE
-	} PRIMITIVE_TYPE;
 
 	typedef enum MapType
 	{

@@ -1,7 +1,6 @@
-#ifndef DEVICE_BASE_H
-#define DEVICE_BASE_H
+#ifndef DEVICEBASE_H
+#define DEVICEBASE_H
 
-#include "../../SDK/Core/System/WindowBase.h"
 #include "../../SDK/Gapi/Types.h"
 #include "../../SDK/Platform.h"
 
@@ -10,22 +9,53 @@ namespace Gapi
 	class IDeviceBase
 	{
 	public:
-		/** Constructor. */
-		IDeviceBase(Core::System::IWindowBase* window) {}
+		/// <summary>Конструктор класса.</summary>
+		/// <param name="handle">Хендл окна.</param>
+		IDeviceBase(HWND handle) {}
 
-		/** Destructor. */
-		virtual ~IDeviceBase() {}
+		/// <summary>Деструктор класса.</summary>
+		virtual ~IDeviceBase(void) {}
 
-		virtual void Initialize() = 0;
+		virtual bool Create(void) = 0;
 
-		virtual void Clear(float red, float green, float blue, float alpha) = 0;
+		virtual void Destroy(void) = 0;
 
-		virtual bool Swap() = 0;
+		virtual void MakeCurrentContext(void) = 0;
+
+		virtual void ResetCurrentContext(void) = 0;
+
+		virtual void DoneCurrentContext(void) = 0;
+
+		virtual void Clear(CLEARFLAGS flags) = 0;
+
+		virtual void SetClearColor(float red, float green, float blue, float alpha) const = 0;
+
+		virtual void SetClearColor(const Math::Color& color) const = 0;
+
+		virtual void SwapChain(void) = 0;
+
+		virtual void Flush(void) = 0;
 
 		virtual void SetViewport(UInt width, UInt height) = 0;
+
+		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height) = 0;
+
+#pragma region Capabilities
+
+		virtual const char* GetGlVersionString(void) = 0;
+
+		virtual const char* GetGlVendorString(void) = 0;
+
+		virtual const char* GetGlRendererString(void) = 0;
+
+		virtual const char* GetGlslVersionString(void) = 0;
+
+		virtual void GetGlInfo(std::ostream& ostr) = 0;
+
+#pragma endregion
 	};
 
-	CORE_API IDeviceBase* RegisterDevice(Core::System::IWindowBase* window);
+	CORE_API IDeviceBase* RegisterDevice(HWND handle);
 }
 
-#endif // DEVICE_BASE_H
+#endif // DEVICEBASE_H

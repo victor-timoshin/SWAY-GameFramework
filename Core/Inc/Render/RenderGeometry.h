@@ -1,7 +1,8 @@
-#ifndef RENDER_GEOMETRY_H
-#define RENDER_GEOMETRY_H
+#ifndef RENDERGEOMETRY_H
+#define RENDERGEOMETRY_H
 
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
+#include "../../../SDK/Math/Vertex.h"
 
 namespace Core
 {
@@ -10,25 +11,24 @@ namespace Core
 		class RenderGeometry : public IRenderGeometryBase
 		{
 		public:
-			/** Constructor. */
-			RenderGeometry(Scene::ISceneComponentBase* component, Gapi::IDeviceBase* device);
+			/// <summary>Конструктор класса.</summary>
+			RenderGeometry(Scene::IRenderableBase* renderable);
 
-			/** Destructor. */
-			virtual ~RenderGeometry();
+			/// <summary>Деструктор класса.</summary>
+			virtual ~RenderGeometry(void);
 
-			virtual void BuildVBOs(void* library, Gapi::IShaderBase* shader);
+			virtual void BuildVBOs(void* library);
 
-			virtual void Draw();
+			virtual void Draw(void);
 
 			virtual void SetInstanceId(UInt id);
 
-			virtual UInt GetInstanceId();
+			virtual UInt GetInstanceId(void);
 
-			virtual Scene::ISceneComponentBase* GetSceneComponent();
+			virtual Scene::IRenderableBase* GetRenderableComponent(void);
 		private:
-			Scene::ISceneComponentBase* sceneComponent;
+			Scene::IRenderableBase* renderableComponent;
 
-			Gapi::IDeviceBase* renderDevice;
 			Gapi::IBufferBase* vertexBuffer;
 			Gapi::IBufferBase* indexBuffer;
 
@@ -37,4 +37,4 @@ namespace Core
 	}
 }
 
-#endif // RENDER_GEOMETRY_H
+#endif // RENDERGEOMETRY_H

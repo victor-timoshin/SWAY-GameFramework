@@ -1,40 +1,38 @@
-#ifndef STREAM_BASE_H
-#define STREAM_BASE_H
+#ifndef STREAMBASE_H
+#define STREAMBASE_H
 
+#include "../../Platform.h"
 #include <stdio.h>
 
 namespace Core
 {
 	namespace Utils
 	{
-		typedef enum StreamMode
-		{
-			Read = 0x7641,
-			Write = 0xD97F
-		} STREAM_MODE;
-
 		class IStreamBase
 		{
 		public:
-			/** Constructor. */
-			IStreamBase() {}
+			/// <summary>Конструктор класса.</summary>
+			IStreamBase(void) {}
 
-			/** Destructor. */
-			virtual ~IStreamBase() {}
+			/// <summary>Деструктор класса.</summary>
+			virtual ~IStreamBase(void) {}
 
-			virtual void Open(const char* fileName, STREAM_MODE mode, bool binary) = 0;
+			/// <param name="filename">Имя файла.</param>
+			virtual void Open(const char* filename, FILEMODES mode, bool binary) = 0;
 
-			virtual void Close() = 0;
+			virtual void Close(void) = 0;
 
-			virtual void Seek() = 0;
+			virtual void Seek(void) = 0;
 
 			virtual void Print(const char* str) = 0;
 
-			virtual bool IsOpen() const = 0;
+			virtual bool IsOpen(void) const = 0;
 
-			virtual FILE* GetFileHandle() const = 0;
+			virtual FILE* GetFileHandle(void) const = 0;
+
+			virtual UInt GetFileLength(void) const = 0;
 		};
 	}
 }
 
-#endif // STREAM_BASE_H
+#endif // STREAMBASE_H

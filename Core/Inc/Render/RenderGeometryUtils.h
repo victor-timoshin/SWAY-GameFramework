@@ -1,96 +1,90 @@
-#ifndef RENDER_GEOMETRY_UTILS_H
-#define RENDER_GEOMETRY_UTILS_H
+#ifndef RENDERGEOMETRYUTILS_H
+#define RENDERGEOMETRYUTILS_H
 
-#include "../../../SDK/Core/Scene/SceneComponentBase.h"
-#include "../../../SDK/Core/Math/Vector2.h"
-#include "../../../SDK/Core/Math/Vector3.h"
-#include "../../../SDK/Core/Math/Vector4.h"
-#include "../../../SDK/Core/Math/Vertex.h"
+#include "../../../SDK/Math/Vector2.h"
+#include "../../../SDK/Math/Vector3.h"
+#include "../../../SDK/Math/Vector4.h"
+#include "../../../SDK/Math/Vertex.h"
+#include "../../../SDK/Math/Color.h"
 
 namespace Core
 {
 	class RenderGeometryUtils
 	{
 	public:
-		static Scene::LGEOMETRYPACKET GetPrefabPlane()
+		static Scene::LGEOMETRYPACKET GetPrefabPlane(void)
 		{
 			Math::PVERTEX_NORMAL vertices = new Math::LVERTEX_NORMAL[4];
 			vertices[0] = Math::VertexNormal(Math::Vector3(-1.0f, -1.0f, 0.0f), Math::Vector2(0.0f, 0.0f));
-			vertices[1] = Math::VertexNormal(Math::Vector3(1.0f, -1.0f, 0.0f), Math::Vector2(1.0f, 0.0f));
-			vertices[2] = Math::VertexNormal(Math::Vector3(-1.0f, 1.0f, 0.0f), Math::Vector2(0.0f, 1.0f));
-			vertices[3] = Math::VertexNormal(Math::Vector3(1.0f, 1.0f, 0.0f), Math::Vector2(1.0f, 1.0f));
+			vertices[1] = Math::VertexNormal(Math::Vector3( 1.0f, -1.0f, 0.0f), Math::Vector2(1.0f, 0.0f));
+			vertices[2] = Math::VertexNormal(Math::Vector3(-1.0f,  1.0f, 0.0f), Math::Vector2(0.0f, 1.0f));
+			vertices[3] = Math::VertexNormal(Math::Vector3( 1.0f,  1.0f, 0.0f), Math::Vector2(1.0f, 1.0f));
 
-			UInt16* Indices = new UInt16[6];
+			UByte* Indices = new UByte[6];
 			Indices[0] = 0; Indices[1] = 1; Indices[2] = 2;
 			Indices[3] = 2; Indices[4] = 1; Indices[5] = 3;
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = 4;
-			geometryPacket.vertices = (UInt16*)vertices;
+			geometryPacket.vertices = (float*)vertices;
 			geometryPacket.numIndices = 6;
 			geometryPacket.indices = Indices;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
-			geometryPacket.primitiveType = Gapi::TYPE_TRIANGLELIST;
+			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 
 			return geometryPacket;
 		}
-		static Scene::LGEOMETRYPACKET GetPrefabBox()
+
+		static Scene::LGEOMETRYPACKET GetPrefabBox(const Math::Color& color = Math::Color(1.0f, 1.0f, 1.0f, 1.0f))
 		{
 			Math::PVERTEX_COLOR vertices = new Math::LVERTEX_COLOR[24];
 
-			/* Far plane. */
-			vertices[ 0] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 1] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 2] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 3] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			/* Right plane. */
-			vertices[ 4] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 5] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 6] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 7] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
 			/* Front plane. */
-			vertices[ 8] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[ 9] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[10] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[11] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
+			vertices[ 0] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v0
+			vertices[ 1] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v1
+			vertices[ 2] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v2
+			vertices[ 3] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v3
+			/* Right plane. */
+			vertices[ 4] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v0
+			vertices[ 5] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v3
+			vertices[ 6] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v4
+			vertices[ 7] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v5
+			/* Top plane. */
+			vertices[ 8] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v0
+			vertices[ 9] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v5
+			vertices[10] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v6
+			vertices[11] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v1
 			/* Left plane. */
-			vertices[12] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[13] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[14] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[15] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			/* Upper plane. */
-			vertices[16] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[17] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[18] = Math::VertexColor(Math::Vector3(-0.5f,  0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[19] = Math::VertexColor(Math::Vector3( 0.5f,  0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			/* Lower plane. */
-			vertices[20] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[21] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[22] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
-			vertices[23] = Math::VertexColor(Math::Vector3( 0.5f, -0.5f,  0.5f), Math::Vector4(0.0f, 255.0f, 255.0f, 255.0f));
+			vertices[12] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v1
+			vertices[13] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v6
+			vertices[14] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v7
+			vertices[15] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v2
+			/* Bottom plane. */
+			vertices[16] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v7
+			vertices[17] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v4
+			vertices[18] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v3
+			vertices[19] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, +0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v2
+			/* Back plane. */
+			vertices[20] = Math::VertexColor(Math::Vector3(+0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v4
+			vertices[21] = Math::VertexColor(Math::Vector3(-0.5f, -0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v7
+			vertices[22] = Math::VertexColor(Math::Vector3(-0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v6
+			vertices[23] = Math::VertexColor(Math::Vector3(+0.5f, +0.5f, -0.5f), Math::Vector4(color._r, color._g, color._b, color._a)); // v5
 
-
-			UInt16* indices = new UInt16[36];
-			indices[0]  =  2; indices[1]  =  1; indices[2]  =  0;
-			indices[3]  =  1; indices[4]  =  3; indices[5]  =  0;
-			indices[6]  =  6; indices[7]  =  5; indices[8]  =  4;
-			indices[9]  =  5; indices[10] =  7; indices[11] =  4;
-			indices[12] = 10; indices[13] =  9; indices[14] =  8;
-			indices[15] =  9; indices[16] = 11; indices[17] =  8;
-			indices[18] = 14; indices[19] = 13; indices[20] = 12;
-			indices[21] = 13; indices[22] = 15; indices[23] = 12;
-			indices[24] = 18; indices[25] = 17; indices[26] = 16;
-			indices[27] = 17; indices[28] = 19; indices[29] = 16;
-			indices[30] = 22; indices[31] = 21; indices[32] = 20;
-			indices[33] = 21; indices[34] = 23; indices[35] = 20;
+			UByte* indices = new UByte[36];
+			indices[ 0] =  0; indices[ 1] =  1; indices[ 2] =  2; indices[ 3] =  2; indices[ 4] =  3; indices[ 5] =  0; // Front
+			indices[ 6] =  4; indices[ 7] =  5; indices[ 8] =  6; indices[ 9] =  6; indices[10] =  7; indices[11] =  4; // Right
+			indices[12] =  8; indices[13] =  9; indices[14] = 10; indices[15] = 10; indices[16] = 11; indices[17] =  8; // Top
+			indices[18] = 12; indices[19] = 13; indices[20] = 14; indices[21] = 14; indices[22] = 15; indices[23] = 12; // Left
+			indices[24] = 16; indices[25] = 17; indices[26] = 18; indices[27] = 18; indices[28] = 19; indices[29] = 16; // Bottom
+			indices[30] = 20; indices[31] = 21; indices[32] = 22; indices[33] = 22; indices[34] = 23; indices[35] = 20; // Back
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = 24;
-			geometryPacket.vertices = (UInt16*)vertices;
+			geometryPacket.vertices = (float*)vertices;
 			geometryPacket.numIndices = 36;
 			geometryPacket.indices = indices;
-			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
-			geometryPacket.primitiveType = Gapi::TYPE_TRIANGLELIST;
+			geometryPacket.numPrimitives = geometryPacket.numIndices;
+			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 
 			return geometryPacket;
 		}
@@ -104,7 +98,7 @@ namespace Core
 			Math::PVERTEX_NORMAL vertices = new Math::LVERTEX_NORMAL[(numRings + 1) * (numSegments + 1)];
 			int verticesIndex = 0;
 
-			UInt16* indices = new UInt16[6 * numRings * (numSegments + 1)];
+			UByte* indices = new UByte[6 * numRings * (numSegments + 1)];
 			int indicesIndex = 0;
 
 			int offset = 0;
@@ -151,15 +145,15 @@ namespace Core
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.numVertices = (numRings + 1) * (numSegments + 1);
-			geometryPacket.vertices = (UInt16*)vertices;
+			geometryPacket.vertices = (float*)vertices;
 			geometryPacket.numIndices = 6 * numRings * (numSegments + 1);
 			geometryPacket.indices = indices;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
-			geometryPacket.primitiveType = Gapi::TYPE_TRIANGLELIST;
+			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 
 			return geometryPacket;
 		}
 	};
 }
 
-#endif // RENDER_GEOMETRY_UTILS_H
+#endif // RENDERGEOMETRYUTILS_H

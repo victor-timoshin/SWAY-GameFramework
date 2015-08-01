@@ -11,22 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLDevice.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLShader.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLTexture.cpp" />
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\BitmapFont.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Device.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\ShaderProgram.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\GpuBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLDevice.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLShader.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLBuffer.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\BitmapFont.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Device.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\ShaderProgram.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GpuBuffer.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
-    <ClInclude Include="..\..\..\SDK\Gapi\BufferBase.h" />
-    <ClInclude Include="..\..\..\SDK\Gapi\DeviceBase.h" />
-    <ClInclude Include="..\..\..\SDK\Gapi\ShaderBase.h" />
-    <ClInclude Include="..\..\..\SDK\Gapi\TextureBase.h" />
-    <ClInclude Include="..\..\..\SDK\Gapi\Types.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -61,6 +58,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\</OutDir>
+    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

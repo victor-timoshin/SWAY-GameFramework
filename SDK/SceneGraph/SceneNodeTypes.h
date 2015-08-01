@@ -1,0 +1,21 @@
+#ifndef SCENENODETYPES_H
+#define SCENENODETYPES_H
+
+namespace Scene
+{
+	typedef enum SceneNodeType
+	{
+		ESNT_EMPTY,
+		ESNT_TEXT,
+		ESNT_CAMERA,
+		ESNT_PLANE,
+		ESNT_BOX,
+		ESNT_SPHERE,
+		ESNT_MESH,
+		ESNT_BILLBOARD,
+		ESNT_TERRAIN,
+		ESNT_SKY
+	} SCENENODE_TYPE;
+}
+
+#endif // SCENENODETYPES_H

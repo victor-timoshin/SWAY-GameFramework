@@ -1,53 +1,57 @@
 #include "../../../Core/Inc/Render/RenderGeometry.h"
 
-#include <string.h>
-
 namespace Core
 {
 	namespace Render
 	{
-		/** Constructor. */
-		RenderGeometry::RenderGeometry(Scene::ISceneComponentBase* component, Gapi::IDeviceBase* device) : IRenderGeometryBase(component, device)
-			, sceneComponent(component), renderDevice(device), vertexBuffer(0L), indexBuffer(0L), instanceId(-1) {}
+		/// <summary>Конструктор класса.</summary>
+		RenderGeometry::RenderGeometry(Scene::IRenderableBase* renderable) : IRenderGeometryBase(renderable)
+			, renderableComponent(renderable), vertexBuffer(NULL), indexBuffer(NULL), instanceId(-1) {}
 
-		/** Destructor. */
-		RenderGeometry::~RenderGeometry()
+		/// <summary>Деструктор класса.</summary>
+		RenderGeometry::~RenderGeometry(void)
 		{
 			SAFE_DELETE(indexBuffer);
 			SAFE_DELETE(vertexBuffer);
 		}
 
-		void RenderGeometry::BuildVBOs(void* library, Gapi::IShaderBase* shader)
+		void RenderGeometry::BuildVBOs(void* library)
 		{
-			const Scene::LGEOMETRYPACKET& geometryPacket = sceneComponent->GetGeometryPacket();
+			const Scene::LGEOMETRYPACKET& geometryPacket = renderableComponent->GetGeometryPacket();
 
 			Gapi::LVERTEX_ELEMENT_DESC elementDesc[] = {
-				{ 0, Gapi::TYPE_POSITION, Gapi::FORMAT_FLOAT },
-				{ 0, Gapi::TYPE_COLOR,    Gapi::FORMAT_UBYTE }
+				{ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT },
+				{ 0, Gapi::VERTEXELEMENTTYPES::EVET_COLOR, Gapi::VERTEXELEMENTFORMATS::EVEF_UBYTE }
 			};
 
-			typedef Gapi::IBufferBase* VertexBufferCallback(void*);
-			vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))(renderDevice);
-			vertexBuffer->SetVertexDeclaration(elementDesc, 2);
-			vertexBuffer->Create(sizeof Math::LVERTEX_COLOR, geometryPacket.numVertices);
+			if (geometryPacket.vertices != NULL && geometryPacket.numVertices != 0)
+			{
+				typedef Gapi::IBufferBase* VertexBufferCallback(void);
+				vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
+				vertexBuffer->SetVertexDeclaration(elementDesc, 2);
+				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, sizeof(Math::LVERTEX_COLOR), geometryPacket.numVertices);
 
-			void* lockedVertexData = vertexBuffer->Lock();
-			memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * sizeof Math::LVERTEX_COLOR);
-			vertexBuffer->Unlock();
+				void* lockedVertexData = vertexBuffer->Lock();
+				memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * sizeof(Math::LVERTEX_COLOR));
+				vertexBuffer->Unlock();
+			}
 
-			typedef Gapi::IBufferBase* IndexBufferCallback(void*);
-			indexBuffer = reinterpret_cast<IndexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))(renderDevice);
-			indexBuffer->Create(sizeof UInt16, geometryPacket.numIndices);
+			if (geometryPacket.indices != NULL && geometryPacket.numIndices != 0)
+			{
+				typedef Gapi::IBufferBase* IndexBufferCallback(void);
+				indexBuffer = reinterpret_cast<IndexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
+				indexBuffer->Create(Gapi::BUFFERTYPES::EBT_INDEX, sizeof(UByte), geometryPacket.numIndices);
 
-			void* lockedIndexData = indexBuffer->Lock();
-			memcpy(lockedIndexData, geometryPacket.indices, geometryPacket.numIndices * sizeof UInt16);
-			indexBuffer->Unlock();
+				void* lockedIndexData = indexBuffer->Lock();
+				memcpy(lockedIndexData, geometryPacket.indices, geometryPacket.numIndices * sizeof(UByte));
+				indexBuffer->Unlock();
+			}
 		}
 
-		void RenderGeometry::Draw()
+		void RenderGeometry::Draw(void)
 		{
-			const Scene::LGEOMETRYPACKET& geometryPacket = sceneComponent->GetGeometryPacket();
-			vertexBuffer->Render(geometryPacket.primitiveType, indexBuffer, 0, geometryPacket.numVertices, geometryPacket.numPrimitives);
+			const Scene::LGEOMETRYPACKET& geometryPacket = renderableComponent->GetGeometryPacket();
+			vertexBuffer->Render(geometryPacket.primitiveType, indexBuffer, geometryPacket.numVertices, geometryPacket.numPrimitives);
 		}
 
 		void RenderGeometry::SetInstanceId(UInt id)
@@ -55,14 +59,14 @@ namespace Core
 			instanceId = id;
 		}
 
-		UInt RenderGeometry::GetInstanceId()
+		UInt RenderGeometry::GetInstanceId(void)
 		{
 			return instanceId;
 		}
 
-		Scene::ISceneComponentBase* RenderGeometry::GetSceneComponent()
+		Scene::IRenderableBase* RenderGeometry::GetRenderableComponent(void)
 		{
-			return sceneComponent;
+			return renderableComponent;
 		}
 	}
 }

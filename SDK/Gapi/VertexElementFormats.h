@@ -1,0 +1,13 @@
+#ifndef VERTEXELEMENTFORMATS_H
+#define VERTEXELEMENTFORMATS_H
+
+namespace Gapi
+{
+	typedef enum VertexElementFormats
+	{
+		EVEF_FLOAT = 0x0D65,
+		EVEF_UBYTE = 0x14A1
+	} VERTEXELEMENTFORMATS;
+}
+
+#endif // VERTEXELEMENTFORMATS_H

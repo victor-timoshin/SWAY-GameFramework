@@ -1,4 +1,4 @@
-#ifndef HIERARCHY_H
+﻿#ifndef HIERARCHY_H
 #define HIERARCHY_H
 
 #include <string>
@@ -6,15 +6,16 @@
 
 namespace Utils
 {
-	template<typename TYPE> class THierarchy
+	template<typename TYPE>
+	class THierarchy
 	{
 	public:
-		/** Constructor. */
+		/// <summary>Конструктор класса.</summary>
 		THierarchy(std::string name)
 			: nodeName(name) {}
 
-		/** Destructor. */
-		~THierarchy() {}
+		/// <summary>Деструктор класса.</summary>
+		~THierarchy(void) {}
 
 		void AddChild(TYPE* child)
 		{
@@ -32,7 +33,7 @@ namespace Utils
 			}
 		}
 
-		void RemoveAll()
+		void RemoveAll(void)
 		{
 			for (typename ICollectionMap::iterator i = children.begin(); i != children.end(); ++i)
 			{
@@ -54,7 +55,7 @@ namespace Utils
 			return 0L;
 		}
 
-		unsigned int GetChildCount()
+		unsigned int GetChildCount(void)
 		{
 			return static_cast<unsigned int>(children.size());
 		}
@@ -64,7 +65,7 @@ namespace Utils
 			parentNode = parent;
 		}
 
-		TYPE* GetParentNode()
+		TYPE* GetParentNode(void)
 		{
 			return parentNode;
 		}
@@ -74,7 +75,7 @@ namespace Utils
 			nodeName = name;
 		}
 
-		std::string GetNodeName()
+		std::string GetNodeName(void)
 		{
 			return nodeName;
 		}

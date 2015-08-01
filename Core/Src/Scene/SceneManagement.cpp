@@ -2,11 +2,8 @@
 
 namespace Scene
 {
-	/** Constructor. */
-	SceneManagement::SceneManagement() {}
-
-	/** Destructor. */
-	SceneManagement::~SceneManagement()
+	/// <summary>Деструктор класса.</summary>
+	SceneManagement::~SceneManagement(void)
 	{
 		while (!stateStack.empty())
 		{
@@ -20,12 +17,12 @@ namespace Scene
 		stateStack.back()->FrameStarted(event, timeStep);
 	}
 
-	void SceneManagement::FrameEnded()
+	void SceneManagement::FrameEnded(void)
 	{
 		stateStack.back()->FrameEnded();
 	}
 
-	void SceneManagement::ChangeState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph)
+	void SceneManagement::ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
 		while (!stateStack.empty())
 		{
@@ -34,19 +31,19 @@ namespace Scene
 		}
 
 		stateStack.push_back(sceneState);
-		stateStack.back()->Enter(sceneGraph);
+		stateStack.back()->Enter(renderSystem, sceneGraph);
 	}
 
-	void SceneManagement::PushState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph)
+	void SceneManagement::PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
 		if (!stateStack.empty())
 			stateStack.back()->Pause();
 
 		stateStack.push_back(sceneState);
-		stateStack.back()->Enter(sceneGraph);
+		stateStack.back()->Enter(renderSystem, sceneGraph);
 	}
 
-	void SceneManagement::PopState()
+	void SceneManagement::PopState(void)
 	{
 		while (!stateStack.empty())
 		{
@@ -58,7 +55,7 @@ namespace Scene
 			stateStack.back()->Resume();
 	}
 
-	ISceneManagementBase* RegisterSceneManagement()
+	ISceneManagementBase* RegisterSceneManagement(void)
 	{
 		return new SceneManagement();
 	}

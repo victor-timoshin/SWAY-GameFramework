@@ -6,24 +6,24 @@ namespace Utils
 	template<typename TYPE> class TSingleton
 	{
 	public:
-		/** Constructor. */
-		TSingleton()
+		/// <summary>Конструктор класса.</summary>
+		TSingleton(void)
 		{
 			instance = static_cast<TYPE*>(this);
 		}
 
-		/** Destructor. */
-		~TSingleton()
+		/// <summary>Деструктор класса.</summary>
+		~TSingleton(void)
 		{
-			instance = 0L;
+			instance = nullptr;
 		}
 
-		static TYPE& GetInstance()
+		static TYPE& GetInstance(void)
 		{
 			return *instance;
 		}
 
-		static TYPE* GetInstancePtr()
+		static TYPE* GetInstancePtr(void)
 		{
 			return instance;
 		}
@@ -31,7 +31,7 @@ namespace Utils
 		static TYPE* instance;
 	};
 
-	template<typename TYPE>TYPE* TSingleton<TYPE>::instance = 0L;
+	template<typename TYPE>TYPE* TSingleton<TYPE>::instance = nullptr;
 }
 
 #endif // SINGLETON_H

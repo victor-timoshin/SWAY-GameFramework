@@ -1,12 +1,8 @@
 EXPORTS
-	RegisterLogger
-
-	RegisterWindow
-	ProcessEvent
-	RegisterInputManagement
+	RegisterFileLogger
+	RegisterStreamLogger
+	StreamLoggerWrite
 
 	RegisterRenderSystem
 
 	RegisterSceneManagement
-	RegisterSceneGraph
-	RegisterSceneNode

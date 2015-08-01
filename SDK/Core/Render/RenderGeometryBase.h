@@ -1,9 +1,8 @@
-#ifndef RENDER_GEOMETRY_BASE_H
-#define RENDER_GEOMETRY_BASE_H
+#ifndef RENDERGEOMETRYBASE_H
+#define RENDERGEOMETRYBASE_H
 
-#include "../../../SDK/Core/Scene/SceneComponentBase.h"
+#include "../../../SDK/Core/Scene/RenderableBase.h"
 
-#include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Gapi/BufferBase.h"
 #include "../../../SDK/Gapi/ShaderBase.h"
 
@@ -14,23 +13,23 @@ namespace Core
 		class IRenderGeometryBase
 		{
 		public:
-			/** Constructor. */
-			IRenderGeometryBase(Scene::ISceneComponentBase* component, Gapi::IDeviceBase* device) {}
+			/// <summary>Конструктор класса.</summary>
+			IRenderGeometryBase(Scene::IRenderableBase* renderable) {}
 
-			/** Destructor. */
-			virtual ~IRenderGeometryBase() {}
+			/// <summary>Деструктор класса.</summary>
+			virtual ~IRenderGeometryBase(void) {}
 
-			virtual void BuildVBOs(void* library, Gapi::IShaderBase* shader) = 0;
+			virtual void BuildVBOs(void* library) = 0;
 
-			virtual void Draw() = 0;
+			virtual void Draw(void) = 0;
 
 			virtual void SetInstanceId(UInt id) = 0;
 
-			virtual UInt GetInstanceId() = 0;
+			virtual UInt GetInstanceId(void) = 0;
 
-			virtual Scene::ISceneComponentBase* GetSceneComponent() = 0;
+			virtual Scene::IRenderableBase* GetRenderableComponent(void) = 0;
 		};
 	}
 }
 
-#endif // RENDER_GEOMETRY_BASE_H
+#endif // RENDERGEOMETRYBASE_H

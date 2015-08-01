@@ -21,23 +21,8 @@
     <Filter Include="Src\Utils">
       <UniqueIdentifier>{d3168372-4116-4915-b24d-9254262434c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\Math">
-      <UniqueIdentifier>{0674fc17-ee46-43e9-90f6-60ee8506847f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Math\_SDK">
-      <UniqueIdentifier>{635e1ab3-eb3b-4977-be67-acaf39c37a51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\System\_SDK">
-      <UniqueIdentifier>{cc949eed-74d5-45c2-9a27-495e8d8e9694}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Utils\_SDK">
-      <UniqueIdentifier>{b08ca24e-ea91-442e-8290-3388993625ad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Inc\Render">
       <UniqueIdentifier>{64fb49d5-1536-4eb2-a4b0-ae71413cf68d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Render\_SDK">
-      <UniqueIdentifier>{d819532e-8393-449f-af40-bb488494c594}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src\Render">
       <UniqueIdentifier>{c569b415-fb8b-4a5c-a1d9-b92ebc52ce23}</UniqueIdentifier>
@@ -47,9 +32,6 @@
     </Filter>
     <Filter Include="Inc\Scene">
       <UniqueIdentifier>{7a6196f5-911a-4f68-abc9-9b5719948254}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Scene\_SDK">
-      <UniqueIdentifier>{a87c9cd4-2c41-4d13-b8ca-d457326e0c20}</UniqueIdentifier>
     </Filter>
     <Filter Include="Inc\Renderer">
       <UniqueIdentifier>{063e3820-50a6-4a51-b19a-7a6d5f374cf4}</UniqueIdentifier>
@@ -63,163 +45,58 @@
     <Filter Include="Src\Renderer\Light">
       <UniqueIdentifier>{d928fdbc-8db0-4f12-bc30-01593dfe9d74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\OIS">
-      <UniqueIdentifier>{8a22ce12-8255-497c-8d99-c49a64252128}</UniqueIdentifier>
+    <Filter Include="Src\Render\Debug">
+      <UniqueIdentifier>{ff476560-b683-4468-8e3c-6569b635ab20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Inc\OIS">
-      <UniqueIdentifier>{7a901bd0-f60c-48bf-9aab-f218e2f5ab80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\OIS\_SDK">
-      <UniqueIdentifier>{0547bea7-b632-485e-94d8-b02941ec20e8}</UniqueIdentifier>
+    <Filter Include="Inc\Render\Debug">
+      <UniqueIdentifier>{bb90d64e-6116-465a-b59f-ff10bcbfa0b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
-    <ClInclude Include="..\..\..\Core\Inc\System\WindowImpl.h">
-      <Filter>Inc\System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Utils\StreamFile.h">
-      <Filter>Inc\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Utils\Log.h">
-      <Filter>Inc\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\MathCommon.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Vector2.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Vector3.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Vector4.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Vertex.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\System\WindowBase.h">
-      <Filter>Inc\System\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Utils\LogBase.h">
-      <Filter>Inc\Utils\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Utils\StreamBase.h">
-      <Filter>Inc\Utils\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Render\RenderSystemBase.h">
-      <Filter>Inc\Render\_SDK</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderSystem.h">
       <Filter>Inc\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneNode.h">
-      <Filter>Inc\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneNodeBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Utils\Hierarchy.h">
-      <Filter>Inc\Utils\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneComponent.h">
-      <Filter>Inc\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneComponentBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneGraphBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneGraph.h">
-      <Filter>Inc\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneManagementBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Scene\SceneManagement.h">
       <Filter>Inc\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Utils\Singleton.h">
-      <Filter>Inc\Utils\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\SceneStateBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Render\RenderGeometryBase.h">
-      <Filter>Inc\Render\_SDK</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometry.h">
       <Filter>Inc\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Scene\Shape.h">
-      <Filter>Inc\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Matrix4.h">
-      <Filter>Inc\Math\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\Quaternion.h">
-      <Filter>Inc\Math\_SDK</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometryUtils.h">
       <Filter>Inc\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Scene\CameraBase.h">
-      <Filter>Inc\Scene\_SDK</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\FileStream.h">
+      <Filter>Inc\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Scene\UniversalCamera.h">
-      <Filter>Inc\Scene</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\FileLogger.h">
+      <Filter>Inc\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\Math\BoundingVolume.h">
-      <Filter>Inc\Math\_SDK</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\StreamLogger.h">
+      <Filter>Inc\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\OIS\InputBase.h">
-      <Filter>Inc\OIS\_SDK</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Material.h">
+      <Filter>Inc\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\RawKeyboard.h">
-      <Filter>Inc\OIS</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Render\DDS.h">
+      <Filter>Inc\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\OIS\Keyboard.h">
-      <Filter>Inc\OIS\_SDK</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Debug\RenderLineDebug.h">
+      <Filter>Inc\Render\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Core\OIS\Mouse.h">
-      <Filter>Inc\OIS\_SDK</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\System\Mutex.h">
+      <Filter>Inc\System</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputDevice.h">
-      <Filter>Inc\OIS</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\RawMouse.h">
-      <Filter>Inc\OIS</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\OIS\RawInputManagement.h">
-      <Filter>Inc\OIS</Filter>
+    <ClInclude Include="..\..\..\Core\Inc\Utils\FileDirectory.h">
+      <Filter>Inc\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Core\Src\System\WindowImpl.cpp">
-      <Filter>Src\System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Utils\StreamFile.cpp">
-      <Filter>Src\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Utils\Log.cpp">
-      <Filter>Src\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Render\RenderSystem.cpp">
       <Filter>Src\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Scene\SceneNode.cpp">
-      <Filter>Src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Scene\SceneComponent.cpp">
-      <Filter>Src\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Scene\SceneGraph.cpp">
-      <Filter>Src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Scene\SceneManagement.cpp">
       <Filter>Src\Scene</Filter>
@@ -227,20 +104,26 @@
     <ClCompile Include="..\..\..\Core\Src\Render\RenderGeometry.cpp">
       <Filter>Src\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Scene\Shape.cpp">
-      <Filter>Src\Scene</Filter>
+    <ClCompile Include="..\..\..\Core\Src\Utils\FileStream.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Scene\UniversalCamera.cpp">
-      <Filter>Src\Scene</Filter>
+    <ClCompile Include="..\..\..\Core\Src\Utils\FileLogger.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\OIS\RawKeyboard.cpp">
-      <Filter>Src\OIS</Filter>
+    <ClCompile Include="..\..\..\Core\Src\Utils\StreamLogger.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\OIS\RawMouse.cpp">
-      <Filter>Src\OIS</Filter>
+    <ClCompile Include="..\..\..\Core\Src\Render\Material.cpp">
+      <Filter>Src\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\OIS\RawInputManagement.cpp">
-      <Filter>Src\OIS</Filter>
+    <ClCompile Include="..\..\..\Core\Src\Render\Debug\RenderLineDebug.cpp">
+      <Filter>Src\Render\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\System\Mutex.cpp">
+      <Filter>Src\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Utils\FileDirectory.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

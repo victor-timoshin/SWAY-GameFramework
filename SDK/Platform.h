@@ -1,12 +1,7 @@
 #ifndef PLATFORM_H
 #define PLATFORM_H
 
-#ifdef BUILDING_CORE
-	#define CORE_API __declspec(dllexport)
-#else
-	#define CORE_API __declspec(dllimport)
-#endif
-
+#define WIN32_LEAN_AND_MEAN 1
 #include <windows.h>
 #include <windowsx.h>
 
@@ -14,19 +9,27 @@
 #include <string>
 #include <map>
 
+#include <fstream>
+#include <iostream>
+
+#include "Defines.h"
+
+#include "Core/Utils/FileModes.h"
+#include "Core/Utils/LogLevels.h"
+
+#include "Gapi/ClearFlags.h"
+#include "Gapi/ShaderTypes.h"
+#include "Gapi/BufferTypes.h"
+#include "Gapi/VertexElementTypes.h"
+#include "Gapi/VertexElementFormats.h"
+#include "Gapi/PrimitiveTypes.h"
+
+#include "Math/Color.h"
+
 typedef unsigned int UInt;
 typedef unsigned char UByte;
 typedef unsigned short UInt16;
 typedef unsigned long UInt32;
-
-typedef long int RESULT;
-#define RESULT_SUCCEEDED(x) (((RESULT)(x)) >= 0)
-#define RESULT_FAILED(x) (((RESULT)(x)) < 0)
-
-#define CHECK_ERROR(x) if(FAILED(x)) { return false; }
-
-#define SAFE_RELEASE(x) if(x != 0L) { x->Release(); x = 0L; }
-#define SAFE_DELETE(x) if(x != 0L) { delete x; x = 0L; }
-#define SAFE_DELETE_ARRAY(x) if(x != 0L) { delete[] x; x = 0L; }
+typedef unsigned long long UInt64;
 
 #endif // PLATFORM_H

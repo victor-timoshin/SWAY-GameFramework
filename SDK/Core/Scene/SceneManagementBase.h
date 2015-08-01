@@ -1,9 +1,9 @@
-#ifndef SCENE_MANAGEMENT_BASE_H
-#define SCENE_MANAGEMENT_BASE_H
+#ifndef SCENEMANAGEMENTBASE_H
+#define SCENEMANAGEMENTBASE_H
 
-//#include "../../Core/OIS/InputEventBase.h"
-#include "../../Core/OIS/InputBase.h"
-#include "../../Core/Scene/SceneGraphBase.h"
+#include "../../OIS/InputBase.h"
+#include "../../Core/Render/RenderSystemBase.h"
+#include "../../SceneGraph/SceneGraphBase.h"
 #include "../../Core/Utils/Singleton.h"
 #include "../../Platform.h"
 
@@ -13,24 +13,24 @@ namespace Scene
 	class ISceneManagementBase : public Utils::TSingleton<ISceneManagementBase>
 	{
 	public:
-		/** Constructor. */
-		ISceneManagementBase() {}
+		/// <summary>Конструктор класса.</summary>
+		ISceneManagementBase(void) {}
 
-		/** Destructor. */
-		virtual ~ISceneManagementBase() {}
+		/// <summary>Деструктор класса.</summary>
+		virtual ~ISceneManagementBase(void) {}
 
 		virtual void FrameStarted(OIS::IInputBase* event, float timeStep) = 0;
 
-		virtual void FrameEnded() = 0;
+		virtual void FrameEnded(void) = 0;
 
-		virtual void ChangeState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph) = 0;
+		virtual void ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
 
-		virtual void PushState(ISceneStateBase* sceneState, ISceneGraphBase* sceneGraph) = 0;
+		virtual void PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
 
-		virtual void PopState() = 0;
+		virtual void PopState(void) = 0;
 	};
 
-	CORE_API ISceneManagementBase* RegisterSceneManagement();
+	CORE_API ISceneManagementBase* RegisterSceneManagement(void);
 }
 
-#endif // SCENE_MANAGEMENT_BASE_H
+#endif // SCENEMANAGEMENTBASE_H

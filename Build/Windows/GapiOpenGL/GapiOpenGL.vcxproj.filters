@@ -9,52 +9,40 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Inc\_SDK">
-      <UniqueIdentifier>{2eba24e1-cf42-4bc7-a674-72688efc95ca}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLBuffer.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\BitmapFont.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLDevice.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\GpuBuffer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLShader.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\ShaderProgram.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\OGLTexture.cpp">
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\Device.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLBuffer.h">
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\BitmapFont.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLDevice.h">
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Device.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLShader.h">
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\GpuBuffer.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\OGLTexture.h">
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\ShaderProgram.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Gapi\BufferBase.h">
-      <Filter>Inc\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Gapi\DeviceBase.h">
-      <Filter>Inc\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Gapi\ShaderBase.h">
-      <Filter>Inc\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Gapi\TextureBase.h">
-      <Filter>Inc\_SDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\SDK\Gapi\Types.h">
-      <Filter>Inc\_SDK</Filter>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

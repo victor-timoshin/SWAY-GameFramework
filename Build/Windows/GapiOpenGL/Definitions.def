@@ -1,4 +1,5 @@
 EXPORTS
 	RegisterDevice
-	RegisterShader
+	RegisterShaderProgram
 	RegisterBuffer
+	RegisterFont
