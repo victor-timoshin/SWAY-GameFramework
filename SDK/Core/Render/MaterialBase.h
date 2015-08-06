@@ -1,7 +1,7 @@
 #ifndef MATERIALBASE_H
 #define MATERIALBASE_H
 
-#include "../../../SDK/Math/Vector4.h"
+#include "../../../Math/Inc/Vector4.h"
 #include "../../../SDK/Platform.h"
 
 namespace Render

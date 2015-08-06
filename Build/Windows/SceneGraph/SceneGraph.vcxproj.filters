@@ -27,6 +27,9 @@
     <ClInclude Include="..\..\..\SceneGraph\Inc\Camera.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SceneGraph\Inc\SceneNodeQueue.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\SceneGraph\Src\SceneComponent.cpp">
@@ -39,6 +42,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\SceneGraph\Src\Camera.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SceneGraph\Src\SceneNodeQueue.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,10 +7,14 @@
 
 #include <stdlib.h>
 #include <string>
+#include <vector>
 #include <map>
+#include <set>
 
 #include <fstream>
 #include <iostream>
+
+#include <math.h>
 
 #include "Defines.h"
 
@@ -24,7 +28,7 @@
 #include "Gapi/VertexElementFormats.h"
 #include "Gapi/PrimitiveTypes.h"
 
-#include "Math/Color.h"
+//#include "Math/Color.h"
 
 typedef unsigned int UInt;
 typedef unsigned char UByte;

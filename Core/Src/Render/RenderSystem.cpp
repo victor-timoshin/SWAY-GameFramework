@@ -1,17 +1,17 @@
-#include "../../../Core/Inc/Render/RenderSystem.h"
+п»ї#include "../../../Core/Inc/Render/RenderSystem.h"
 #include "../../../Core/Inc/Render/Material.h"
 #include "../../../Core/Inc/Render/RenderGeometry.h"
 #include "../../../Core/Inc/Utils/StreamLogger.h"
 #include "../../../SDK/Core/Scene/RenderableBase.h"
-#include "../../../SDK/Math/Frustum.h"
+#include "../../../Math/Inc/Frustum.h"
 
 namespace Render
 {
-	/// <summary>Конструктор класса.</summary>
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	RenderSystem::RenderSystem(void)
 		: device(NULL) { }
 
-	/// <summary>Деструктор класса.</summary>
+	/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	RenderSystem::~RenderSystem(void)
 	{
 		SAFE_DELETE(material);

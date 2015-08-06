@@ -19,20 +19,15 @@ namespace Core
 		{
 			const Scene::LGEOMETRYPACKET& geometryPacket = renderableComponent->GetGeometryPacket();
 
-			Gapi::LVERTEX_ELEMENT_DESC elementDesc[] = {
-				{ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT },
-				{ 0, Gapi::VERTEXELEMENTTYPES::EVET_COLOR, Gapi::VERTEXELEMENTFORMATS::EVEF_UBYTE }
-			};
-
 			if (geometryPacket.vertices != NULL && geometryPacket.numVertices != 0)
 			{
 				typedef Gapi::IBufferBase* VertexBufferCallback(void);
 				vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
-				vertexBuffer->SetVertexDeclaration(elementDesc, 2);
-				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, sizeof(Math::LVERTEX_COLOR), geometryPacket.numVertices);
+				vertexBuffer->SetVertexDeclaration((Gapi::PVERTEX_ELEMENT_DESC)&geometryPacket.elementDesc[0], geometryPacket.elementDesc.size());
+				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, geometryPacket.byteStride, geometryPacket.numVertices);
 
 				void* lockedVertexData = vertexBuffer->Lock();
-				memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * sizeof(Math::LVERTEX_COLOR));
+				memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * geometryPacket.byteStride);
 				vertexBuffer->Unlock();
 			}
 

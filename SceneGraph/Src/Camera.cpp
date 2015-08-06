@@ -96,12 +96,12 @@ namespace Scene
 
 		projectionMatrix[2][0] = 0.0f;
 		projectionMatrix[2][1] = 0.0f;
-		projectionMatrix[2][2] = -2.0f / (farClip - nearClip);
+		projectionMatrix[2][2] =-2.0f / (farClip - nearClip);
 		projectionMatrix[2][3] = 0.0f;
 
 		projectionMatrix[3][0] =-(right + left) / (right - left);
 		projectionMatrix[3][1] =-(top + bottom) / (top - bottom);
-		projectionMatrix[3][2] = -(farClip + nearClip) / (farClip - nearClip);
+		projectionMatrix[3][2] =-(farClip + nearClip) / (farClip - nearClip);
 		projectionMatrix[3][3] = 1.0f;
 	}
 
@@ -171,6 +171,11 @@ namespace Scene
 	Math::Vector3 Camera::GetPosition(void) const
 	{
 		return eye;
+	}
+
+	Math::Quaternion Camera::GetOrientation(void) const
+	{
+		return orientation;
 	}
 
 	void Camera::SetNearClipDistance(float value)

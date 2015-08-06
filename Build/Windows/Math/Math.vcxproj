@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BC2A5098-D053-4C74-91DA-4D853A32F1DD}</ProjectGuid>
-    <RootNamespace>SceneGraph</RootNamespace>
+    <ProjectGuid>{A85E2B7A-341C-468D-B111-C6FA258D0D94}</ProjectGuid>
+    <RootNamespace>Math</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -40,25 +40,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\</OutDir>
-    <IncludePath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Math\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_CORE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug$(TargetExt)</OutputFile>
       <ModuleDefinitionFile>Definitions.def</ModuleDefinitionFile>
-      <ProgramDatabaseFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(TargetDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)\Libs\$(TargetName)_Win32_Debug.lib</ImportLibrary>
-      <AdditionalDependencies>Math_Win32_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,19 +74,28 @@
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\SceneGraph\Inc\SceneComponent.h" />
-    <ClInclude Include="..\..\..\SceneGraph\Inc\SceneGraph.h" />
-    <ClInclude Include="..\..\..\SceneGraph\Inc\SceneNodeQueue.h" />
-    <ClInclude Include="..\..\..\SceneGraph\Inc\SceneNode.h" />
-    <ClInclude Include="..\..\..\SceneGraph\Inc\Camera.h" />
-    <ClInclude Include="..\..\..\SceneGraph\StdAfx.h" />
+    <ClCompile Include="..\..\..\Math\Src\BoundingVolume.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Frustum.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Color.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Matrix4.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Quaternion.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Vertex.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\MathCommon.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Vector2.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Vector3.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\SceneGraph\Src\SceneComponent.cpp" />
-    <ClCompile Include="..\..\..\SceneGraph\Src\SceneGraph.cpp" />
-    <ClCompile Include="..\..\..\SceneGraph\Src\SceneNodeQueue.cpp" />
-    <ClCompile Include="..\..\..\SceneGraph\Src\SceneNode.cpp" />
-    <ClCompile Include="..\..\..\SceneGraph\Src\Camera.cpp" />
+    <ClInclude Include="..\..\..\Math\Inc\BoundingVolume.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Frustum.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Matrix4.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Color.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Quaternion.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Vertex.h" />
+    <ClInclude Include="..\..\..\Math\Inc\MathCommon.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Vector2.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Vector3.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Vector4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,7 +1,7 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-#include "../Math/Vector2.h"
+#include "../../Math/Inc/Vector2.h"
 #include "../Platform.h"
 
 namespace OIS

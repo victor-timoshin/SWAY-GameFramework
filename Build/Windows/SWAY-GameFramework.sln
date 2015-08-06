@@ -78,20 +78,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OIS", "OIS", "{9325D1B1-F15
 		..\..\SDK\OIS\Mouse.h = ..\..\SDK\OIS\Mouse.h
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Math", "Math", "{428CC5CD-6CDF-4092-ADB7-513B8429ECAC}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\SDK\Math\BoundingVolume.h = ..\..\SDK\Math\BoundingVolume.h
-		..\..\SDK\Math\Color.h = ..\..\SDK\Math\Color.h
-		..\..\SDK\Math\Frustum.h = ..\..\SDK\Math\Frustum.h
-		..\..\SDK\Math\MathCommon.h = ..\..\SDK\Math\MathCommon.h
-		..\..\SDK\Math\Matrix4.h = ..\..\SDK\Math\Matrix4.h
-		..\..\SDK\Math\Quaternion.h = ..\..\SDK\Math\Quaternion.h
-		..\..\SDK\Math\Vector2.h = ..\..\SDK\Math\Vector2.h
-		..\..\SDK\Math\Vector3.h = ..\..\SDK\Math\Vector3.h
-		..\..\SDK\Math\Vector4.h = ..\..\SDK\Math\Vector4.h
-		..\..\SDK\Math\Vertex.h = ..\..\SDK\Math\Vertex.h
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneGraph", "SceneGraph\SceneGraph.vcxproj", "{BC2A5098-D053-4C74-91DA-4D853A32F1DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SceneGraph", "SceneGraph", "{67B27693-2CAE-4263-B68D-E3712CD46E67}"
@@ -101,7 +87,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SceneGraph", "SceneGraph", 
 		..\..\SDK\SceneGraph\SceneGraphBase.h = ..\..\SDK\SceneGraph\SceneGraphBase.h
 		..\..\SDK\SceneGraph\SceneNodeBase.h = ..\..\SDK\SceneGraph\SceneNodeBase.h
 		..\..\SDK\SceneGraph\SceneNodeTypes.h = ..\..\SDK\SceneGraph\SceneNodeTypes.h
+		..\..\SDK\SceneGraph\TransformableBase.h = ..\..\SDK\SceneGraph\TransformableBase.h
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Math", "Math\Math.vcxproj", "{A85E2B7A-341C-468D-B111-C6FA258D0D94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +118,10 @@ Global
 		{BC2A5098-D053-4C74-91DA-4D853A32F1DD}.Debug|Win32.Build.0 = Debug|Win32
 		{BC2A5098-D053-4C74-91DA-4D853A32F1DD}.Release|Win32.ActiveCfg = Release|Win32
 		{BC2A5098-D053-4C74-91DA-4D853A32F1DD}.Release|Win32.Build.0 = Release|Win32
+		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Debug|Win32.Build.0 = Debug|Win32
+		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Release|Win32.ActiveCfg = Release|Win32
+		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,7 +134,6 @@ Global
 		{19B628F7-193A-4BFE-A7CA-0C8EE8587180} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{EC6D06C1-C6FB-45E2-84C3-A89695881E30} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{9325D1B1-F15D-42B0-BB16-34F2F8090FE1} = {D643DD03-23C9-427F-A4A9-57571D238E47}
-		{428CC5CD-6CDF-4092-ADB7-513B8429ECAC} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{67B27693-2CAE-4263-B68D-E3712CD46E67} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 	EndGlobalSection
 EndGlobal

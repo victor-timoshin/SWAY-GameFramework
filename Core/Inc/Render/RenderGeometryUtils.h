@@ -1,11 +1,11 @@
 #ifndef RENDERGEOMETRYUTILS_H
 #define RENDERGEOMETRYUTILS_H
 
-#include "../../../SDK/Math/Vector2.h"
-#include "../../../SDK/Math/Vector3.h"
-#include "../../../SDK/Math/Vector4.h"
-#include "../../../SDK/Math/Vertex.h"
-#include "../../../SDK/Math/Color.h"
+#include "../../../Math/Inc/Vector2.h"
+#include "../../../Math/Inc/Vector3.h"
+#include "../../../Math/Inc/Vector4.h"
+#include "../../../Math/Inc/Vertex.h"
+#include "../../../Math/Inc/Color.h"
 
 namespace Core
 {
@@ -25,10 +25,14 @@ namespace Core
 			Indices[3] = 2; Indices[4] = 1; Indices[5] = 3;
 
 			Scene::LGEOMETRYPACKET geometryPacket;
-			geometryPacket.numVertices = 4;
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_TEXCOORD, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_NORMAL, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
 			geometryPacket.vertices = (float*)vertices;
-			geometryPacket.numIndices = 6;
+			geometryPacket.byteStride = sizeof(Math::LVERTEX_NORMAL);
+			geometryPacket.numVertices = 4;
 			geometryPacket.indices = Indices;
+			geometryPacket.numIndices = 6;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
 			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 
@@ -79,10 +83,13 @@ namespace Core
 			indices[30] = 20; indices[31] = 21; indices[32] = 22; indices[33] = 22; indices[34] = 23; indices[35] = 20; // Back
 
 			Scene::LGEOMETRYPACKET geometryPacket;
-			geometryPacket.numVertices = 24;
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_COLOR, Gapi::VERTEXELEMENTFORMATS::EVEF_UBYTE });
 			geometryPacket.vertices = (float*)vertices;
-			geometryPacket.numIndices = 36;
+			geometryPacket.byteStride = sizeof(Math::LVERTEX_COLOR);
+			geometryPacket.numVertices = 24;
 			geometryPacket.indices = indices;
+			geometryPacket.numIndices = 36;
 			geometryPacket.numPrimitives = geometryPacket.numIndices;
 			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 
@@ -144,10 +151,14 @@ namespace Core
 			}
 
 			Scene::LGEOMETRYPACKET geometryPacket;
-			geometryPacket.numVertices = (numRings + 1) * (numSegments + 1);
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_TEXCOORD, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
+			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_NORMAL, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
 			geometryPacket.vertices = (float*)vertices;
-			geometryPacket.numIndices = 6 * numRings * (numSegments + 1);
+			geometryPacket.byteStride = sizeof(Math::LVERTEX_NORMAL);
+			geometryPacket.numVertices = (numRings + 1) * (numSegments + 1);
 			geometryPacket.indices = indices;
+			geometryPacket.numIndices = 6 * numRings * (numSegments + 1);
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
 			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;
 

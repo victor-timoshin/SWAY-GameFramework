@@ -1,8 +1,8 @@
 #ifndef ATTRIBUTEPACET_H
 #define ATTRIBUTEPACET_H
 
-#include "../../Math/BoundingVolume.h"
-#include "../../Math/Matrix4.h"
+#include "../../../Math/Inc/BoundingVolume.h"
+#include "../../../Math/Inc/Matrix4.h"
 
 namespace Scene
 {

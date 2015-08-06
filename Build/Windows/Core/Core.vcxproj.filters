@@ -90,6 +90,12 @@
     <ClInclude Include="..\..\..\Core\Inc\Utils\FileDirectory.h">
       <Filter>Inc\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderQueue.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\RenderTarget.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -124,6 +130,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Utils\FileDirectory.cpp">
       <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\RenderQueue.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\RenderTarget.cpp">
+      <Filter>Src\Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

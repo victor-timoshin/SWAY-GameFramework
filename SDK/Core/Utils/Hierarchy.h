@@ -80,7 +80,7 @@ namespace Utils
 			return nodeName;
 		}
 
-	private:
+	protected:
 		typedef std::map<std::string, TYPE*> ICollectionMap;
 		ICollectionMap children;
 		TYPE* parentNode;

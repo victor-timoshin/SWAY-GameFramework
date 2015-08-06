@@ -1,21 +1,23 @@
-#ifndef SCENENODE_H
+п»ї#ifndef SCENENODE_H
 #define SCENENODE_H
 
 #include "../../SDK/SceneGraph/SceneNodeBase.h"
 #include "../../SDK/SceneGraph/SceneNodeTypes.h"
 #include "../../SDK/Platform.h"
 
+#include "SceneNodeQueue.h"
+
 namespace Scene
 {
-	class SceneNode: public ISceneNodeBase
+	class SceneNode : public ISceneNodeBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="name">Имя узла.</param>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="name">РРјСЏ СѓР·Р»Р°.</param>
 		SceneNode(std::string name);
 
-		/// <summary>Деструктор класса.</summary>
-		virtual ~SceneNode(void) { }
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		virtual ~SceneNode(void) {}
 
 		virtual ISceneNodeBase* CreateChild(const char* name);
 
@@ -28,7 +30,15 @@ namespace Scene
 		virtual ISceneComponentBase* GetAttachedComponentByName(const char* name);
 
 
-		virtual void SetPosition(float x, float y, float z);
+		virtual void CascadeUpdate(void);
+
+		virtual void SetPosition(const Math::Vector3& position, TransformSpace relativeTo);
+
+		virtual void SetPosition(float x, float y, float z, TransformSpace relativeTo);
+
+		virtual void SetTranslate(const Math::Vector3& translate, TransformSpace relativeTo);
+
+		virtual void SetTranslate(float x, float y, float z, TransformSpace relativeTo);
 
 		virtual void SetRotation(Math::Vector3 axis, float angle, TransformSpace relativeTo);
 

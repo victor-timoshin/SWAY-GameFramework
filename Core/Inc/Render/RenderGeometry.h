@@ -2,7 +2,7 @@
 #define RENDERGEOMETRY_H
 
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
-#include "../../../SDK/Math/Vertex.h"
+#include "../../../Math/Inc/Vertex.h"
 
 namespace Core
 {

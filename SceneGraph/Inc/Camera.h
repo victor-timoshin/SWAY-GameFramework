@@ -39,6 +39,8 @@ namespace Scene
 
 		virtual Math::Vector3 GetPosition(void) const;
 
+		virtual Math::Quaternion GetOrientation(void) const;
+
 		virtual void SetNearClipDistance(float value);
 
 		virtual float GetNearClipDistance(void) const;

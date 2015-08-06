@@ -1,4 +1,4 @@
-#ifndef RENDERSYSTEM_H
+п»ї#ifndef RENDERSYSTEM_H
 #define RENDERSYSTEM_H
 
 #include "../../../SDK/Core/Render/RenderSystemBase.h"
@@ -8,18 +8,16 @@
 #include "../../../SDK/Gapi/FontBase.h"
 #include "../../../SDK/Platform.h"
 
-#include <vector>
-
 namespace Render
 {
 	class Scene::IRenderableBase;
 	class RenderSystem : public IRenderSystemBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		RenderSystem(void);
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~RenderSystem(void);
 
 		virtual void SetRenderableComponent(Scene::IRenderableBase* renderable);

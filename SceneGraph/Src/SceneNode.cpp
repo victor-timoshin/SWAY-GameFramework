@@ -1,11 +1,10 @@
-#include "../Inc/SceneNode.h"
+п»ї#include "../Inc/SceneNode.h"
 
 namespace Scene
 {
-	/// <summary>Конструктор класса.</summary>
-	/// <param name="name">Имя узла.</param>
-	SceneNode::SceneNode(std::string name)
-		: ISceneNodeBase(name)
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+	/// <param name="name">РРјСЏ СѓР·Р»Р°.</param>
+	SceneNode::SceneNode(std::string name) : ISceneNodeBase(name)
 	{
 		matrixWorld.Identity();
 
@@ -36,7 +35,7 @@ namespace Scene
 		if (i != components.end() && i->second == subscriber)
 		{
 			components.erase(i);
-			subscriber->Notify(0L);
+			subscriber->Notify(nullptr);
 		}
 	}
 
@@ -45,7 +44,7 @@ namespace Scene
 		for (IComponentMap::iterator i = components.begin(); i != components.end(); ++i)
 		{
 			ISceneComponentBase* subscriber = i->second;
-			subscriber->Notify(0L);
+			subscriber->Notify(nullptr);
 		}
 
 		components.clear();
@@ -57,17 +56,67 @@ namespace Scene
 		if (i != components.end())
 			return i->second;
 
-		return 0L;
+		return nullptr;
 	}
 
-	void SceneNode::SetPosition(float x, float y, float z)
+	void SceneNode::CascadeUpdate(void)
 	{
-		position = Math::Vector3(x, y, z);
+		for (ICollectionMap::iterator i = children.begin(); i != children.end(); ++i)
+		{
+			ISceneNodeBase* child = i->second;
+			child->CascadeUpdate();
+		}
+	}
+
+	void SceneNode::SetPosition(const Math::Vector3& positionV, TransformSpace relativeTo)
+	{
+		switch (relativeTo)
+		{
+		case TRANSFORM_PARENT:
+			position = positionV;
+			break;
+		case TRANSFORM_WORLD:
+			position = positionV;
+			break;
+		case TRANSFORM_LOCAL:
+			position = positionV;
+			break;
+		}
+
+		// TODO: update
+	}
+
+	void SceneNode::SetPosition(float x, float y, float z, TransformSpace relativeTo)
+	{
+		SetPosition(Math::Vector3(x, y, z), relativeTo);
+	}
+
+	void SceneNode::SetTranslate(const Math::Vector3& translate, TransformSpace relativeTo)
+	{
+		switch (relativeTo)
+		{
+		case TRANSFORM_PARENT:
+			position += translate;
+			break;
+		case TRANSFORM_WORLD:
+			position += translate;
+			break;
+		case TRANSFORM_LOCAL:
+			//position += orientation * translate;
+			break;
+		}
+
+		// TODO: update
+	}
+
+	void SceneNode::SetTranslate(float x, float y, float z, TransformSpace relativeTo)
+	{
+		SetTranslate(Math::Vector3(x, y, z), relativeTo);
 	}
 
 	void SceneNode::SetRotation(Math::Vector3 axis, float angle, TransformSpace relativeTo)
 	{
-		rotation.FromAxisAngle(axis, Math::RadiansToDegrees(angle));
+		rotation.FromAxisAngle(axis, Math::DegreesToRadians(angle));
 
 		switch (relativeTo)
 		{
@@ -75,26 +124,35 @@ namespace Scene
 			orientation = rotation * orientation;
 			break;
 		case TRANSFORM_WORLD:
+			orientation = orientation * rotation;
 			break;
 		case TRANSFORM_LOCAL:
 			orientation = orientation * rotation;
 			break;
 		}
+
+		// TODO: update
 	}
 
 	void SceneNode::SetScale(float x, float y, float z)
 	{
 		scale = Math::Vector3(x, y, z);
+
+		// TODO: update
 	}
 
 	void SceneNode::SetOrientation(float w, float x, float y, float z)
 	{
 		orientation = Math::Quaternion(w, x, y, z);
+
+		// TODO: update
 	}
 
-	void SceneNode::SetOrientation(const Math::Quaternion& o)
+	void SceneNode::SetOrientation(const Math::Quaternion& orientationQ)
 	{
-		orientation = o;
+		orientation = orientationQ;
+
+		// TODO: update
 	}
 
 	Math::Matrix4 SceneNode::GetWorldMatrixTransform(void)

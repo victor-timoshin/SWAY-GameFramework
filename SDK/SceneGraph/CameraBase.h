@@ -1,11 +1,11 @@
 #ifndef CAMERABASE_H
 #define CAMERABASE_H
 
-#include "../Math/BoundingVolume.h"
-#include "../Math/Quaternion.h"
-#include "../Math/Matrix4.h"
-#include "../Math/Vector3.h"
-#include "../Math/MathCommon.h"
+#include "../../Math/Inc/BoundingVolume.h"
+#include "../../Math/Inc/Quaternion.h"
+#include "../../Math/Inc/Matrix4.h"
+#include "../../Math/Inc/Vector3.h"
+#include "../../Math/Inc/MathCommon.h"
 
 #include <string>
 
@@ -40,6 +40,8 @@ namespace Scene
 		virtual void SetPosition(Math::Vector3& eye) = 0;
 
 		virtual Math::Vector3 GetPosition(void) const = 0;
+
+		virtual Math::Quaternion GetOrientation(void) const = 0;
 
 		virtual void SetNearClipDistance(float value) = 0;
 

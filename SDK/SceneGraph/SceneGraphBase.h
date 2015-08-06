@@ -1,4 +1,4 @@
-#ifndef SCENEGRAPHBASE_H
+п»ї#ifndef SCENEGRAPHBASE_H
 #define SCENEGRAPHBASE_H
 
 #include "../Platform.h"
@@ -11,11 +11,13 @@ namespace Scene
 	class ISceneGraphBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		ISceneGraphBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~ISceneGraphBase(void) {}
+
+		virtual ISceneNodeBase* GetRootSceneNode(void) = 0;
 
 		virtual ICameraBase* CreateCamera(const char* name) = 0;
 
@@ -31,10 +33,10 @@ namespace Scene
 
 		virtual ISceneComponentBase* CreateSphere(const char* name) = 0;
 
-		/// <summary>Полностью очищает сцену.</summary>
-		virtual void Clear(void) = 0;
+		virtual void Update(void) = 0;
 
-		virtual ISceneNodeBase* GetRootSceneNode(void) = 0;
+		/// <summary>РџРѕР»РЅРѕСЃС‚СЊСЋ РѕС‡РёС‰Р°РµС‚ СЃС†РµРЅСѓ.</summary>
+		virtual void Clear(void) = 0;
 	};
 
 	CORE_API ISceneGraphBase* RegisterSceneGraph(void);

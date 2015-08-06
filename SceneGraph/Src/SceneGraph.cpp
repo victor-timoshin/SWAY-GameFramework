@@ -1,4 +1,4 @@
-#include "../Inc/SceneGraph.h"
+п»ї#include "../Inc/SceneGraph.h"
 #include "../Inc/SceneNode.h"
 #include "../Inc/SceneComponent.h"
 #include "../Inc/Camera.h"
@@ -7,16 +7,21 @@
 
 namespace Scene
 {
-	/// <summary>Конструктор класса.</summary>
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	SceneGraph::SceneGraph(void)
 	{
 		rootSceneNode = new SceneNode("root");
 	}
 
-	/// <summary>Деструктор класса.</summary>
+	/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	SceneGraph::~SceneGraph(void)
 	{
 		SAFE_DELETE(rootSceneNode);
+	}
+
+	ISceneNodeBase* SceneGraph::GetRootSceneNode(void)
+	{
+		return rootSceneNode;
 	}
 
 	ICameraBase* SceneGraph::CreateCamera(const char* name)
@@ -85,15 +90,15 @@ namespace Scene
 		return component;
 	}
 
-	/// <summary>Полностью очищает сцену.</summary>
+	void SceneGraph::Update(void)
+	{
+		rootSceneNode->CascadeUpdate();
+	}
+
+	/// <summary>РџРѕР»РЅРѕСЃС‚СЊСЋ РѕС‡РёС‰Р°РµС‚ СЃС†РµРЅСѓ.</summary>
 	void SceneGraph::Clear(void)
 	{
 		rootSceneNode->RemoveAll();
-	}
-
-	ISceneNodeBase* SceneGraph::GetRootSceneNode(void)
-	{
-		return rootSceneNode;
 	}
 
 	ISceneGraphBase* RegisterSceneGraph(void)

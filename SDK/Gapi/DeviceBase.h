@@ -1,6 +1,7 @@
 #ifndef DEVICEBASE_H
 #define DEVICEBASE_H
 
+#include "../../Math/Inc/Color.h"
 #include "../../SDK/Gapi/Types.h"
 #include "../../SDK/Platform.h"
 
