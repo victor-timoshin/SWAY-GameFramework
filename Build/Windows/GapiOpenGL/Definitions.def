@@ -2,4 +2,4 @@ EXPORTS
 	RegisterDevice
 	RegisterShaderProgram
 	RegisterBuffer
-	RegisterFont
+	RegisterTexture

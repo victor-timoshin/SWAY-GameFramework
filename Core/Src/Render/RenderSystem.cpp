@@ -9,13 +9,17 @@ namespace Render
 {
 	/// <summary>Конструктор класса.</summary>
 	RenderSystem::RenderSystem(void)
-		: device(NULL) { }
+		: device(NULL)
+	{
+		font = NULL;
+	}
 
 	/// <summary>Деструктор класса.</summary>
 	RenderSystem::~RenderSystem(void)
 	{
 		SAFE_DELETE(material);
 		SAFE_DELETE(device);
+
 		FreeLibrary((HMODULE)library);
 	}
 
@@ -39,13 +43,7 @@ namespace Render
 		typedef Gapi::IDeviceBase* IDeviceCallback(HWND);
 		device = reinterpret_cast<IDeviceCallback*>(GetProcAddress((HMODULE)library, "RegisterDevice"))(windowHandle);
 		if (!device->Create())
-		{
 			return false;
-		}
-
-		typedef Gapi::IFontBase* IFontCallback(void);
-		font = reinterpret_cast<IFontCallback*>(GetProcAddress((HMODULE)library, "RegisterFont"))();
-		font->Create(windowHandle);
 
 		return true;
 	}
@@ -59,11 +57,17 @@ namespace Render
 	{
 		material = new Material(library, device);
 		if (material->Create(vertexShader, fragmentShader))
-		{
 			return true;
-		}
 
 		return false;
+	}
+
+	bool RenderSystem::CreateTTFont(const char* filename)
+	{
+		font = GUI::RegisterTTFont();
+		font->Create(filename);
+
+		return true;
 	}
 
 	void RenderSystem::CreateBuffer(Scene::IRenderableBase* renderable)
@@ -129,10 +133,11 @@ namespace Render
 
 				static_cast<Material*>(material)->GetShader()->Unbind();
 			}
+		}
 
-			font->StartTextMode(800, 600);
-			font->DrawString(800 / 2 - 50, 600 / 2, "%i", numDisplayObjects);
-			font->EndTextMode();
+		if (font != NULL)
+		{
+			font->Draw2DText("Hello", 250.0f, 250.0f, 1.0f, Math::Vector3(1.0f, 1.0f, 1.0f));
 		}
 
 		device->SwapChain();

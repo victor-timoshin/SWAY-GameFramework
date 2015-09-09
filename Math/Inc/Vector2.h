@@ -17,7 +17,6 @@ namespace Math
 		/// <summary>Конструктор класса.</summary>
 		Vector2(const float* other);
 
-
 		/// <summary>Возвращает квадрат длины данного вектора.</summary>
 		float LengthSquared(void) const;
 

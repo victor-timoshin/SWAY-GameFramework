@@ -11,14 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\BitmapFont.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\Device.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\ShaderProgram.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\GpuBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\BitmapFont.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Device.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\ShaderProgram.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h" />
@@ -58,7 +56,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\</OutDir>
-    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;C:\Users\Bonus\Documents\Visual Studio 2013\Projects\freetype-2.6\objs\vc2010\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Bonus\Documents\Visual Studio 2013\Projects\freetype-2.6\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -73,6 +72,7 @@
       <ModuleDefinitionFile>Definitions.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)\Libs\$(TargetName)_Win32_Debug.lib</ImportLibrary>
+      <AdditionalDependencies>Math_Win32_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

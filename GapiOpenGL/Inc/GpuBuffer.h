@@ -1,4 +1,4 @@
-#ifndef GPUBUFFER_H
+п»ї#ifndef GPUBUFFER_H
 #define GPUBUFFER_H
 
 #include "../../SDK/Gapi/BufferBase.h"
@@ -12,6 +12,7 @@ namespace Gapi
 	{
 	public:
 		static UInt GetBufferType(BUFFERTYPES type);
+		static UInt GetBufferUsage(BUFFER_USAGES usage);
 		static UInt GetPrimitiveType(PRIMITIVETYPES type);
 
 		static PFNGLGENBUFFERSARBPROC glGenBuffersARB;
@@ -23,20 +24,25 @@ namespace Gapi
 		static PFNGLDELETEBUFFERSARBPROC glDeleteBuffersARB;
 		static PFNGLGETBUFFERPARAMETERIVARBPROC glGetBufferParameterivARB;
 
-
+		static PFNGLGENVERTEXARRAYSPROC glGenVertexArraysARB;
+		static PFNGLBINDVERTEXARRAYPROC glBindVertexArrayARB;
 		static PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointerARB;
+		static PFNGLGETATTRIBLOCATIONARBPROC glGetAttribLocationARB;
 		static PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArrayARB;
+		static PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArrayARB;
 
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		GpuBuffer(void);
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~GpuBuffer(void);
 
-		/// <summary>Устанавливает декларацию вершин.</summary>
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµРєР»Р°СЂР°С†РёСЋ РІРµСЂС€РёРЅ.</summary>
 		virtual void SetVertexDeclaration(const PVERTEX_ELEMENT_DESC elementDesc, UInt numElements);
 
-		virtual UInt Create(BUFFERTYPES type, UInt stride, UInt count);
+		virtual UInt CreateArray(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage);
+
+		virtual UInt Create(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage);
 
 		virtual void Destroy(void);
 
@@ -45,6 +51,12 @@ namespace Gapi
 		virtual void* Lock(void);
 
 		virtual void Unlock(void);
+
+		virtual void BindVertexArray(void);
+
+		virtual void UnbindVertexArray(void);
+
+		virtual void RenderW(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount);
 
 		virtual void Render(PRIMITIVETYPES primitiveType, IBufferBase* indexBuffer, UInt numVertices, UInt primitiveCount);
 

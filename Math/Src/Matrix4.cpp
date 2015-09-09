@@ -1,4 +1,5 @@
 ﻿#include "../Inc/Matrix4.h"
+#include "../Inc/MathCommon.h"
 
 namespace Math
 {
@@ -90,6 +91,33 @@ namespace Math
 		result[3][3] = +(v3 * m00 - v1 * m01 + v0 * m02) * invDet;
 
 		return result;
+	}
+
+	void Matrix4::Perspective(float fov, float aspectRatio, float nearClip, float farClip)
+	{
+		Identity();
+
+		float height = 1.0f / tanf((fov * (Math::REAL_PI / 180.0f)) * 0.5f);
+		float width = height / aspectRatio;
+
+		matrix[0][0] = 2.0f * nearClip / height;
+		matrix[1][1] = 2.0f * nearClip / width;
+		matrix[2][2] = farClip / (nearClip - farClip);
+		matrix[2][3] =-1.0f;
+		matrix[3][2] = nearClip * farClip / (nearClip - farClip);
+		matrix[3][3] = 0.0f;
+	}
+
+	void Matrix4::OrthoOffCenter(float left, float top, float right, float bottom, float nearClip, float farClip)
+	{
+		Identity();
+
+		matrix[0][0] = 2.0f / (right - left);
+		matrix[1][1] = 2.0f / (top - bottom);
+		matrix[2][2] =-2.0f / (farClip - nearClip);
+		matrix[3][0] =-(right + left) / (right - left);
+		matrix[3][1] =-(top + bottom) / (top - bottom);
+		matrix[3][2] =-(farClip + nearClip) / (farClip - nearClip);
 	}
 
 	Matrix4& Matrix4::operator *= (const Matrix4& m)

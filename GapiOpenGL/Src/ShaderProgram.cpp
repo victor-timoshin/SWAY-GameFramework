@@ -30,8 +30,11 @@ namespace Gapi
 	PFNGLSHADERSOURCEARBPROC ShaderProgram::glShaderSourceARB = NULL;
 	PFNGLCOMPILESHADERARBPROC ShaderProgram::glCompileShaderARB = NULL;
 	PFNGLVALIDATEPROGRAMARBPROC ShaderProgram::glValidateProgramARB = NULL;
+	PFNGLGETATTRIBLOCATIONARBPROC ShaderProgram::glGetAttribLocationARB = NULL;
 	PFNGLGETUNIFORMLOCATIONARBPROC ShaderProgram::glGetUniformLocationARB = NULL;
 	PFNGLUNIFORMMATRIX4FVARBPROC ShaderProgram::glUniformMatrix4fvARB = NULL;
+	PFNGLUNIFORM3FARBPROC ShaderProgram::glUniform3fARB = NULL;
+	PFNGLUNIFORM4FARBPROC ShaderProgram::glUniform4fARB = NULL;
 
 	PFNGLGETOBJECTPARAMETERIVARBPROC ShaderProgram::glGetObjectParameterivARB = NULL;
 	PFNGLGETINFOLOGARBPROC ShaderProgram::glGetInfoLogARB = NULL;
@@ -50,8 +53,11 @@ namespace Gapi
 		LOAD_EXTENSION(PFNGLSHADERSOURCEARBPROC, glShaderSourceARB);
 		LOAD_EXTENSION(PFNGLCOMPILESHADERARBPROC, glCompileShaderARB);
 		LOAD_EXTENSION(PFNGLVALIDATEPROGRAMARBPROC, glValidateProgramARB);
+		LOAD_EXTENSION(PFNGLGETATTRIBLOCATIONARBPROC, glGetAttribLocationARB);
 		LOAD_EXTENSION(PFNGLGETUNIFORMLOCATIONARBPROC, glGetUniformLocationARB);
 		LOAD_EXTENSION(PFNGLUNIFORMMATRIX4FVARBPROC, glUniformMatrix4fvARB);
+		LOAD_EXTENSION(PFNGLUNIFORM3FARBPROC, glUniform3fARB);
+		LOAD_EXTENSION(PFNGLUNIFORM4FARBPROC, glUniform4fARB);
 
 		LOAD_EXTENSION(PFNGLGETOBJECTPARAMETERIVARBPROC, glGetObjectParameterivARB);
 		LOAD_EXTENSION(PFNGLGETINFOLOGARBPROC, glGetInfoLogARB);
@@ -202,9 +208,28 @@ namespace Gapi
 		return location;
 	}
 
+	int ShaderProgram::GetAttributeLocation(const char* name)
+	{
+		int location;
+		for (size_t i = 0; i < programIDs.size(); ++i)
+			location = glGetAttribLocationARB(programIDs[i], name);
+
+		return location;
+	}
+
 	void ShaderProgram::SetUniformMatrix4(int location, bool transpose, const void* value)
 	{
 		glUniformMatrix4fvARB(location, 1, transpose, (const GLfloat*)value);
+	}
+
+	void ShaderProgram::SetUniform3f(int location, int x, int y, int z)
+	{
+		glUniform3fARB(location, x, y, z);
+	}
+
+	void ShaderProgram::SetUniform4f(int location, int x, int y, int z, int w)
+	{
+		glUniform4fARB(location, x, y, z, w);
 	}
 
 	void ShaderProgram::Bind(void)

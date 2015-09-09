@@ -5,8 +5,9 @@
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../SDK/Core/Render/MaterialBase.h"
 #include "../../../SDK/Gapi/DeviceBase.h"
-#include "../../../SDK/Gapi/FontBase.h"
 #include "../../../SDK/Platform.h"
+
+#include "../../../SDK/GUI/FontBase.h"
 
 namespace Render
 {
@@ -30,6 +31,8 @@ namespace Render
 
 		virtual bool CreateMaterial(const char* vertexShader, const char* fragmentShader);
 
+		virtual bool CreateTTFont(const char* filename);
+
 		virtual void CreateBuffer(Scene::IRenderableBase* renderable);
 
 		virtual void RemoveBuffer(UInt idx);
@@ -41,13 +44,14 @@ namespace Render
 	private:
 		void* library;
 		Gapi::IDeviceBase* device;
-		Gapi::IFontBase* font;
 		Render::IMaterialBase* material;
 
 		std::vector<Core::Render::IRenderGeometryBase*> renderGeometries;
 		int numDisplayObjects;
 
 		Scene::IRenderableBase* renderableComponent;
+
+		GUI::IFontBase* font;
 	};
 }
 

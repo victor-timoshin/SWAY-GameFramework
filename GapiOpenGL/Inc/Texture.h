@@ -17,9 +17,19 @@ namespace Gapi
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Texture(void);
 
+		virtual void CreateFromMemory(const void* data, int width, int height, TEXTURE_FORMATS format);
+
 		virtual void Create(int format, int width, int height, const void* data, int mipCount);
 
-		virtual void Set(int slot);
+		virtual void SetActive(int slot);
+
+		virtual void Bind(void);
+
+		virtual void Unbind(void);
+
+		virtual void SetPixelStore(UInt param);
+
+		virtual UInt GetID(void) const;
 
 	private:
 		UInt textureID;

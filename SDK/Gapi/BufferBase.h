@@ -1,4 +1,4 @@
-#ifndef BUFFERBASE_H
+п»ї#ifndef BUFFERBASE_H
 #define BUFFERBASE_H
 
 #include "../../SDK/Gapi/Types.h"
@@ -44,16 +44,17 @@ namespace Gapi
 	class IBufferBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		IBufferBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~IBufferBase(void) {}
 
-		/// <summary>Устанавливает декларацию вершин.</summary>
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РґРµРєР»Р°СЂР°С†РёСЋ РІРµСЂС€РёРЅ.</summary>
 		virtual void SetVertexDeclaration(const PVERTEX_ELEMENT_DESC elementDesc, UInt numElements) = 0;
 
-		virtual UInt Create(BUFFERTYPES type, UInt stride, UInt count) = 0;
+		virtual UInt CreateArray(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage) = 0;
+		virtual UInt Create(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage) = 0;
 
 		virtual void Destroy(void) = 0;
 
@@ -62,6 +63,12 @@ namespace Gapi
 		virtual void* Lock(void) = 0;
 
 		virtual void Unlock(void) = 0;
+
+		virtual void BindVertexArray(void) = 0;
+
+		virtual void UnbindVertexArray(void) = 0;
+
+		virtual void RenderW(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount) = 0;
 
 		virtual void Render(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount) = 0;
 	

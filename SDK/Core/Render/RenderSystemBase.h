@@ -28,6 +28,8 @@ namespace Render
 
 		virtual bool CreateMaterial(const char* vertexShader, const char* fragmentShader) = 0;
 
+		virtual bool CreateTTFont(const char* filename) = 0;
+
 		virtual void CreateBuffer(Scene::IRenderableBase* renderable) = 0;
 
 		virtual void RemoveBuffer(UInt idx) = 0;

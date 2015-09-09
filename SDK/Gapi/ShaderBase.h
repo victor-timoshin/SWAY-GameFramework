@@ -30,13 +30,21 @@ namespace Gapi
 
 		virtual bool Validate(void) = 0;
 
+		virtual int GetAttributeLocation(const char* name) = 0;
+
 		virtual int GetUniformLocation(const char* name) = 0;
 
 		virtual void SetUniformMatrix4(int location, bool transpose, const void* value) = 0;
 
+		virtual void SetUniform3f(int location, int x, int y, int z) = 0;
+
+		virtual void SetUniform4f(int location, int x, int y, int z, int w) = 0;
+
 		virtual void Bind(void) = 0;
 
 		virtual void Unbind(void) = 0;
+
+		virtual UInt GetShaderProgram(void) = 0;
 	};
 
 	CORE_API IShaderBase* RegisterShaderProgram(void);

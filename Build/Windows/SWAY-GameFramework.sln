@@ -44,13 +44,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gapi", "Gapi", "{8A694952-C
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\Gapi\BufferBase.h = ..\..\SDK\Gapi\BufferBase.h
 		..\..\SDK\Gapi\BufferTypes.h = ..\..\SDK\Gapi\BufferTypes.h
+		..\..\SDK\Gapi\BufferUsages.h = ..\..\SDK\Gapi\BufferUsages.h
 		..\..\SDK\Gapi\ClearFlags.h = ..\..\SDK\Gapi\ClearFlags.h
+		..\..\SDK\Gapi\CullFormats.h = ..\..\SDK\Gapi\CullFormats.h
 		..\..\SDK\Gapi\DeviceBase.h = ..\..\SDK\Gapi\DeviceBase.h
-		..\..\SDK\Gapi\FontBase.h = ..\..\SDK\Gapi\FontBase.h
 		..\..\SDK\Gapi\PrimitiveTypes.h = ..\..\SDK\Gapi\PrimitiveTypes.h
 		..\..\SDK\Gapi\ShaderBase.h = ..\..\SDK\Gapi\ShaderBase.h
 		..\..\SDK\Gapi\ShaderTypes.h = ..\..\SDK\Gapi\ShaderTypes.h
 		..\..\SDK\Gapi\TextureBase.h = ..\..\SDK\Gapi\TextureBase.h
+		..\..\SDK\Gapi\TextureFormats.h = ..\..\SDK\Gapi\TextureFormats.h
 		..\..\SDK\Gapi\Types.h = ..\..\SDK\Gapi\Types.h
 		..\..\SDK\Gapi\VertexElementFormats.h = ..\..\SDK\Gapi\VertexElementFormats.h
 		..\..\SDK\Gapi\VertexElementTypes.h = ..\..\SDK\Gapi\VertexElementTypes.h
@@ -92,6 +94,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SceneGraph", "SceneGraph", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Math", "Math\Math.vcxproj", "{A85E2B7A-341C-468D-B111-C6FA258D0D94}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{BCE578B0-A0BD-4B35-9882-0E3C669F450D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{9E22C380-C12D-473A-884E-46F80EF245DE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\GUI\FontBase.h = ..\..\SDK\GUI\FontBase.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -122,6 +131,10 @@ Global
 		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Debug|Win32.Build.0 = Debug|Win32
 		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Release|Win32.ActiveCfg = Release|Win32
 		{A85E2B7A-341C-468D-B111-C6FA258D0D94}.Release|Win32.Build.0 = Release|Win32
+		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Debug|Win32.Build.0 = Debug|Win32
+		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Release|Win32.ActiveCfg = Release|Win32
+		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,5 +148,6 @@ Global
 		{EC6D06C1-C6FB-45E2-84C3-A89695881E30} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{9325D1B1-F15D-42B0-BB16-34F2F8090FE1} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{67B27693-2CAE-4263-B68D-E3712CD46E67} = {D643DD03-23C9-427F-A4A9-57571D238E47}
+		{9E22C380-C12D-473A-884E-46F80EF245DE} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 	EndGlobalSection
 EndGlobal

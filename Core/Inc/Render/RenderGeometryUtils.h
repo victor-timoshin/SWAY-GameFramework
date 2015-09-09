@@ -16,13 +16,13 @@ namespace Core
 		{
 			Math::PVERTEX_NORMAL vertices = new Math::LVERTEX_NORMAL[4];
 			vertices[0] = Math::VertexNormal(Math::Vector3(-1.0f, -1.0f, 0.0f), Math::Vector2(0.0f, 0.0f));
-			vertices[1] = Math::VertexNormal(Math::Vector3( 1.0f, -1.0f, 0.0f), Math::Vector2(1.0f, 0.0f));
-			vertices[2] = Math::VertexNormal(Math::Vector3(-1.0f,  1.0f, 0.0f), Math::Vector2(0.0f, 1.0f));
-			vertices[3] = Math::VertexNormal(Math::Vector3( 1.0f,  1.0f, 0.0f), Math::Vector2(1.0f, 1.0f));
-
-			UByte* Indices = new UByte[6];
-			Indices[0] = 0; Indices[1] = 1; Indices[2] = 2;
-			Indices[3] = 2; Indices[4] = 1; Indices[5] = 3;
+			vertices[1] = Math::VertexNormal(Math::Vector3(+1.0f, -1.0f, 0.0f), Math::Vector2(1.0f, 0.0f));
+			vertices[2] = Math::VertexNormal(Math::Vector3(-1.0f, +1.0f, 0.0f), Math::Vector2(0.0f, 1.0f));
+			vertices[3] = Math::VertexNormal(Math::Vector3(+1.0f, +1.0f, 0.0f), Math::Vector2(1.0f, 1.0f));
+		
+			UByte* indices = new UByte[6];
+			indices[0] = 0; indices[1] = 1; indices[2] = 2;
+			indices[3] = 2; indices[4] = 1; indices[5] = 3;
 
 			Scene::LGEOMETRYPACKET geometryPacket;
 			geometryPacket.elementDesc.push_back({ 0, Gapi::VERTEXELEMENTTYPES::EVET_POSITION, Gapi::VERTEXELEMENTFORMATS::EVEF_FLOAT });
@@ -31,7 +31,7 @@ namespace Core
 			geometryPacket.vertices = (float*)vertices;
 			geometryPacket.byteStride = sizeof(Math::LVERTEX_NORMAL);
 			geometryPacket.numVertices = 4;
-			geometryPacket.indices = Indices;
+			geometryPacket.indices = indices;
 			geometryPacket.numIndices = 6;
 			geometryPacket.numPrimitives = geometryPacket.numIndices / 3;
 			geometryPacket.primitiveType = Gapi::EPT_TRIANGLELIST;

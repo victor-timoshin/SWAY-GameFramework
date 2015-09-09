@@ -18,6 +18,17 @@ namespace Gapi
 		return (BUFFERTYPES)-1;
 	}
 
+	UInt GpuBuffer::GetBufferUsage(BUFFER_USAGES usage)
+	{
+		switch (usage)
+		{
+		case EBU_STATIC: return GL_STATIC_DRAW_ARB;
+		case EBU_DYNAMIC: return GL_DYNAMIC_DRAW_ARB;
+		}
+
+		return (BUFFER_USAGES)-1;
+	}
+
 	UInt GpuBuffer::GetPrimitiveType(PRIMITIVETYPES type)
 	{
 		switch (type)
@@ -41,8 +52,12 @@ namespace Gapi
 	PFNGLDELETEBUFFERSARBPROC GpuBuffer::glDeleteBuffersARB = NULL;
 	PFNGLGETBUFFERPARAMETERIVARBPROC GpuBuffer::glGetBufferParameterivARB = NULL;
 
+	PFNGLGENVERTEXARRAYSPROC GpuBuffer::glGenVertexArraysARB = NULL;
+	PFNGLBINDVERTEXARRAYPROC GpuBuffer::glBindVertexArrayARB = NULL;
 	PFNGLVERTEXATTRIBPOINTERPROC GpuBuffer::glVertexAttribPointerARB = NULL;
+	PFNGLGETATTRIBLOCATIONARBPROC GpuBuffer::glGetAttribLocationARB = NULL;
 	PFNGLENABLEVERTEXATTRIBARRAYPROC GpuBuffer::glEnableVertexAttribArrayARB = NULL;
+	PFNGLDISABLEVERTEXATTRIBARRAYPROC GpuBuffer::glDisableVertexAttribArrayARB = NULL;
 
 	/// <summary>Конструктор класса.</summary>
 	GpuBuffer::GpuBuffer(void)
@@ -57,8 +72,12 @@ namespace Gapi
 		LOAD_EXTENSION(PFNGLDELETEBUFFERSARBPROC, glDeleteBuffersARB);
 		LOAD_EXTENSION(PFNGLGETBUFFERPARAMETERIVARBPROC, glGetBufferParameterivARB);
 
+		LOAD_EXTENSION(PFNGLGENVERTEXARRAYSPROC, glGenVertexArraysARB);
+		LOAD_EXTENSION(PFNGLBINDVERTEXARRAYPROC, glBindVertexArrayARB);
 		LOAD_EXTENSION(PFNGLVERTEXATTRIBPOINTERPROC, glVertexAttribPointerARB);
+		LOAD_EXTENSION(PFNGLGETATTRIBLOCATIONARBPROC, glGetAttribLocationARB);
 		LOAD_EXTENSION(PFNGLENABLEVERTEXATTRIBARRAYPROC, glEnableVertexAttribArrayARB);
+		LOAD_EXTENSION(PFNGLDISABLEVERTEXATTRIBARRAYPROC, glDisableVertexAttribArrayARB);
 
 		memset(&vertexFormatDesc, 0, sizeof(LVERTEX_FORMAT_DESC));
 	}
@@ -146,7 +165,30 @@ namespace Gapi
 		}
 	}
 
-	UInt GpuBuffer::Create(BUFFERTYPES type, UInt stride, UInt count)
+	UInt GpuBuffer::CreateArray(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage)
+	{
+		bufferType = GpuBuffer::GetBufferType(type);
+
+		byteStride = stride;
+		numElements = count;
+
+		UInt dataSize = numElements * byteStride;
+
+		glGenVertexArraysARB(1, &bufferID);
+		CHECK_GLERROR();
+		glGenBuffersARB(1, &bufferID);
+		CHECK_GLERROR();
+		glBindVertexArrayARB(bufferID);
+		CHECK_GLERROR();
+		glBindBufferARB(bufferType, bufferID);
+		CHECK_GLERROR();
+		glBufferDataARB(bufferType, dataSize, NULL, GpuBuffer::GetBufferUsage(usage));
+		CHECK_GLERROR();
+
+		return bufferID;
+	}
+
+	UInt GpuBuffer::Create(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage)
 	{
 		bufferType = GpuBuffer::GetBufferType(type);
 
@@ -159,7 +201,7 @@ namespace Gapi
 		CHECK_GLERROR();
 		glBindBufferARB(bufferType, bufferID);
 		CHECK_GLERROR();
-		glBufferDataARB(bufferType, dataSize, NULL, GL_STATIC_DRAW_ARB/*GL_STREAM_DRAW_ARB*/);
+		glBufferDataARB(bufferType, dataSize, NULL, GpuBuffer::GetBufferUsage(usage));
 		CHECK_GLERROR();
 
 		int bufferSize = 0;
@@ -182,9 +224,14 @@ namespace Gapi
 
 	void GpuBuffer::SetData(void* source)
 	{
-		glBufferSubDataARB(bufferType, 0/*offset*/, numElements * byteStride, source);
+		if (bufferID)
+		{
+			glBindBufferARB(bufferType, bufferID);
+			glBufferSubDataARB(bufferType, 0/*offset*/, numElements * byteStride, source);
+			glBindBufferARB(bufferType, 0);
 
-		CHECK_GLERROR();
+			CHECK_GLERROR();
+		}
 	}
 
 	void* GpuBuffer::Lock(void)
@@ -193,7 +240,7 @@ namespace Gapi
 		if (bufferID)
 		{
 			glBindBufferARB(bufferType, bufferID);
-			buffer = glMapBufferARB(bufferType, GL_READ_WRITE/*GL_WRITE_ONLY_ARB*/);
+			buffer = glMapBufferARB(bufferType, /*GL_READ_WRITE*/GL_WRITE_ONLY_ARB);
 			glBindBufferARB(bufferType, 0);
 
 			CHECK_GLERROR();
@@ -214,6 +261,49 @@ namespace Gapi
 		}
 	}
 
+	void GpuBuffer::BindVertexArray(void)
+	{
+		glBindVertexArrayARB(bufferType);
+	}
+
+	void GpuBuffer::UnbindVertexArray(void)
+	{
+		glBindVertexArrayARB(0);
+	}
+
+	void GpuBuffer::RenderW(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt shaderProgram)
+	{
+		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		{
+			GLint texCoord = glGetAttribLocationARB(shaderProgram, "texCoord");
+
+			glEnableVertexAttribArrayARB(texCoord);
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
+			glVertexAttribPointerARB(texCoord, vertexFormatDesc.texCoord.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.texCoord.offset));
+
+			CHECK_GLERROR();
+		}
+
+		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
+		{
+			GLint vertex = glGetAttribLocationARB(shaderProgram, "position");
+
+			glEnableVertexAttribArrayARB(vertex);
+			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
+			glVertexAttribPointerARB(vertex, vertexFormatDesc.position.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
+
+			CHECK_GLERROR();
+		}
+
+		glDrawArrays(GpuBuffer::GetPrimitiveType(primitiveType), 0, numVertices);
+
+		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
+			glDisableVertexAttribArrayARB(0);
+
+		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+			glDisableVertexAttribArrayARB(1);
+	}
+
 	void GpuBuffer::Render(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount)
 	{
 		GpuBuffer* indexBuffer = static_cast<GpuBuffer*>(indexBufferBase);
@@ -232,9 +322,6 @@ namespace Gapi
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
 			glNormalPointer(GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.normal.offset));
 
-			//glVertexAttribPointerARB(2, 3, GL_FLOAT, GL_FALSE, stride, (GLvoid*)(5 * sizeof(float)));
-			//glEnableVertexAttribArray(2);
-
 			CHECK_GLERROR();
 		}
 
@@ -243,9 +330,6 @@ namespace Gapi
 			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
 			glTexCoordPointer(vertexFormatDesc.texCoord.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.texCoord.offset));
-
-			//glVertexAttribPointerARB(1, 2, GL_FLOAT, GL_FALSE, stride, (GLvoid*)(3 * sizeof(float)));
-			//glEnableVertexAttribArray(1);
 
 			CHECK_GLERROR();
 		}
@@ -256,9 +340,6 @@ namespace Gapi
 			glEnableClientState(GL_COLOR_ARRAY);
 			glColorPointer(vertexFormatDesc.color.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.color.offset));
 
-			//glVertexAttribPointerARB(1, vertexFormatDesc.color.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
-			//glEnableVertexAttribArrayARB(1);
-
 			CHECK_GLERROR();
 		}
 
@@ -267,9 +348,6 @@ namespace Gapi
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
 			glEnableClientState(GL_VERTEX_ARRAY);
 			glVertexPointer(vertexFormatDesc.position.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
-
-			//glVertexAttribPointerARB(0, vertexFormatDesc.position.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
-			//glEnableVertexAttribArrayARB(0);
 
 			CHECK_GLERROR();
 		}

@@ -55,28 +55,7 @@ namespace Scene
 		nearClip = nearClipF;
 		farClip = farClipF;
 
-		float height = 1.0f / tanf((fovF * (Math::REAL_PI / 180.0f)) * 0.5f);
-		float width = height / aspectRatio;
-
-		projectionMatrix[0][0] = 2.0f * nearClip / height;
-		projectionMatrix[0][1] = 0.0f;
-		projectionMatrix[0][2] = 0.0f;
-		projectionMatrix[0][3] = 0.0f;
-
-		projectionMatrix[1][0] = 0.0f;
-		projectionMatrix[1][1] = 2.0f * nearClip / width;
-		projectionMatrix[1][2] = 0.0f;
-		projectionMatrix[1][3] = 0.0f;
-
-		projectionMatrix[2][0] = 0.0f;
-		projectionMatrix[2][1] = 0.0f;
-		projectionMatrix[2][2] = farClip / (nearClip - farClip);
-		projectionMatrix[2][3] =-1.0f;
-
-		projectionMatrix[3][0] = 0.0f;
-		projectionMatrix[3][1] = 0.0f;
-		projectionMatrix[3][2] = nearClip * farClip / (nearClip - farClip);
-		projectionMatrix[3][3] = 0.0f;
+		projectionMatrix.Perspective(fov, aspectRatio, nearClip, farClip);
 	}
 
 	void Camera::OrthoOffCenter(float left, float top, float right, float bottom, float nearClipF, float farClipF)
@@ -84,25 +63,7 @@ namespace Scene
 		nearClip = nearClipF;
 		farClip = farClipF;
 
-		projectionMatrix[0][0] = 2.0f / (right - left);
-		projectionMatrix[0][1] = 0.0f;
-		projectionMatrix[0][2] = 0.0f;
-		projectionMatrix[0][3] = 0.0f;
-
-		projectionMatrix[1][0] = 0.0f;
-		projectionMatrix[1][1] = 2.0f / (top - bottom);
-		projectionMatrix[1][2] = 0.0f;
-		projectionMatrix[1][3] = 0.0f;
-
-		projectionMatrix[2][0] = 0.0f;
-		projectionMatrix[2][1] = 0.0f;
-		projectionMatrix[2][2] =-2.0f / (farClip - nearClip);
-		projectionMatrix[2][3] = 0.0f;
-
-		projectionMatrix[3][0] =-(right + left) / (right - left);
-		projectionMatrix[3][1] =-(top + bottom) / (top - bottom);
-		projectionMatrix[3][2] =-(farClip + nearClip) / (farClip - nearClip);
-		projectionMatrix[3][3] = 1.0f;
+		projectionMatrix.OrthoOffCenter(left, top, right, bottom, nearClip, farClip);
 	}
 
 	void Camera::Update(void)

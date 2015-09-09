@@ -24,7 +24,7 @@ namespace Core
 				typedef Gapi::IBufferBase* VertexBufferCallback(void);
 				vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
 				vertexBuffer->SetVertexDeclaration((Gapi::PVERTEX_ELEMENT_DESC)&geometryPacket.elementDesc[0], geometryPacket.elementDesc.size());
-				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, geometryPacket.byteStride, geometryPacket.numVertices);
+				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, geometryPacket.byteStride, geometryPacket.numVertices, Gapi::BUFFER_USAGES::EBU_STATIC);
 
 				void* lockedVertexData = vertexBuffer->Lock();
 				memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * geometryPacket.byteStride);
@@ -35,7 +35,7 @@ namespace Core
 			{
 				typedef Gapi::IBufferBase* IndexBufferCallback(void);
 				indexBuffer = reinterpret_cast<IndexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
-				indexBuffer->Create(Gapi::BUFFERTYPES::EBT_INDEX, sizeof(UByte), geometryPacket.numIndices);
+				indexBuffer->Create(Gapi::BUFFERTYPES::EBT_INDEX, sizeof(UByte), geometryPacket.numIndices, Gapi::BUFFER_USAGES::EBU_STATIC);
 
 				void* lockedIndexData = indexBuffer->Lock();
 				memcpy(lockedIndexData, geometryPacket.indices, geometryPacket.numIndices * sizeof(UByte));

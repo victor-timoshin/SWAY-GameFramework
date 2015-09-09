@@ -41,6 +41,8 @@ namespace Gapi
 
 		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height) = 0;
 
+		virtual void SetCullFormat(CULL_FORMATS format) = 0;
+
 #pragma region Capabilities
 
 		virtual const char* GetGlVersionString(void) = 0;

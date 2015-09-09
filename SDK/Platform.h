@@ -22,11 +22,15 @@
 #include "Core/Utils/LogLevels.h"
 
 #include "Gapi/ClearFlags.h"
+#include "Gapi/CullFormats.h"
 #include "Gapi/ShaderTypes.h"
 #include "Gapi/BufferTypes.h"
+#include "Gapi/BufferUsages.h"
 #include "Gapi/VertexElementTypes.h"
 #include "Gapi/VertexElementFormats.h"
 #include "Gapi/PrimitiveTypes.h"
+#include "Gapi/TextureFormats.h"
+
 
 //#include "Math/Color.h"
 

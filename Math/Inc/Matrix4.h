@@ -23,6 +23,10 @@ namespace Math
 		/// <summary>Инверсирует матрицу.</summary>
 		Matrix4 Inverse(void) const;
 
+		void Perspective(float fov, float aspectRatio, float nearClip, float farClip);
+
+		void OrthoOffCenter(float left, float top, float right, float bottom, float nearClip, float farClip);
+
 		Matrix4& operator *= (const Matrix4& m);
 
 		Matrix4 operator * (const Matrix4& m) const;

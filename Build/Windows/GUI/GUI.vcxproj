@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D5D63648-08C3-4990-9946-2789B248BA19}</ProjectGuid>
-    <RootNamespace>Core</RootNamespace>
+    <ProjectGuid>{BCE578B0-A0BD-4B35-9882-0E3C669F450D}</ProjectGuid>
+    <RootNamespace>GUI</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -40,23 +40,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\</OutDir>
-    <IncludePath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Math\Inc;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Bonus\Documents\Visual Studio 2013\Projects\freetype-2.6\objs\vc2010\Win32;C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Bonus\Documents\Visual Studio 2013\Projects\freetype-2.6\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;BUILDING_CORE</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug$(TargetExt)</OutputFile>
+      <AdditionalDependencies>Math_Win32_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>Definitions.def</ModuleDefinitionFile>
-      <ProgramDatabaseFile>$(TargetDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)\Libs\$(TargetName)_Win32_Debug.lib</ImportLibrary>
-      <AdditionalDependencies>Math_Win32_Debug.lib;GUI_Win32_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -74,38 +74,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Core\Inc\Render\DDS.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\Debug\RenderLineDebug.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometry.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\RenderGeometryUtils.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\Material.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\RenderQueue.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\RenderSystem.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Render\RenderTarget.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Scene\SceneManagement.h" />
-    <ClInclude Include="..\..\..\Core\Inc\System\Mutex.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Utils\FileDirectory.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Utils\StreamLogger.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Utils\FileLogger.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Utils\FileStream.h" />
-    <ClInclude Include="..\..\..\Core\StdAfx.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\Font.h" />
+    <ClInclude Include="..\..\..\GUI\StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\GUI\Src\Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\..\Core\Src\Render\Debug\RenderLineDebug.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Render\RenderGeometry.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Render\Material.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Render\RenderQueue.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Render\RenderSystem.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Render\RenderTarget.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Scene\SceneManagement.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\System\Mutex.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Utils\StreamLogger.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Utils\FileLogger.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Utils\FileStream.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Utils\FileDirectory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

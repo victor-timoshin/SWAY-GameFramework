@@ -22,8 +22,11 @@ namespace Gapi
 		static PFNGLSHADERSOURCEARBPROC glShaderSourceARB;
 		static PFNGLCOMPILESHADERARBPROC glCompileShaderARB;
 		static PFNGLVALIDATEPROGRAMARBPROC glValidateProgramARB;
+		static PFNGLGETATTRIBLOCATIONARBPROC glGetAttribLocationARB;
 		static PFNGLGETUNIFORMLOCATIONARBPROC glGetUniformLocationARB;
 		static PFNGLUNIFORMMATRIX4FVARBPROC glUniformMatrix4fvARB;
+		static PFNGLUNIFORM3FARBPROC glUniform3fARB;
+		static PFNGLUNIFORM4FARBPROC glUniform4fARB;
 
 		static PFNGLGETOBJECTPARAMETERIVARBPROC glGetObjectParameterivARB;
 		static PFNGLGETINFOLOGARBPROC glGetInfoLogARB;
@@ -50,11 +53,21 @@ namespace Gapi
 
 		virtual int GetUniformLocation(const char* name);
 
+		virtual int GetAttributeLocation(const char* name);
+
 		virtual void SetUniformMatrix4(int location, bool transpose, const void* value);
+
+		virtual void SetUniform3f(int location, int x, int y, int z);
+
+		virtual void SetUniform4f(int location, int x, int y, int z, int w);
 
 		virtual void Bind(void);
 
 		virtual void Unbind(void);
+
+		virtual UInt GetShaderProgram(void) {
+			return programIDs[0];
+		}
 
 	protected:
 		bool CheckStatus(UInt object, UInt name);

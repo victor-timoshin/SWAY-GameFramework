@@ -113,10 +113,11 @@ namespace Gapi
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
 		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_LIGHTING);
+		//glEnable(GL_LIGHTING);
 		glEnable(GL_CULL_FACE);
+		glEnable(GL_BLEND);
 
-		//glFrontFace(GL_CW);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 		glEnable(GL_COLOR_MATERIAL);
@@ -160,6 +161,26 @@ namespace Gapi
 	void Device::SetScissor(UInt x, UInt y, UInt width, UInt height)
 	{
 		glScissor(x, y, width, height);
+	}
+
+	void Device::SetCullFormat(CULL_FORMATS format)
+	{
+		switch (format)
+		{
+		case CULL_FORMATS::ECF_CW:
+			glEnable(GL_CULL_FACE);
+			glFrontFace(GL_CW);
+			break;
+
+		case CULL_FORMATS::ECF_CCW:
+			glEnable(GL_CULL_FACE);
+			glFrontFace(GL_CCW);
+			break;
+
+		case CULL_FORMATS::ECF_NONE:
+			glDisable(GL_CULL_FACE);
+			break;
+		}
 	}
 
 #pragma region Capabilities

@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\GapiOpenGL\Src\BitmapFont.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\GapiOpenGL\Src\GpuBuffer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
@@ -29,9 +26,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
-    <ClInclude Include="..\..\..\GapiOpenGL\Inc\BitmapFont.h">
-      <Filter>Inc</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Device.h">
       <Filter>Inc</Filter>
     </ClInclude>
