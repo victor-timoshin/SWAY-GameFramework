@@ -1,0 +1,11 @@
+language: cpp
+
+compiler:
+- gcc
+
+branches:
+  only:
+  - master
+
+os:
+- osx
