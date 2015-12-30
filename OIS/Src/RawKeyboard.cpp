@@ -28,12 +28,17 @@ namespace OIS
 
 #pragma region IKeyboard
 
-	bool RawKeyboard::KeyDown(const KEYCODE& key) const
+	bool RawKeyboard::HasKeyDown(const KEYCODE& key) const
 	{
 		return keyboardDevice.VKey == key && (keyboardDevice.Flags == RI_KEY_MAKE || keyboardDevice.Flags == RI_KEY_MAKE + RI_KEY_E0);
 	}
 
-	bool RawKeyboard::KeyUp(const KEYCODE& key) const
+	bool RawKeyboard::HasKeyDownStr(const std::string& key) const
+	{
+		return HasKeyDown(OIS::KeyCodeFromString(key));
+	}
+
+	bool RawKeyboard::HasKeyUp(const KEYCODE& key) const
 	{
 		return keyboardDevice.VKey == key && (keyboardDevice.Flags == RI_KEY_BREAK || keyboardDevice.Flags == RI_KEY_BREAK + RI_KEY_E0);
 	}

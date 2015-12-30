@@ -1,2 +1,4 @@
 EXPORTS
+	RegisterControl
+	RegisterFontManager
 	RegisterTTFont

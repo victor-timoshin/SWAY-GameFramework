@@ -1,4 +1,4 @@
-#ifndef CAMERA_H
+п»ї#ifndef CAMERA_H
 #define CAMERA_H
 
 #include "../../SDK/SceneGraph/CameraBase.h"
@@ -7,70 +7,102 @@ namespace Scene
 {
 	class Camera : public ICameraBase
 	{
-	public:
-		static const Math::Vector3 WORLD_XAXIS;
-		static const Math::Vector3 WORLD_YAXIS;
-		static const Math::Vector3 WORLD_ZAXIS;
+		DECL_PROPERTY_VIRTUAL_FLOAT(FieldOfView, _fieldOfView)
+		DECL_PROPERTY_VIRTUAL_FLOAT(AspectRatio, _aspectRatio)
+		DECL_PROPERTY_VIRTUAL_FLOAT(NearPlane, _nearPlane)
+		DECL_PROPERTY_VIRTUAL_FLOAT(FarPlane, _farPlane)
 
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="name">Имя камеры.</param>
+		DECL_PROPERTY_VIRTUAL(Math::Vec3F, XAxis, _xAxis)
+		DECL_PROPERTY_VIRTUAL(Math::Vec3F, YAxis, _yAxis)
+		DECL_PROPERTY_VIRTUAL(Math::Vec3F, ZAxis, _zAxis)
+
+	public:
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="name">РРјСЏ РєР°РјРµСЂС‹.</param>
 		Camera(std::string name);
 		
-		/// <summary>Деструктор класса.</summary>
-		virtual ~Camera(void) {}
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		virtual ~Camera(void);
 
-		virtual void LookAt(void);
+		virtual void LookAt(const Math::Vec3F& target);
+
+		virtual void LookAt(const Math::Vec3F& eye, const Math::Vec3F& target, const Math::Vec3F& up);
 
 		virtual void Perspective(float fov, float aspectRatio, float nearClip = 0.1f, float farClip = 1000.0f);
 
 		virtual void OrthoOffCenter(float left, float top, float right, float bottom, float nearClip = 1.0f, float farClip = 0.0f);
 
+		//virtual void SwitchToPerspective(float fieldOfView, float nearClip = 0.1f, float farClip = 1000.0f);
+
+		//virtual void SwitchToOrtho(void);
+
 		virtual void Update(void);
 
-		virtual void Move(Math::Vector3& direction);
+		virtual void Move(Math::Vec3F& direction);
 
 		virtual void Rotation(float yaw, float pitch, float roll);
 
-		virtual const Math::Matrix4& GetViewMatrix(void);
+		virtual const Math::Matrix4F& GetProjectionMatrix(void);
 
-		virtual const Math::Matrix4& GetProjectionMatrix(void);
+		virtual const Math::Matrix4F& GetViewMatrix(void);
 
-		virtual void SetPosition(Math::Vector3& eye);
+		virtual const Math::Matrix4F& GetViewProjectionMatrix(void);
 
-		virtual Math::Vector3 GetPosition(void) const;
+		virtual const Math::Matrix4F& GetInverseViewProjectionMatrix(void);
+
+		virtual void SetFrustum(bool enable);
+
+		virtual const Math::Frustum& GetFrustum(void);
+
+		virtual bool IsVisible(const Math::BoundingBox& box) const;
+		
+		//virtual void SetZoom(float delta);
+
+		//virtual float GetZoom(void) const;
+
+		//virtual void ResetZoom();
+
+		virtual void SetPosition(Math::Vec3F& position);
+
+		virtual Math::Vec3F GetPosition(void) const;
 
 		virtual Math::Quaternion GetOrientation(void) const;
 
-		virtual void SetNearClipDistance(float value);
+		virtual Math::Vec3F GetFront(void) const;
+		virtual Math::Vec3F GetBack(void) const;
+		virtual Math::Vec3F GetLeft(void) const;
+		virtual Math::Vec3F GetRight(void) const;
+		virtual Math::Vec3F GetUp(void) const;
+		virtual Math::Vec3F GetDown(void) const;
 
-		virtual float GetNearClipDistance(void) const;
+		virtual PROJECTION_MODE GetMode(void) const;
 
-		virtual void SetFarClipDistance(float value);
+		//virtual void InjectMouseMove(int x, int y) {}
+		//virtual void InjectMouseDown(int x, int y) {}
+		//virtual void InjectMouseRelease() {}
+		//virtual void InjectWheelUp(void) {}
+		//virtual void InjectWheelDown(void) {}
 
-		virtual float GetFarClipDistance(void) const;
+		//virtual void SetPosition(const Math::Vec2F& position) {}
+		//virtual void SetDistance(float distance) {}
 
-		virtual Math::Vector3 GetXAxis(void);
+	protected:
+		//Math::Vec3F UnprojectViewPoint(const Math::Vec3F& screen, const Math::Size& view);
 
-		virtual Math::Vector3 GetYAxis(void);
+	protected:
+		PROJECTION_MODE _mode;
 
-		virtual Math::Vector3 GetZAxis(void);
+		Math::Matrix4F _projectionMatrix;
+		Math::Matrix4F _viewMatrix;
+		Math::Matrix4F _viewProjectionMatrix;
 
-	private:
-		Math::Matrix4 projectionMatrix;
-		Math::Matrix4 viewMatrix;
+		Math::Vec3F _position;
+		Math::Vec3F _target;
 
-		float fov;
-		float nearClip;
-		float farClip;
+		Math::Quaternion _orientation;
 
-		Math::Vector3 eye;
-		Math::Vector3 target;
-
-		Math::Quaternion orientation;
-
-		Math::Vector3 xAxis;
-		Math::Vector3 yAxis;
-		Math::Vector3 zAxis;
+		Math::Frustum _frustum;
+		bool _enableFrustum;
 	};
 }
 

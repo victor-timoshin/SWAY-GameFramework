@@ -8,7 +8,7 @@
 
 namespace Scene
 {
-	class ISceneNodeBase : public Utils::THierarchy < ISceneNodeBase >, public ITransformableBase
+	class ISceneNodeBase : public Utils::THierarchy<ISceneNodeBase>, public ITransformableBase
 	{
 	public:
 		/// <summary>Конструктор класса.</summary>

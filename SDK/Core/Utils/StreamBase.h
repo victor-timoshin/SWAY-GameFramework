@@ -1,4 +1,4 @@
-#ifndef STREAMBASE_H
+п»ї#ifndef STREAMBASE_H
 #define STREAMBASE_H
 
 #include "../../Platform.h"
@@ -8,17 +8,30 @@ namespace Core
 {
 	namespace Utils
 	{
+		typedef enum StreamMode {
+			Text   = 0,
+			Binary = 1
+		} STREAM_MODE;
+
 		class IStreamBase
 		{
 		public:
-			/// <summary>Конструктор класса.</summary>
+			/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 			IStreamBase(void) {}
 
-			/// <summary>Деструктор класса.</summary>
+			/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 			virtual ~IStreamBase(void) {}
 
-			/// <param name="filename">Имя файла.</param>
-			virtual void Open(const char* filename, FILEMODES mode, bool binary) = 0;
+			/// <param name="filename">РРјСЏ С„Р°Р№Р»Р°.</param>
+			virtual void Open(const char* filename, FILE_MODE mode, bool binary) = 0;
+
+			virtual bool OpenStream(const std::string& filename, STREAM_MODE mode) = 0;
+
+			virtual void CloseStream(void) = 0;
+
+			virtual bool IsOpenStream(void) = 0;
+
+			virtual std::ifstream& GetStream(void) = 0;
 
 			virtual void Close(void) = 0;
 

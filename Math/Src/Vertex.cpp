@@ -2,13 +2,13 @@
 
 namespace Math
 {
-	LVERTEX_COLOR VertexColor(const Vector3& position, const Vector4& color)
+	LVERTEX_COLOR VertexColor(const Vector3F& position, const Vector4& color)
 	{
 		LVERTEX_COLOR vertex;
 
-		vertex.x = position._x;
-		vertex.y = position._y;
-		vertex.z = position._z;
+		vertex.x = position.GetX();
+		vertex.y = position.GetY();
+		vertex.z = position.GetZ();
 
 		vertex.r = color._x;
 		vertex.g = color._y;
@@ -18,34 +18,30 @@ namespace Math
 		return vertex;
 	}
 
-	LVERTEX_TEXCOORD VertexTexCoord(const Vector3& position, const Vector2& texCoord)
+	LVERTEX_TEXCOORD VertexTexCoord(const Vector3F& position, const Vector2F& texCoord)
 	{
 		LVERTEX_TEXCOORD vertex;
-
-		vertex.x = position._x;
-		vertex.y = position._y;
-		vertex.z = position._z;
-
-		vertex.u = texCoord._x;
-		vertex.v = texCoord._y;
+		vertex.SetPosition(position);
+		vertex.SetColor(Color(0.0f, 0.0f, 0.0f, 1.0f));
+		vertex.SetTexCoord(texCoord);
 
 		return vertex;
 	}
 
-	LVERTEX_NORMAL VertexNormal(const Vector3& position, const Vector2& texCoord, const Vector3& normal)
+	LVERTEX_NORMAL VertexNormal(const Vector3F& position, const Vector2F& texCoord, const Vector3F& normal)
 	{
 		LVERTEX_NORMAL vertex;
 
-		vertex.position[0] = position._x;
-		vertex.position[1] = position._y;
-		vertex.position[2] = position._z;
+		vertex.position[0] = position.GetX();
+		vertex.position[1] = position.GetY();
+		vertex.position[2] = position.GetZ();
 
 		vertex.textureCoordinates[0] = texCoord._x;
 		vertex.textureCoordinates[1] = texCoord._y;
 
-		vertex.normal[0] = normal._x;
-		vertex.normal[1] = normal._y;
-		vertex.normal[2] = normal._z;
+		vertex.normal[0] = normal.GetX();
+		vertex.normal[1] = normal.GetY();
+		vertex.normal[2] = normal.GetZ();
 
 		return vertex;
 	}

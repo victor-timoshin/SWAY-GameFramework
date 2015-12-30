@@ -28,9 +28,11 @@ namespace OIS
 
 #pragma region IKeyboard
 
-		virtual bool KeyDown(const KEYCODE& key) const;
+		virtual bool HasKeyDown(const KEYCODE& key) const;
 
-		virtual bool KeyUp(const KEYCODE& key) const;
+		virtual bool HasKeyDownStr(const std::string& key) const;
+
+		virtual bool HasKeyUp(const KEYCODE& key) const;
 
 #pragma endregion
 

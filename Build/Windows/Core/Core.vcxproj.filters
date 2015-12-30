@@ -42,14 +42,41 @@
     <Filter Include="Src\Renderer\PostProcess">
       <UniqueIdentifier>{aff00ef4-235c-43e2-80dd-de587af8b981}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Renderer\Light">
-      <UniqueIdentifier>{d928fdbc-8db0-4f12-bc30-01593dfe9d74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Render\Debug">
       <UniqueIdentifier>{ff476560-b683-4468-8e3c-6569b635ab20}</UniqueIdentifier>
     </Filter>
     <Filter Include="Inc\Render\Debug">
       <UniqueIdentifier>{bb90d64e-6116-465a-b59f-ff10bcbfa0b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Imaging">
+      <UniqueIdentifier>{6d2af95e-bba6-4d50-a900-890085a82957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Imaging">
+      <UniqueIdentifier>{d385a716-b8ba-42e1-821b-1e89564123d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Imaging\Codecs">
+      <UniqueIdentifier>{8b313874-55d5-4ccf-9eec-0de047828723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Imaging\Codecs">
+      <UniqueIdentifier>{8032a6b7-305d-4221-bcce-f264a07a2a45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Tiled">
+      <UniqueIdentifier>{216d3f7e-3eb9-4d30-8376-7462655c0835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Tiled">
+      <UniqueIdentifier>{78ba4cf2-dd87-44b4-b27a-f2a3b69e30ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Xml">
+      <UniqueIdentifier>{4dd9e7df-f346-41ab-a18f-321dc64672aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Xml">
+      <UniqueIdentifier>{4a87410c-f8d7-4c1f-8137-beaff737a7fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\Resource">
+      <UniqueIdentifier>{b3225b35-acfe-49b0-9180-24418b15d21b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Resource">
+      <UniqueIdentifier>{2bd8824a-69fa-48cc-a67e-c8f2e6a46354}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +105,6 @@
     <ClInclude Include="..\..\..\Core\Inc\Render\Material.h">
       <Filter>Inc\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Render\DDS.h">
-      <Filter>Inc\Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\Debug\RenderLineDebug.h">
       <Filter>Inc\Render\Debug</Filter>
     </ClInclude>
@@ -94,6 +118,63 @@
       <Filter>Inc\Render</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderTarget.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\BMPLoader.h">
+      <Filter>Inc\Imaging\Codecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\DDSLoader.h">
+      <Filter>Inc\Imaging\Codecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\PNGLoader.h">
+      <Filter>Inc\Imaging\Codecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\TGALoader.h">
+      <Filter>Inc\Imaging\Codecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Tiled\TileSet.h">
+      <Filter>Inc\Tiled</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Imaging\CodecFactory.h">
+      <Filter>Inc\Imaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Xml\Document.h">
+      <Filter>Inc\Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Xml\Node.h">
+      <Filter>Inc\Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Emitter.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Image.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Effect.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Tiled\Tile.h">
+      <Filter>Inc\Tiled</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Tiled\TileLayer.h">
+      <Filter>Inc\Tiled</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Tiled\TileLayerType.h">
+      <Filter>Inc\Tiled</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Resource\Resource.h">
+      <Filter>Inc\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Resource\ResourceType.h">
+      <Filter>Inc\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Resource\ResourceManagement.h">
+      <Filter>Inc\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\SpriteBatch.h">
+      <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\Atlas.h">
       <Filter>Inc\Render</Filter>
     </ClInclude>
   </ItemGroup>
@@ -135,6 +216,57 @@
       <Filter>Src\Render</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Render\RenderTarget.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\BMPLoader.cpp">
+      <Filter>Src\Imaging\Codecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\DDSLoader.cpp">
+      <Filter>Src\Imaging\Codecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\PNGLoader.cpp">
+      <Filter>Src\Imaging\Codecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\TGALoader.cpp">
+      <Filter>Src\Imaging\Codecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Tiled\TileSet.cpp">
+      <Filter>Src\Tiled</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Imaging\CodecFactory.cpp">
+      <Filter>Src\Imaging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Xml\Document.cpp">
+      <Filter>Src\Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Xml\Node.cpp">
+      <Filter>Src\Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\Emitter.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\Image.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\Effect.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Tiled\Tile.cpp">
+      <Filter>Src\Tiled</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Tiled\TileLayer.cpp">
+      <Filter>Src\Tiled</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Resource\Resource.cpp">
+      <Filter>Src\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Resource\ResourceManagement.cpp">
+      <Filter>Src\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\SpriteBatch.cpp">
+      <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\Atlas.cpp">
       <Filter>Src\Render</Filter>
     </ClCompile>
   </ItemGroup>

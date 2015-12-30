@@ -1,4 +1,5 @@
 ﻿#include "../Inc/Quaternion.h"
+#include "../Inc/MathCommon.h"
 
 namespace Math
 {
@@ -63,19 +64,19 @@ namespace Math
 		return Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 
-	void Quaternion::FromAxisAngle(Vector3 axis, float angle)
+	void Quaternion::FromAxisAngle(TVector3<float> axis, float angle)
 	{
-		float fHalfAngle = angle * 0.5f;
-		float fSin = sin(fHalfAngle);
+		float halfAngle = angle * 0.5f;
+		float fSin = sin(halfAngle);
 
 		_x = fSin * axis._x;
 		_y = fSin * axis._y;
 		_z = fSin * axis._z;
 
-		_w = cos(fHalfAngle);
+		_w = cos(halfAngle);
 	}
 
-	void Quaternion::ToRotationMatrix(Matrix4& m) const
+	void Quaternion::ToRotationMatrix(Matrix4F& m) const
 	{
 		float x = _x + _x;
 		float y = _y + _y;
@@ -94,31 +95,31 @@ namespace Math
 		float wy = _w * y;
 		float wz = _w * z;
 
-		m[0][0] = 1.0f - (yy + zz);
-		m[0][1] = xy + wz;
-		m[0][2] = xz - wy;
-		m[0][3] = 0.0f;
+		m.Set(0, 0, 1.0f - (yy + zz));
+		m.Set(0, 1, xy + wz);
+		m.Set(0, 2, xz - wy);
+		m.Set(0, 3, 0.0f);
 
-		m[1][0] = xy - wz;
-		m[1][1] = 1.0f - (xx + zz);
-		m[1][2] = yz + wx;
-		m[1][3] = 0.0f;
+		m.Set(1, 0, xy - wz);
+		m.Set(1, 1, 1.0f - (xx + zz));
+		m.Set(1, 2, yz + wx);
+		m.Set(1, 3, 0.0f);
 
-		m[2][0] = xz + wy;
-		m[2][1] = yz - wx;
-		m[2][2] = 1.0f - (xx + yy);
-		m[2][3] = 0.0f;
+		m.Set(2, 0, xz + wy);
+		m.Set(2, 1, yz - wx);
+		m.Set(2, 2, 1.0f - (xx + yy));
+		m.Set(2, 3, 0.0f);
 
-		m[3][0] = 0.0f;
-		m[3][1] = 0.0f;
-		m[3][2] = 0.0f;
-		m[3][3] = 1.0f;
+		m.Set(3, 0, 0.0f);
+		m.Set(3, 1, 0.0f);
+		m.Set(3, 2, 0.0f);
+		m.Set(3, 3, 1.0f);
 	}
 
-	void Quaternion::FromRotationMatrix(Matrix4& m)
+	void Quaternion::FromRotationMatrix(Matrix4F& m)
 	{
 		float root = 0.0f;
-		float trace = m[0][0] + m[1][1] + m[2][2];
+		float trace = m.Get(0, 0) + m.Get(1, 1) + m.Get(2, 2);
 
 		if (trace > 0.0f)
 		{
@@ -128,32 +129,32 @@ namespace Math
 
 			root = 0.5f / root;
 
-			_x = (m[1][2] - m[2][1]) * root;
-			_y = (m[2][0] - m[0][2]) * root;
-			_z = (m[0][1] - m[1][0]) * root;
+			_x = (m.Get(1, 2) - m.Get(2, 1)) * root;
+			_y = (m.Get(2, 0) - m.Get(0, 2)) * root;
+			_z = (m.Get(0, 1) - m.Get(1, 0)) * root;
 		}
 		else
 		{
 			int next[3] = { 1, 2, 0 };
 			int i = 0;
 
-			if (m[1][1] > m[0][0]) i = 1;
-			if (m[2][2] > m[i][i]) i = 2;
+			if (m.Get(1, 1) > m.Get(0, 0)) i = 1;
+			if (m.Get(2, 2) > m.Get(i, i)) i = 2;
 
 			int j = next[i];
 			int k = next[j];
 
-			root = sqrtf((m[i][i] - (m[j][j] + m[k][k])) + 1.0f);
+			root = sqrtf((m.Get(i, i) - (m.Get(j, j) + m.Get(k, k))) + 1.0f);
 
 			float* apkQuat[3] = { &_x, &_y, &_z };
 			*apkQuat[i] = 0.5f * root;
 
 			root = 0.5f / root;
 
-			_w = (m[k][j] - m[j][k]) * root;
+			_w = (m.Get(k, j) - m.Get(j, k)) * root;
 
-			*apkQuat[j] = (m[j][i] + m[i][j]) * root;
-			*apkQuat[k] = (m[k][i] + m[i][k]) * root;
+			*apkQuat[j] = (m.Get(j, i) + m.Get(i, j)) * root;
+			*apkQuat[k] = (m.Get(k, i) + m.Get(i, k)) * root;
 		}
 	}
 
@@ -205,9 +206,32 @@ namespace Math
 		return Multiply(scalar);
 	}
 
+	Vector3F Quaternion::operator * (const Vector3F& vector) const
+	{
+		Vector3F u(_x, _y, _z);
+		float s = _w;
+
+		return 2.0f * Math::DotProduct(u, vector) * u + (s * s - Math::DotProduct(u, u)) * vector + 2.0f * s * Math::Cross(u, vector);
+	}
+
 	/// <summary>Умножает указанный скаляр на данный кватернион.</summary>
 	Quaternion Quaternion::Multiply(const float scalar) const
 	{
 		return Quaternion(_x * scalar, _y * scalar, _z * scalar, _w * scalar);
+	}
+
+	Vector3F Quaternion::GetForward(void) const
+	{
+		return Vector3F(-2 * (_x * _z + _w * _y), -2 * (_y * _z - _w * _x), -1 + 2 * (_x * _x + _y * _y));
+	}
+
+	Vector3F Quaternion::GetUp(void) const
+	{
+		return Vector3F(2 * (_x * _y - _w * _z), 1 - 2 * (_x * _x + _z * _z), 2 * (_y * _z + _w * _x));
+	}
+
+	Vector3F Quaternion::GetRight(void) const
+	{
+		return Vector3F(1 - 2 * (_y * _y + _z * _z), 2 * (_x * _y + _w * _z), 2 * (_x * _z - _w * _y));
 	}
 }

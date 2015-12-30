@@ -9,27 +9,7 @@ namespace Gapi
 	class ShaderProgram : public IShaderBase
 	{
 	public:
-		static UInt GetShaderType(SHADERTYPES type);
-
-		static PFNGLCREATEPROGRAMOBJECTARBPROC glCreateProgramObjectARB;
-		static PFNGLDELETEPROGRAMSARBPROC glDeleteProgramsARB;
-		static PFNGLATTACHOBJECTARBPROC glAttachObjectARB;
-		static PFNGLDETACHOBJECTARBPROC glDetachObjectARB;
-		static PFNGLLINKPROGRAMARBPROC glLinkProgramARB;
-		static PFNGLUSEPROGRAMOBJECTARBPROC glUseProgramObjectARB;
-		static PFNGLCREATESHADEROBJECTARBPROC glCreateShaderObjectARB;
-		static PFNGLDELETEOBJECTARBPROC glDeleteObjectARB;
-		static PFNGLSHADERSOURCEARBPROC glShaderSourceARB;
-		static PFNGLCOMPILESHADERARBPROC glCompileShaderARB;
-		static PFNGLVALIDATEPROGRAMARBPROC glValidateProgramARB;
-		static PFNGLGETATTRIBLOCATIONARBPROC glGetAttribLocationARB;
-		static PFNGLGETUNIFORMLOCATIONARBPROC glGetUniformLocationARB;
-		static PFNGLUNIFORMMATRIX4FVARBPROC glUniformMatrix4fvARB;
-		static PFNGLUNIFORM3FARBPROC glUniform3fARB;
-		static PFNGLUNIFORM4FARBPROC glUniform4fARB;
-
-		static PFNGLGETOBJECTPARAMETERIVARBPROC glGetObjectParameterivARB;
-		static PFNGLGETINFOLOGARBPROC glGetInfoLogARB;
+		static UInt GetShaderType(SHADER_TYPE type);
 
 		/// <summary>Конструктор класса.</summary>
 		ShaderProgram(void);
@@ -43,7 +23,7 @@ namespace Gapi
 
 		virtual void Destroy(void);
 
-		virtual UInt Compile(SHADERTYPES type, const char* source);
+		virtual UInt Compile(SHADER_TYPE type, std::string source);
 
 		virtual bool Attach(std::vector<UInt> shaders);
 
@@ -57,27 +37,32 @@ namespace Gapi
 
 		virtual void SetUniformMatrix4(int location, bool transpose, const void* value);
 
-		virtual void SetUniform3f(int location, int x, int y, int z);
+		virtual void SetUniform1I(int location, int value);
 
-		virtual void SetUniform4f(int location, int x, int y, int z, int w);
+		virtual void SetUniform3F(int location, float x, float y, float z);
+
+		virtual void SetUniform4F(int location, float x, float y, float z, float w);
+
+		virtual void BindVertexAttributeArray(const char* name, UInt index, int size, UInt type, int stride, void* pointer);
+
+		virtual void BindClientStates(void);
+
+		virtual void UnbindClientStates(void);
 
 		virtual void Bind(void);
 
 		virtual void Unbind(void);
 
-		virtual UInt GetShaderProgram(void) {
-			return programIDs[0];
-		}
+		virtual UInt GetShaderProgram(void);
 
 	protected:
 		bool CheckStatus(UInt object, UInt name);
 
 	private:
-		std::vector<GLhandleARB> programIDs;
+		GLhandleARB _programID;
 
-		UInt program;
-		UInt vertexShader;
-		UInt pixelShader;
+		UInt _vertexShaderID;
+		UInt _fragmentShaderID;
 	};
 }
 

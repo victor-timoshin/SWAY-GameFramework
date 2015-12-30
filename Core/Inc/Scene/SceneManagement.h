@@ -21,9 +21,9 @@ namespace Scene
 		virtual void FrameStarted(OIS::IInputBase* event, float timeStep);
 		virtual void FrameEnded();
 
-		virtual void ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
+		virtual void ChangeState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
 
-		virtual void PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
+		virtual void PushState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
 
 		virtual void PopState(void);
 

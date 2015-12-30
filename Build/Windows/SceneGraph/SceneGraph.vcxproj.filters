@@ -30,6 +30,12 @@
     <ClInclude Include="..\..\..\SceneGraph\Inc\SceneNodeQueue.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SceneGraph\Inc\Light.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SceneGraph\Inc\Sprite.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\SceneGraph\Src\SceneComponent.cpp">
@@ -45,6 +51,12 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\SceneGraph\Src\SceneNodeQueue.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SceneGraph\Src\Light.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SceneGraph\Src\Sprite.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

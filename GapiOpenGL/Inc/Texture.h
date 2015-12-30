@@ -2,6 +2,7 @@
 #define TEXTURE_H
 
 #include "../../SDK/Gapi/TextureBase.h"
+#include "../../SDK/Gapi/TextureTarget.h"
 #include "../../GapiOpenGL/StdAfx.h"
 
 namespace Gapi
@@ -9,7 +10,12 @@ namespace Gapi
 	class Texture : public ITextureBase
 	{
 	public:
-		static PFNGLACTIVETEXTUREPROC glActiveTextureARB;
+		static UInt GetTextureFormat(Gapi::TEXTURE_FORMAT format);
+
+		static UInt GetTextureTarget(Gapi::TEXTURE_TARGET target);
+		static std::string GetTextureTargetToString(UInt target);
+
+		static UInt GetMipmapHint(Gapi::MIPMAPHINT hint);
 
 		/// <summary>Конструктор класса.</summary>
 		Texture(void);
@@ -17,9 +23,19 @@ namespace Gapi
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Texture(void);
 
-		virtual void CreateFromMemory(const void* data, int width, int height, TEXTURE_FORMATS format);
+		virtual void Load(Gapi::PTEXTURE_DESCRIPTION textureDesc);
 
-		virtual void Create(int format, int width, int height, const void* data, int mipCount);
+		virtual void CreateNullTexture(int width, int height);
+
+		virtual void CreateFromMemory(const void* data, int width, int height, TEXTURE_FORMAT format);
+
+		virtual void Upload(int level, int xOffset, int yOffset, int width, int height, TEXTURE_FORMAT format, const void* pixels);
+
+		virtual void GenerateMipmaps(Gapi::MIPMAPHINT hint);
+
+		virtual void SetMipmapRange(int minLevel, int maxLevel);
+
+		virtual bool HasMipmapped(void) const;
 
 		virtual void SetActive(int slot);
 
@@ -27,13 +43,25 @@ namespace Gapi
 
 		virtual void Unbind(void);
 
-		virtual void SetPixelStore(UInt param);
+		virtual void SetUnpackAlignement(UInt param);
 
+		/// <summary>Получает уникальный идентификатор.</summary>
 		virtual UInt GetID(void) const;
+		
+		/// <summary>Получает ширину текстуры.</summary>
+		virtual UInt GetWidth(void) const;
+
+		/// <summary>Получает высоту текстуры.</summary>
+		virtual UInt GetHeight(void) const;
+
+		virtual bool IsValid(void) const;
 
 	private:
-		UInt textureID;
-		UByte* pixels;
+		UInt _textureID;
+		UByte* _pixels;
+
+		bool _mipmapped;
+		bool _compressed;
 	};
 }
 

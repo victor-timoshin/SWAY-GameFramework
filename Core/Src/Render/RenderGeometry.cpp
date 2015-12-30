@@ -1,67 +1,108 @@
-#include "../../../Core/Inc/Render/RenderGeometry.h"
+﻿#include "../../../Core/Inc/Render/RenderGeometry.h"
+#include "../../../Core/Inc/Render/Material.h"
 
 namespace Core
 {
 	namespace Render
 	{
-		/// <summary>����������� ������.</summary>
+		/// <summary>Конструктор класса.</summary>
+		/// <param name="renderable">Указатель на базовый класс.</param>
 		RenderGeometry::RenderGeometry(Scene::IRenderableBase* renderable) : IRenderGeometryBase(renderable)
-			, renderableComponent(renderable), vertexBuffer(NULL), indexBuffer(NULL), instanceId(-1) {}
+			, _renderableComponent(renderable), _vertexBuffer(nullptr), _indexBuffer(nullptr), _instanceId(-1)
+		{
+		}
 
-		/// <summary>���������� ������.</summary>
+		/// <summary>Деструктор класса.</summary>
 		RenderGeometry::~RenderGeometry(void)
 		{
-			SAFE_DELETE(indexBuffer);
-			SAFE_DELETE(vertexBuffer);
+			SAFE_DELETE(_indexBuffer);
+			SAFE_DELETE(_vertexBuffer);
 		}
 
+		/// <summary>Строит геометрию.</summary>
+		/// <param name="library">Указатель на хенд графической библиотеки.</param>
 		void RenderGeometry::BuildVBOs(void* library)
 		{
-			const Scene::LGEOMETRYPACKET& geometryPacket = renderableComponent->GetGeometryPacket();
+			const Scene::LGEOMETRYPACKET& geometryPacket = _renderableComponent->GetGeometryPacket();
 
-			if (geometryPacket.vertices != NULL && geometryPacket.numVertices != 0)
+			if (geometryPacket.vertices != nullptr AND geometryPacket.numVertices != 0)
 			{
 				typedef Gapi::IBufferBase* VertexBufferCallback(void);
-				vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
-				vertexBuffer->SetVertexDeclaration((Gapi::PVERTEX_ELEMENT_DESC)&geometryPacket.elementDesc[0], geometryPacket.elementDesc.size());
-				vertexBuffer->Create(Gapi::BUFFERTYPES::EBT_VERTEX, geometryPacket.byteStride, geometryPacket.numVertices, Gapi::BUFFER_USAGES::EBU_STATIC);
+				_vertexBuffer = reinterpret_cast<VertexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
+				_vertexBuffer->SetVertexDeclaration(geometryPacket.elements);
+				_vertexBuffer->Create(Gapi::BUFFER_TYPE::Vertex, geometryPacket.byteStride, geometryPacket.numVertices, Gapi::BUFFER_USAGE::Static);
 
-				void* lockedVertexData = vertexBuffer->Lock();
-				memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * geometryPacket.byteStride);
-				vertexBuffer->Unlock();
+				void* lockedVertexData = _vertexBuffer->Map();
+				if (lockedVertexData != nullptr)
+				{
+					memcpy(lockedVertexData, geometryPacket.vertices, geometryPacket.numVertices * geometryPacket.byteStride);
+					_vertexBuffer->Unmap();
+				}
 			}
 
-			if (geometryPacket.indices != NULL && geometryPacket.numIndices != 0)
+			if (geometryPacket.indices != nullptr AND geometryPacket.numIndices != 0)
 			{
 				typedef Gapi::IBufferBase* IndexBufferCallback(void);
-				indexBuffer = reinterpret_cast<IndexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
-				indexBuffer->Create(Gapi::BUFFERTYPES::EBT_INDEX, sizeof(UByte), geometryPacket.numIndices, Gapi::BUFFER_USAGES::EBU_STATIC);
+				_indexBuffer = reinterpret_cast<IndexBufferCallback*>(GetProcAddress((HMODULE)library, "RegisterBuffer"))();
+				_indexBuffer->Create(Gapi::BUFFER_TYPE::Index, sizeof(UByte), geometryPacket.numIndices, Gapi::BUFFER_USAGE::Static);
 
-				void* lockedIndexData = indexBuffer->Lock();
-				memcpy(lockedIndexData, geometryPacket.indices, geometryPacket.numIndices * sizeof(UByte));
-				indexBuffer->Unlock();
+				void* lockedIndexData = _indexBuffer->Map();
+				if (lockedIndexData != nullptr)
+				{
+					memcpy(lockedIndexData, geometryPacket.indices, geometryPacket.numIndices * sizeof(UByte));
+					_indexBuffer->Unmap();
+				}
 			}
 		}
 
-		void RenderGeometry::Draw(void)
+		/// <summary>Отрисовывает геометрию.</summary>
+		void RenderGeometry::Draw(Scene::ICameraBase* camera)
 		{
-			const Scene::LGEOMETRYPACKET& geometryPacket = renderableComponent->GetGeometryPacket();
-			vertexBuffer->Render(geometryPacket.primitiveType, indexBuffer, geometryPacket.numVertices, geometryPacket.numPrimitives);
+			const Scene::LGEOMETRYPACKET& geometryPacket = _renderableComponent->GetGeometryPacket();
+			const Scene::LATTRIBUTE_PACKET& attributePacket = _renderableComponent->GetAttributePacket();
+
+			_lineDebug->AddLineAABB(attributePacket.aabb);
+
+			int modelMatrixLocation = static_cast<Material*>(_material)->GetShader()->GetUniformLocation("ModelMatrix");
+			int viewMatrixLocation = static_cast<Material*>(_material)->GetShader()->GetUniformLocation("ViewMatrix");
+			int projectionMatrixLocation = static_cast<Material*>(_material)->GetShader()->GetUniformLocation("ProjectionMatrix");
+			int textureUnitLocation = static_cast<Material*>(_material)->GetShader()->GetUniformLocation("DiffuseTexture");
+
+			_material->Bind();
+
+			static_cast<Material*>(_material)->GetShader()->SetUniformMatrix4(modelMatrixLocation, true, &attributePacket.modelMatrix);
+			static_cast<Material*>(_material)->GetShader()->SetUniformMatrix4(viewMatrixLocation, true, &camera->GetViewMatrix());
+			static_cast<Material*>(_material)->GetShader()->SetUniformMatrix4(projectionMatrixLocation, true, &camera->GetProjectionMatrix());
+			static_cast<Material*>(_material)->GetShader()->SetUniform1I(textureUnitLocation, 0/*static_cast<Material*>(material)->GetTexture()->GetID()*/);
+
+			_vertexBuffer->Render(geometryPacket.primitiveType, _indexBuffer, geometryPacket.numVertices, geometryPacket.numPrimitives, static_cast<Material*>(_material)->GetShader()->GetShaderProgram());
+
+			_material->Unbind();
+		}
+
+		void RenderGeometry::SetMaterial(IMaterialBase* material)
+		{
+			_material = material;
+		}
+
+		IMaterialBase* RenderGeometry::GetMaterial(void) const
+		{
+			return _material;
 		}
 
 		void RenderGeometry::SetInstanceId(UInt id)
 		{
-			instanceId = id;
+			_instanceId = id;
 		}
 
 		UInt RenderGeometry::GetInstanceId(void)
 		{
-			return instanceId;
+			return _instanceId;
 		}
 
 		Scene::IRenderableBase* RenderGeometry::GetRenderableComponent(void)
 		{
-			return renderableComponent;
+			return _renderableComponent;
 		}
 	}
 }

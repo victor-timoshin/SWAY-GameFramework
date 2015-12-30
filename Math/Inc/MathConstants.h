@@ -1,0 +1,12 @@
+#ifndef MATHCONSTANTS_H
+#define MATHCONSTANTS_H
+
+#define MATH_REAL_PI     3.141592654f
+#define MATH_FLOAT_SMALL 1.0e-37f
+#define MATH_TOLERANCE   2e-37f
+#define MATH_EPSILON     0.03125f
+
+#define MATH_DEGTORAD(x) ((x * MATH_REAL_PI) / 180.0)
+#define MATH_RADTODEG(x) ((180.0 * x) / MATH_REAL_PI)
+
+#endif // MATHCONSTANTS_H

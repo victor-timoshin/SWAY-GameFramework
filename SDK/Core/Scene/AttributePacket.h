@@ -1,22 +1,22 @@
 #ifndef ATTRIBUTEPACET_H
 #define ATTRIBUTEPACET_H
 
-#include "../../../Math/Inc/BoundingVolume.h"
-#include "../../../Math/Inc/Matrix4.h"
+#include "../../../Math/Inc/Matrix4F.h"
+#include "../../../Math/Inc/BoundingBox.h"
 
 namespace Scene
 {
 	typedef struct AttributePacket
 	{
-		Math::Matrix4 modelMatrix;
-		Math::BoundingVolume boundingBox;
+		Math::Matrix4F modelMatrix;
+		Math::BoundingBox aabb;
 
-		bool IsValue()
+		bool IsValue(void)
 		{
 			return true;
 		}
 
-	} LATTRIBUTEPACKET, *PATTRIBUTEPACKET;
+	} LATTRIBUTE_PACKET, *PATTRIBUTE_PACKET;
 }
 
 #endif // ATTRIBUTEPACET_H

@@ -1,64 +1,58 @@
-#include "../Inc/SceneComponent.h"
+п»ї#include "../Inc/SceneComponent.h"
 #include "../../SDK/SceneGraph/SceneNodeBase.h"
 
 namespace Scene
 {
-	/// <summary>Конструктор класса.</summary>
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	SceneComponent::SceneComponent(void)
-		: attachedSceneNode(NULL)
+		: _attachedSceneNode(nullptr)
 	{
 	}
 
 	void SceneComponent::Notify(ISceneNodeBase* sceneNode)
 	{
-		attachedSceneNode = sceneNode;
+		_attachedSceneNode = sceneNode;
 	}
 
 	ISceneNodeBase* SceneComponent::GetSceneNode(void)
 	{
-		return attachedSceneNode;
+		return _attachedSceneNode;
 	}
 
-	LATTRIBUTEPACKET SceneComponent::GetAttributePacket(void)
+	LATTRIBUTE_PACKET SceneComponent::GetAttributePacket(void)
 	{
-		Math::Matrix4 worldMatrix;
-		Math::BoundingVolume boundingBox;
+		Math::Matrix4F worldMatrix;
+		Math::BoundingBox aabb;
 
-		if (attachedSceneNode != NULL)
-			worldMatrix = attachedSceneNode->GetWorldMatrixTransform();
+		if (_attachedSceneNode != nullptr)
+			worldMatrix = _attachedSceneNode->GetWorldMatrix();
 		else
-			worldMatrix.Identity();
+			worldMatrix.SetIdentity();
 
-		for (UInt i = 0; i < geometryPacket.numVertices; i++)
-		{
-			float* vertices = &geometryPacket.vertices[i];
-			Math::Vector3 totalSize = Math::Vector3(
-				vertices[0] * worldMatrix[0][0],
-				vertices[1] * worldMatrix[1][1],
-				vertices[2] * worldMatrix[2][2]);
+		_attributePacket.modelMatrix = worldMatrix;
 
-			boundingBox.AddPoint(totalSize);
-		}
+		for (UInt i = 0; i < _geometryPacket.numVertices; i++)
+			aabb.Include(_geometryPacket.verticesEx[i].GetPosition());
 
-		attributePacket.modelMatrix = worldMatrix;
-		attributePacket.boundingBox = boundingBox;
+		_attributePacket.aabb = aabb;
+		_attributePacket.aabb.Transform(worldMatrix);
 
-		return attributePacket;
+		return _attributePacket;
 	}
 
-	void SceneComponent::SetAttributePacket(LATTRIBUTEPACKET packet)
+	void SceneComponent::SetAttributePacket(LATTRIBUTE_PACKET packet)
 	{
-		attributePacket = packet;
+		_attributePacket = packet;
 	}
 
 	LGEOMETRYPACKET SceneComponent::GetGeometryPacket(void)
 	{
-		return geometryPacket;
+		return _geometryPacket;
 	}
 
 	void SceneComponent::SetGeometryPacket(LGEOMETRYPACKET packet)
 	{
-		geometryPacket = packet;
+		_geometryPacket = packet;
 	}
 
 	ISceneComponentBase* RegisterSceneComponent(void)

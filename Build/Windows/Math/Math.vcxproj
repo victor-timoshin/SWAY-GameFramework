@@ -71,26 +71,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\..\Math\Inc\BoundingBox.inl" />
+    <None Include="..\..\..\Math\Inc\Matrix4F.inl" />
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Math\Src\BoundingVolume.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\BoundingBox.cpp" />
     <ClCompile Include="..\..\..\Math\Src\Frustum.cpp" />
     <ClCompile Include="..\..\..\Math\Src\Color.cpp" />
-    <ClCompile Include="..\..\..\Math\Src\Matrix4.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Matrix4F.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Ray.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Size.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Rect.cpp" />
     <ClCompile Include="..\..\..\Math\Src\Quaternion.cpp" />
+    <ClCompile Include="..\..\..\Math\Src\Point.cpp" />
     <ClCompile Include="..\..\..\Math\Src\Vertex.cpp" />
     <ClCompile Include="..\..\..\Math\Src\MathCommon.cpp" />
-    <ClCompile Include="..\..\..\Math\Src\Vector2.cpp" />
-    <ClCompile Include="..\..\..\Math\Src\Vector3.cpp" />
     <ClCompile Include="..\..\..\Math\Src\Vector4.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Math\Inc\BoundingVolume.h" />
+    <ClInclude Include="..\..\..\Math\Inc\BoundingBox.h" />
+    <ClInclude Include="..\..\..\Math\Inc\FrustumAspect.h" />
+    <ClInclude Include="..\..\..\Math\Inc\FrustumSide.h" />
     <ClInclude Include="..\..\..\Math\Inc\Frustum.h" />
-    <ClInclude Include="..\..\..\Math\Inc\Matrix4.h" />
+    <ClInclude Include="..\..\..\Math\Inc\MathConstants.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Matrix4F.h" />
     <ClInclude Include="..\..\..\Math\Inc\Color.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Face.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Ray.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Plane.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Size.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Rect.h" />
     <ClInclude Include="..\..\..\Math\Inc\Quaternion.h" />
+    <ClInclude Include="..\..\..\Math\Inc\Point.h" />
     <ClInclude Include="..\..\..\Math\Inc\Vertex.h" />
     <ClInclude Include="..\..\..\Math\Inc\MathCommon.h" />
     <ClInclude Include="..\..\..\Math\Inc\Vector2.h" />

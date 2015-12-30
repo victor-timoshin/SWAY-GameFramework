@@ -27,7 +27,11 @@ namespace Gapi
 
 		virtual void DoneCurrentContext(void) = 0;
 
-		virtual void Clear(CLEARFLAGS flags) = 0;
+		virtual void Clear(CLEARFLAG flags) = 0;
+
+		virtual void SetClearDepth(int value) = 0;
+
+		virtual void SetClearStencil(int value) = 0;
 
 		virtual void SetClearColor(float red, float green, float blue, float alpha) const = 0;
 
@@ -41,17 +45,17 @@ namespace Gapi
 
 		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height) = 0;
 
-		virtual void SetCullFormat(CULL_FORMATS format) = 0;
+		virtual void SetCullFormat(CULL_FORMAT format) = 0;
 
 #pragma region Capabilities
 
-		virtual const char* GetGlVersionString(void) = 0;
+		virtual const char* GetVersion(void) = 0;
 
-		virtual const char* GetGlVendorString(void) = 0;
+		virtual const char* GetVendorName(void) = 0;
 
-		virtual const char* GetGlRendererString(void) = 0;
+		virtual const char* GetRendererName(void) = 0;
 
-		virtual const char* GetGlslVersionString(void) = 0;
+		virtual const char* GetGLSLVersion(void) = 0;
 
 		virtual void GetGlInfo(std::ostream& ostr) = 0;
 

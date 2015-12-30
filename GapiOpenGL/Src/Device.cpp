@@ -1,10 +1,14 @@
 ﻿#include "../../GapiOpenGL/Inc/Device.h"
+#include "../../GapiOpenGL/Inc/WrapFunc.h"
 
 namespace Gapi
 {
 	/// <summary>Конструктор класса.</summary>
+	/// <param name="handle">Хендл окна.</param>
 	Device::Device(HWND handle) : IDeviceBase(handle)
-		, windowHandle(handle), deviceContext(NULL), renderContext(NULL)
+		, windowHandle(handle)
+		, deviceContext(nullptr)
+		, renderContext(nullptr)
 	{
 	}
 
@@ -54,36 +58,30 @@ namespace Gapi
 			return false;
 		}
 
-		glVersion = (const char*)glGetString(GL_VERSION);
-		glVendor = (const char*)glGetString(GL_VENDOR);
-		glRenderer = (const char*)glGetString(GL_RENDERER);
-		glslVersion = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
+		_version = (const char*)glGetString(GL_VERSION);
+		_vendorName = (const char*)glGetString(GL_VENDOR);
+		_rendererName = (const char*)glGetString(GL_RENDERER);
+		_GLSLVersion = (const char*)glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 		glGetIntegerv(GL_MAJOR_VERSION, &majorVersion);
 		glGetIntegerv(GL_MINOR_VERSION, &minorVersion);
 
-#if defined(DEBUG) || defined(_DEBUG)
-		(void)IsExtensionSupported("GL_ARB_fragment_program"); // Fragment program support.
-		(void)IsExtensionSupported("GL_ARB_vertex_program"); // Vertex program support.
-		(void)IsExtensionSupported("GL_ARB_vertex_buffer_object"); // Vertex buffer object support.
-		(void)IsExtensionSupported("GL_ARB_shader_objects"); // GLSL support.
-		(void)IsExtensionSupported("GL_ARB_multitexture"); // Multitexture support.
-		(void)IsExtensionSupported("GL_ARB_texture_compression"); // Compressed texture support.
-#endif
+		// Инициализируем расширения.
+		InitializeExtensions();
 
 		return true;
 	}
 
 	void Device::Destroy(void)
 	{
-		if (renderContext != NULL)
+		if (renderContext != nullptr)
 		{
 			wglMakeCurrent(deviceContext, 0);
 			wglDeleteContext(renderContext);
-			renderContext = NULL;
+			renderContext = nullptr;
 		}
 
-		if (deviceContext != NULL)
+		if (deviceContext != nullptr)
 			ReleaseDC(windowHandle, deviceContext);
 	}
 
@@ -92,42 +90,71 @@ namespace Gapi
 		if (deviceContext && wglGetCurrentContext() != renderContext)
 			wglMakeCurrent(deviceContext, renderContext);
 
-		CHECK_GLERROR();
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
 	void Device::ResetCurrentContext(void)
 	{
-		wglMakeCurrent(deviceContext, NULL);
-		CHECK_GLERROR();
+		wglMakeCurrent(deviceContext, nullptr);
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
 	void Device::DoneCurrentContext(void)
 	{
-		wglMakeCurrent(NULL, NULL);
-		CHECK_GLERROR();
+		wglMakeCurrent(nullptr, nullptr);
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
-	void Device::Clear(CLEARFLAGS flags)
+	void Device::Clear(CLEARFLAG flags)
 	{
 		glShadeModel(GL_SMOOTH);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 
-		glEnable(GL_DEPTH_TEST);
-		//glEnable(GL_LIGHTING);
-		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
-
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		GLfloat lightModelAmbient[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lightModelAmbient);
+
+		GLfloat lightAmbient[] = { 0.25f, 0.25f, 0.25f, 1.0f };
+		glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+
+		GLfloat lightDiffuse[] = { 0.75f, 0.75f, 0.75f, 1.0f };
+		glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuse);
+
+		GLfloat materialAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, materialAmbient);
+
+		GLfloat materialDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, materialDiffuse);
+
+		GLfloat lightPosition[] = { 0.0f, 0.0f, 2.5f, 1.0f };
+		glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+
+		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHT0);
+		glEnable(GL_LIGHTING);
 		glEnable(GL_COLOR_MATERIAL);
 
-		glClearStencil(0);
-		glClearDepth(1.0f);
+		SetClearStencil(0);
+		SetClearDepth(1.0f);
 
 		glDepthFunc(GL_LEQUAL);
 
-		glClear((flags & CLEARFLAGS::ECF_COLOR ? GL_COLOR_BUFFER_BIT : 0) | (flags & CLEARFLAGS::ECF_DEPTH ? GL_DEPTH_BUFFER_BIT : 0) | (flags & CLEARFLAGS::ECF_STENCIL ? GL_STENCIL_BUFFER_BIT : 0));
+		glClear((flags & CLEARFLAG::Color ? GL_COLOR_BUFFER_BIT : 0) | (flags & CLEARFLAG::Depth ? GL_DEPTH_BUFFER_BIT : 0) | (flags & CLEARFLAG::Stencil ? GL_STENCIL_BUFFER_BIT : 0));
+	}
+
+	void Device::SetClearDepth(int value)
+	{
+		glClearDepth(value);
+		//glClear(GL_DEPTH_BUFFER_BIT);
+	}
+
+	void Device::SetClearStencil(int value)
+	{
+		glClearStencil(value);
+		//glClear(GL_STENCIL_BUFFER_BIT);
 	}
 
 	void Device::SetClearColor(float red, float green, float blue, float alpha) const
@@ -137,25 +164,25 @@ namespace Gapi
 
 	void Device::SetClearColor(const Math::Color& color) const
 	{
-		glClearColor(color.GetRedChannel(), color.GetGreenChannel(), color.GetBlueChannel(), color.GetAlphaChannel());
+		glClearColor(color.GetR(), color.GetG(), color.GetB(), color.GetA());
 	}
 
 	void Device::SwapChain(void)
 	{
 		SwapBuffers(deviceContext);
-		CHECK_GLERROR();
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
 	void Device::Flush(void)
 	{
 		glFlush();
-		CHECK_GLERROR();
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
 	void Device::SetViewport(UInt width, UInt height)
 	{
 		glViewport(0, 0, width, height);
-		CHECK_GLERROR();
+		CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 	}
 
 	void Device::SetScissor(UInt x, UInt y, UInt width, UInt height)
@@ -163,21 +190,21 @@ namespace Gapi
 		glScissor(x, y, width, height);
 	}
 
-	void Device::SetCullFormat(CULL_FORMATS format)
+	void Device::SetCullFormat(CULL_FORMAT format)
 	{
 		switch (format)
 		{
-		case CULL_FORMATS::ECF_CW:
+		case CULL_FORMAT::ECF_CW:
 			glEnable(GL_CULL_FACE);
 			glFrontFace(GL_CW);
 			break;
 
-		case CULL_FORMATS::ECF_CCW:
+		case CULL_FORMAT::ECF_CCW:
 			glEnable(GL_CULL_FACE);
 			glFrontFace(GL_CCW);
 			break;
 
-		case CULL_FORMATS::ECF_NONE:
+		case CULL_FORMAT::ECF_NONE:
 			glDisable(GL_CULL_FACE);
 			break;
 		}
@@ -185,50 +212,37 @@ namespace Gapi
 
 #pragma region Capabilities
 
-	const char* Device::GetGlVersionString(void)
+	const char* Device::GetVersion(void)
 	{
-		sscanf_s(glVersion, isdigit(*glVersion) ? "%d.%d" : "%*[^0-9]%d.%d", &majorVersion, &minorVersion);
-		return glVersion;
+		sscanf_s(_version, isdigit(*_version) ? "%d.%d" : "%*[^0-9]%d.%d", &majorVersion, &minorVersion);
+		return _version;
 	}
 
-	const char* Device::GetGlVendorString(void)
+	const char* Device::GetVendorName(void)
 	{
-		return glVendor;
+		return _vendorName;
 	}
 
-	const char* Device::GetGlRendererString(void)
+	const char* Device::GetRendererName(void)
 	{
-		return glRenderer;
+		return _rendererName;
 	}
 
-	const char* Device::GetGlslVersionString(void)
+	const char* Device::GetGLSLVersion(void)
 	{
-		return glslVersion;
+		return _GLSLVersion;
 	}
 
 	void Device::GetGlInfo(std::ostream& ostr)
 	{
 		ostr << std::endl;
-		ostr << "GL_VERSION: " << glVersion << std::endl;
-		ostr << "GL_VENDOR: " << glVendor << std::endl;
-		ostr << "GL_RENDERER: " << glRenderer << std::endl;
-		ostr << "GL_SHADING_LANGUAGE_VERSION: " << glslVersion << std::endl;
+		ostr << "GL_VERSION: " << GetVersion() << std::endl;
+		ostr << "GL_VENDOR: " << GetVendorName() << std::endl;
+		ostr << "GL_RENDERER: " << GetRendererName() << std::endl;
+		ostr << "GL_SHADING_LANGUAGE_VERSION: " << GetGLSLVersion() << std::endl;
 	}
 
 #pragma endregion
-
-	bool Device::IsExtensionSupported(const char* name)
-	{
-		/* Get all supported extensions. */
-		const char* extensions = (const char*)glGetString(GL_EXTENSIONS);
-		if (strstr(extensions, name) == NULL)
-		{
-			Utils::StreamLoggerWrite(Utils::LOGLEVELS::ELL_ERROR, "Extension %s is not supported.", name);
-			return false;
-		}
-
-		return true;
-	}
 
 	IDeviceBase* RegisterDevice(HWND handle)
 	{

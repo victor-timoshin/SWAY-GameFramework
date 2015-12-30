@@ -29,7 +29,7 @@ namespace Utils
 			if (i != children.end() && i->second == child)
 			{
 				children.erase(i);
-				child->SetParentNode(0L);
+				child->SetParentNode(nullptr);
 			}
 		}
 
@@ -37,10 +37,10 @@ namespace Utils
 		{
 			for (typename ICollectionMap::iterator i = children.begin(); i != children.end(); ++i)
 			{
-				TYPE* Object = i->second;
+				TYPE* object = i->second;
 
-				Object->SetParentNode(0L);
-				delete Object;
+				object->SetParentNode(nullptr);
+				delete object;
 			}
 
 			children.clear();
@@ -52,7 +52,7 @@ namespace Utils
 			if (i != children.end())
 				return i->second;
 
-			return 0L;
+			return nullptr;
 		}
 
 		unsigned int GetChildCount(void)
@@ -80,7 +80,7 @@ namespace Utils
 			return nodeName;
 		}
 
-	protected:
+	public:
 		typedef std::map<std::string, TYPE*> ICollectionMap;
 		ICollectionMap children;
 		TYPE* parentNode;

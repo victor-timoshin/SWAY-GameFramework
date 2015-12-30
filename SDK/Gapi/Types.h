@@ -31,6 +31,13 @@ namespace Gapi
 		TYPE_DISCARD = 0x14EC,
 		TYPE_NOOVERWRITE = 0x43D6
 	} MAP_TYPE;
+
+	typedef enum MipmapHint
+	{
+		None    = 0xE630,
+		Fastest = 0x0EB0,
+		Nicest  = 0xC94B
+	} MIPMAPHINT;
 }
 
 #endif // TYPES_H

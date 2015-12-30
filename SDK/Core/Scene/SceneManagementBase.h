@@ -1,4 +1,4 @@
-#ifndef SCENEMANAGEMENTBASE_H
+п»ї#ifndef SCENEMANAGEMENTBASE_H
 #define SCENEMANAGEMENTBASE_H
 
 #include "../../OIS/InputBase.h"
@@ -13,19 +13,19 @@ namespace Scene
 	class ISceneManagementBase : public Utils::TSingleton<ISceneManagementBase>
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		ISceneManagementBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~ISceneManagementBase(void) {}
 
 		virtual void FrameStarted(OIS::IInputBase* event, float timeStep) = 0;
 
 		virtual void FrameEnded(void) = 0;
 
-		virtual void ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
+		virtual void ChangeState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
 
-		virtual void PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
+		virtual void PushState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
 
 		virtual void PopState(void) = 0;
 	};

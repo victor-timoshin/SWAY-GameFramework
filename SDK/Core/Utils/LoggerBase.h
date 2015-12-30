@@ -1,4 +1,4 @@
-#ifndef LOGGERBASE_H
+п»ї#ifndef LOGGERBASE_H
 #define LOGGERBASE_H
 
 #include "../../../SDK/Core/Utils/Singleton.h"
@@ -11,20 +11,20 @@ namespace Utils
 	class ILoggerBase : public Utils::TSingleton<ILoggerBase>
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="filename">Имя файла.</param>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="filename">РРјСЏ С„Р°Р№Р»Р°.</param>
 		ILoggerBase(const char* filename) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~ILoggerBase(void) {}
 
-		virtual void Write(LOGLEVELS level, const char* format, ...) = 0;
+		virtual void Write(LOG_LEVEL level, const char* format, ...) = 0;
 	};
 
 	CORE_API ILoggerBase* RegisterFileLogger(const char* fileName);
 	CORE_API ILoggerBase* RegisterStreamLogger(const char* fileName);
 
-	CORE_API void StreamLoggerWrite(LOGLEVELS level, const char* format, ...);
+	CORE_API void StreamLoggerWrite(LOG_LEVEL level, const char* format, ...);
 }
 
 #endif // LOGGERBASE_H

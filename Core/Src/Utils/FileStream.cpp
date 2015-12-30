@@ -1,25 +1,32 @@
-#include "../../../Core/Inc/Utils/FileStream.h"
+﻿#include "../../../Core/Inc/Utils/FileStream.h"
 
 namespace Core
 {
 	namespace Utils
 	{
-		/// <summary>����������� ������.</summary>
+		/// <summary>Конструктор класса.</summary>
 		FileStream::FileStream(void)
 			: file(0), numBytes(0)
 		{
 		}
 
-		/// <param name="filename">��� �����.</param>
-		void FileStream::Open(const char* filename, FILEMODES mode, bool binary)
+		/// <summary>Деструктор класса.</summary>
+		FileStream::~FileStream(void)
+		{
+		}
+
+		/// <summary>Открытие файла.</summary>
+		/// <param name="filename">Имя файла.</param>
+		/// <param name="mode">Режим открытия.</param>
+		void FileStream::Open(const char* filename, FILE_MODE mode, bool binary)
 		{
 			switch (mode)
 			{
-			case FILEMODES::EFM_READ:
+			case FILE_MODE::Read:
 				fopen_s(&file, filename, binary ? "rb" : "rt");
 				break;
 
-			case FILEMODES::EFM_WRITE:
+			case FILE_MODE::Write:
 				fopen_s(&file, filename, binary ? "wb" : "wt");
 				break;
 			}
@@ -27,6 +34,42 @@ namespace Core
 			fseek(file, 0L, SEEK_END);
 			numBytes = (unsigned int)ftell(file);
 			fseek(file, 0L, SEEK_SET);
+		}
+
+		/// <summary>Открытие файла.</summary>
+		/// <param name="filename">Имя файла.</param>
+		/// <param name="mode">Режим открытия.</param>
+		bool FileStream::OpenStream(const std::string& filename, STREAM_MODE mode)
+		{
+			//setlocale(LC_ALL, "rus");
+
+			std::ios::openmode openMode = std::ios::in; // Открыть файл для чтения.
+			if (mode == STREAM_MODE::Binary)
+				openMode |= std::ios::binary; // Открытие файла в двоичном режиме.
+
+			// Открываем файл для чтения.
+			in.open(filename.c_str(), openMode);
+
+			// Если во время открытия файла произошла ошибка.
+			if (in.fail())
+				return false;
+
+			return true;
+		}
+
+		void FileStream::CloseStream(void)
+		{
+			in.close();
+		}
+
+		bool FileStream::IsOpenStream(void)
+		{
+			return in.is_open();
+		}
+
+		std::ifstream& FileStream::GetStream(void)
+		{
+			return in;
 		}
 
 		void FileStream::Close(void)

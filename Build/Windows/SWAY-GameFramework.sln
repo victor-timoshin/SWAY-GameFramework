@@ -9,6 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SDK", "_SDK", "{D643DD03-23C9-427F-A4A9-57571D238E47}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\Conversion.h = ..\..\SDK\Conversion.h
 		..\..\SDK\Defines.h = ..\..\SDK\Defines.h
 		..\..\SDK\Platform.h = ..\..\SDK\Platform.h
 	EndProjectSection
@@ -32,10 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scene", "Scene", "{754B735D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{5E1EF28F-2406-4A4B-B640-E91B6DD8CDB1}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\SDK\Core\Utils\FileModes.h = ..\..\SDK\Core\Utils\FileModes.h
+		..\..\SDK\Core\Utils\File.h = ..\..\SDK\Core\Utils\File.h
+		..\..\SDK\Core\Utils\FileMode.h = ..\..\SDK\Core\Utils\FileMode.h
 		..\..\SDK\Core\Utils\Hierarchy.h = ..\..\SDK\Core\Utils\Hierarchy.h
 		..\..\SDK\Core\Utils\LoggerBase.h = ..\..\SDK\Core\Utils\LoggerBase.h
-		..\..\SDK\Core\Utils\LogLevels.h = ..\..\SDK\Core\Utils\LogLevels.h
+		..\..\SDK\Core\Utils\LogLevel.h = ..\..\SDK\Core\Utils\LogLevel.h
 		..\..\SDK\Core\Utils\Singleton.h = ..\..\SDK\Core\Utils\Singleton.h
 		..\..\SDK\Core\Utils\StreamBase.h = ..\..\SDK\Core\Utils\StreamBase.h
 	EndProjectSection
@@ -43,19 +45,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gapi", "Gapi", "{8A694952-CCDC-4331-855F-0AA2D46D8114}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\Gapi\BufferBase.h = ..\..\SDK\Gapi\BufferBase.h
-		..\..\SDK\Gapi\BufferTypes.h = ..\..\SDK\Gapi\BufferTypes.h
-		..\..\SDK\Gapi\BufferUsages.h = ..\..\SDK\Gapi\BufferUsages.h
-		..\..\SDK\Gapi\ClearFlags.h = ..\..\SDK\Gapi\ClearFlags.h
-		..\..\SDK\Gapi\CullFormats.h = ..\..\SDK\Gapi\CullFormats.h
+		..\..\SDK\Gapi\BufferType.h = ..\..\SDK\Gapi\BufferType.h
+		..\..\SDK\Gapi\BufferUsage.h = ..\..\SDK\Gapi\BufferUsage.h
+		..\..\SDK\Gapi\ClearFlag.h = ..\..\SDK\Gapi\ClearFlag.h
+		..\..\SDK\Gapi\CompressType.h = ..\..\SDK\Gapi\CompressType.h
+		..\..\SDK\Gapi\CullFormat.h = ..\..\SDK\Gapi\CullFormat.h
 		..\..\SDK\Gapi\DeviceBase.h = ..\..\SDK\Gapi\DeviceBase.h
-		..\..\SDK\Gapi\PrimitiveTypes.h = ..\..\SDK\Gapi\PrimitiveTypes.h
+		..\..\SDK\Gapi\FrameBufferBase.h = ..\..\SDK\Gapi\FrameBufferBase.h
+		..\..\SDK\Gapi\PrimitiveType.h = ..\..\SDK\Gapi\PrimitiveType.h
 		..\..\SDK\Gapi\ShaderBase.h = ..\..\SDK\Gapi\ShaderBase.h
-		..\..\SDK\Gapi\ShaderTypes.h = ..\..\SDK\Gapi\ShaderTypes.h
+		..\..\SDK\Gapi\ShaderType.h = ..\..\SDK\Gapi\ShaderType.h
 		..\..\SDK\Gapi\TextureBase.h = ..\..\SDK\Gapi\TextureBase.h
-		..\..\SDK\Gapi\TextureFormats.h = ..\..\SDK\Gapi\TextureFormats.h
+		..\..\SDK\Gapi\TextureDescription.h = ..\..\SDK\Gapi\TextureDescription.h
+		..\..\SDK\Gapi\TextureFilter.h = ..\..\SDK\Gapi\TextureFilter.h
+		..\..\SDK\Gapi\TextureFormat.h = ..\..\SDK\Gapi\TextureFormat.h
+		..\..\SDK\Gapi\TextureSamplerBase.h = ..\..\SDK\Gapi\TextureSamplerBase.h
+		..\..\SDK\Gapi\TextureTarget.h = ..\..\SDK\Gapi\TextureTarget.h
+		..\..\SDK\Gapi\TextureWrap.h = ..\..\SDK\Gapi\TextureWrap.h
 		..\..\SDK\Gapi\Types.h = ..\..\SDK\Gapi\Types.h
-		..\..\SDK\Gapi\VertexElementFormats.h = ..\..\SDK\Gapi\VertexElementFormats.h
-		..\..\SDK\Gapi\VertexElementTypes.h = ..\..\SDK\Gapi\VertexElementTypes.h
+		..\..\SDK\Gapi\VertexElementFormat.h = ..\..\SDK\Gapi\VertexElementFormat.h
+		..\..\SDK\Gapi\VertexElementType.h = ..\..\SDK\Gapi\VertexElementType.h
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{19B628F7-193A-4BFE-A7CA-0C8EE8587180}"
@@ -64,7 +73,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcx
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{EC6D06C1-C6FB-45E2-84C3-A89695881E30}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\SDK\System\MessageLoopStates.h = ..\..\SDK\System\MessageLoopStates.h
+		..\..\SDK\System\MessageLoopState.h = ..\..\SDK\System\MessageLoopState.h
+		..\..\SDK\System\TimerBase.h = ..\..\SDK\System\TimerBase.h
 		..\..\SDK\System\WindowBase.h = ..\..\SDK\System\WindowBase.h
 		..\..\SDK\System\WindowDesc.h = ..\..\SDK\System\WindowDesc.h
 		..\..\SDK\System\WindowModes.h = ..\..\SDK\System\WindowModes.h
@@ -75,8 +85,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OIS", "OIS", "{9325D1B1-F15D-42B0-BB16-34F2F8090FE1}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\OIS\InputBase.h = ..\..\SDK\OIS\InputBase.h
+		..\..\SDK\OIS\InputBinding.h = ..\..\SDK\OIS\InputBinding.h
 		..\..\SDK\OIS\Keyboard.h = ..\..\SDK\OIS\Keyboard.h
 		..\..\SDK\OIS\KeyCodes.h = ..\..\SDK\OIS\KeyCodes.h
+		..\..\SDK\OIS\Modifier.h = ..\..\SDK\OIS\Modifier.h
 		..\..\SDK\OIS\Mouse.h = ..\..\SDK\OIS\Mouse.h
 	EndProjectSection
 EndProject
@@ -85,6 +97,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SceneGraph", "SceneGraph", "{67B27693-2CAE-4263-B68D-E3712CD46E67}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\SceneGraph\CameraBase.h = ..\..\SDK\SceneGraph\CameraBase.h
+		..\..\SDK\SceneGraph\LightBase.h = ..\..\SDK\SceneGraph\LightBase.h
+		..\..\SDK\SceneGraph\ProjectionMode.h = ..\..\SDK\SceneGraph\ProjectionMode.h
 		..\..\SDK\SceneGraph\SceneComponentBase.h = ..\..\SDK\SceneGraph\SceneComponentBase.h
 		..\..\SDK\SceneGraph\SceneGraphBase.h = ..\..\SDK\SceneGraph\SceneGraphBase.h
 		..\..\SDK\SceneGraph\SceneNodeBase.h = ..\..\SDK\SceneGraph\SceneNodeBase.h
@@ -98,7 +112,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{9E22C380-C12D-473A-884E-46F80EF245DE}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\GUI\ControlBase.h = ..\..\SDK\GUI\ControlBase.h
+		..\..\SDK\GUI\Corner.h = ..\..\SDK\GUI\Corner.h
 		..\..\SDK\GUI\FontBase.h = ..\..\SDK\GUI\FontBase.h
+		..\..\SDK\GUI\FontManagerBase.h = ..\..\SDK\GUI\FontManagerBase.h
+		..\..\SDK\GUI\FontStyle.h = ..\..\SDK\GUI\FontStyle.h
+		..\..\SDK\GUI\HorizontalAlign.h = ..\..\SDK\GUI\HorizontalAlign.h
+		..\..\SDK\GUI\VerticalAlign.h = ..\..\SDK\GUI\VerticalAlign.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Imaging", "Imaging", "{9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\Core\Imaging\LoaderBase.h = ..\..\SDK\Core\Imaging\LoaderBase.h
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SapiOpenAL", "SapiOpenAL\SapiOpenAL.vcxproj", "{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sapi", "Sapi", "{73879476-87FE-409C-9EC2-3BF991609DCD}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\Sapi\DeviceBase.h = ..\..\SDK\Sapi\DeviceBase.h
 	EndProjectSection
 EndProject
 Global
@@ -135,6 +167,10 @@ Global
 		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Debug|Win32.Build.0 = Debug|Win32
 		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Release|Win32.ActiveCfg = Release|Win32
 		{BCE578B0-A0BD-4B35-9882-0E3C669F450D}.Release|Win32.Build.0 = Release|Win32
+		{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}.Debug|Win32.Build.0 = Debug|Win32
+		{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}.Release|Win32.ActiveCfg = Release|Win32
+		{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,5 +185,7 @@ Global
 		{9325D1B1-F15D-42B0-BB16-34F2F8090FE1} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{67B27693-2CAE-4263-B68D-E3712CD46E67} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{9E22C380-C12D-473A-884E-46F80EF245DE} = {D643DD03-23C9-427F-A4A9-57571D238E47}
+		{9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD} = {19B628F7-193A-4BFE-A7CA-0C8EE8587180}
+		{73879476-87FE-409C-9EC2-3BF991609DCD} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 	EndGlobalSection
 EndGlobal

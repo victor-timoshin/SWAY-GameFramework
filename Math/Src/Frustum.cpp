@@ -13,98 +13,115 @@ namespace Math
 	{
 	}
 
-	bool Frustum::ContainsBoundingVolume(Math::BoundingVolume& box, Math::Vector3& position)
+	/// <summary>Проверяет нахождения бокса в пирамиде видимости.</summary>
+	FRUSTUM_ASPECT Frustum::IsBoundingBoxInside(const BoundingBox& box) const
 	{
-		for (int i = 0; i < 6; i++)
+		Vector3F point;
+
+		Vector3F minPoint = box.GetMinPoint();
+		Vector3F maxPoint = box.GetMaxPoint();
+
+		for (int i = 0; i < MAX_NUM_FRUSTUM_PLANES; i++)
 		{
-			Math::Vector3 p, q;
+			const Vec3F& normal = _planes[i].GetNormal();
 
-			if (planes[i]._a >= 0.0f)
-			{
-				p._x = box.GetMinimum()._x + position._x;
-				q._x = box.GetMaximum()._x + position._x;
-			}
-			else
-			{
-				p._x = box.GetMaximum()._x + position._x;
-				q._x = box.GetMinimum()._x + position._x;
-			}
+			point.SetX(normal._x > 0 ? maxPoint.GetX() : minPoint.GetX());
+			point.SetY(normal._y > 0 ? maxPoint.GetY() : minPoint.GetY());
+			point.SetZ(normal._z > 0 ? maxPoint.GetZ() : minPoint.GetZ());
 
-			if (planes[i]._b >= 0.0f)
-			{
-				p._y = box.GetMinimum()._y + position._y;
-				q._y = box.GetMaximum()._y + position._y;
-			}
-			else
-			{
-				p._y = box.GetMaximum()._y + position._y;
-				q._y = box.GetMinimum()._y + position._y;
-			}
-
-			if (planes[i]._c >= 0.0f)
-			{
-				p._z = box.GetMinimum()._z + position._z;
-				q._z = box.GetMaximum()._z + position._z;
-			}
-			else
-			{
-				p._z = box.GetMaximum()._z + position._z;
-				q._z = box.GetMinimum()._z + position._z;
-			}
-
-			if ((Math::DotProduct(Math::Vector3(planes[i]._a, planes[i]._b, planes[i]._c), q) + planes[i]._d) < 0.0f)
-				return false;
+			if (_planes[i].ClassifyPoint(point) == PlaneF::POINT_BEHIND_PLANE)
+				return FRUSTUM_ASPECT::Outside;
 		}
 
-		return true;
+		return FRUSTUM_ASPECT::Inside;
 	}
 
-	void Frustum::Generate(const Math::Matrix4& viewMatrix, const Math::Matrix4& projectionMatrix)
+	FRUSTUM_ASPECT Frustum::IsPointInside(const Vector3F& point) const
 	{
-		Math::Matrix4 comboMatrix = viewMatrix * projectionMatrix;
+		for (int i = 0; i < MAX_NUM_FRUSTUM_PLANES; i++)
+		{
+			if (_planes[i].ClassifyPoint(point) == PlaneF::POINT_BEHIND_PLANE)
+				return FRUSTUM_ASPECT::Outside;
+		}
 
-		/* Передняя плоскость */
-		planes[0]._a = comboMatrix[0][2] + comboMatrix[0][2];
-		planes[0]._b = comboMatrix[1][2] + comboMatrix[1][2];
-		planes[0]._c = comboMatrix[2][2] + comboMatrix[2][2];
-		planes[0]._d = comboMatrix[3][2] + comboMatrix[3][2];
-		/* Задняя плоскость */
-		planes[1]._a = comboMatrix[0][3] - comboMatrix[0][2];
-		planes[1]._b = comboMatrix[1][3] - comboMatrix[1][2];
-		planes[1]._c = comboMatrix[2][3] - comboMatrix[2][2];
-		planes[1]._d = comboMatrix[3][3] - comboMatrix[3][2];
-		/* Левая плоскость */
-		planes[2]._a = comboMatrix[0][3] + comboMatrix[0][0];
-		planes[2]._b = comboMatrix[1][3] + comboMatrix[1][0];
-		planes[2]._c = comboMatrix[2][3] + comboMatrix[2][0];
-		planes[2]._d = comboMatrix[3][3] + comboMatrix[3][0];
-		/* Правая плоскость */
-		planes[3]._a = comboMatrix[0][3] - comboMatrix[0][0];
-		planes[3]._b = comboMatrix[1][3] - comboMatrix[1][0];
-		planes[3]._c = comboMatrix[2][3] - comboMatrix[2][0];
-		planes[3]._d = comboMatrix[3][3] - comboMatrix[3][0];
-		/* Нижняя плоскость */
-		planes[4]._a = comboMatrix[0][3] + comboMatrix[0][1];
-		planes[4]._b = comboMatrix[1][3] + comboMatrix[1][1];
-		planes[4]._c = comboMatrix[2][3] + comboMatrix[2][1];
-		planes[4]._d = comboMatrix[3][3] + comboMatrix[3][1];
-		/* Верхняя плоскость */
-		planes[5]._a = comboMatrix[0][3] - comboMatrix[0][1];
-		planes[5]._b = comboMatrix[1][3] - comboMatrix[1][1];
-		planes[5]._c = comboMatrix[2][3] - comboMatrix[2][1];
-		planes[5]._d = comboMatrix[3][3] - comboMatrix[3][1];
-
-		for (int i = 0; i < 6; i++)
-			NormalizePlane(planes[i]);
+		return FRUSTUM_ASPECT::Inside;
 	}
 
-	void Frustum::NormalizePlane(LPLANEDATA_DESC& plane)
+	void Frustum::Construct(const Matrix4F& viewProjectionMatrix)
 	{
-		float length = Math::Vector3(plane._a, plane._b, plane._c).Length();
+		// Правая плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Right)].SetDistance(viewProjectionMatrix.Get(3, 3) - viewProjectionMatrix.Get(3, 0));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Right)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) - viewProjectionMatrix.Get(0, 0),
+			viewProjectionMatrix.Get(1, 3) - viewProjectionMatrix.Get(1, 0),
+			viewProjectionMatrix.Get(2, 3) - viewProjectionMatrix.Get(2, 0)));
 
-		plane._a /= length;
-		plane._b /= length;
-		plane._c /= length;
-		plane._d /= length;
+		// Левая плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Left)].SetDistance(viewProjectionMatrix.Get(3, 3) + viewProjectionMatrix.Get(3, 0));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Left)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) + viewProjectionMatrix.Get(0, 0),
+			viewProjectionMatrix.Get(1, 3) + viewProjectionMatrix.Get(1, 0),
+			viewProjectionMatrix.Get(2, 3) + viewProjectionMatrix.Get(2, 0)));
+
+		// Нижняя плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Bottom)].SetDistance(viewProjectionMatrix.Get(3, 3) + viewProjectionMatrix.Get(3, 1));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Bottom)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) + viewProjectionMatrix.Get(0, 1),
+			viewProjectionMatrix.Get(1, 3) + viewProjectionMatrix.Get(1, 1),
+			viewProjectionMatrix.Get(2, 3) + viewProjectionMatrix.Get(2, 1)));
+
+		// Верхняя плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Top)].SetDistance(viewProjectionMatrix.Get(3, 3) - viewProjectionMatrix.Get(3, 1));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Top)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) - viewProjectionMatrix.Get(0, 1),
+			viewProjectionMatrix.Get(1, 3) - viewProjectionMatrix.Get(1, 1),
+			viewProjectionMatrix.Get(2, 3) - viewProjectionMatrix.Get(2, 1)));
+
+		// Задняя плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Far)].SetDistance(viewProjectionMatrix.Get(3, 3) - viewProjectionMatrix.Get(3, 2));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Far)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) - viewProjectionMatrix.Get(0, 2),
+			viewProjectionMatrix.Get(1, 3) - viewProjectionMatrix.Get(1, 2),
+			viewProjectionMatrix.Get(2, 3) - viewProjectionMatrix.Get(2, 2)));
+
+		// Передняя плоскость.
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Near)].SetDistance(viewProjectionMatrix.Get(3, 3) + viewProjectionMatrix.Get(3, 2));
+		_planes[static_cast<UInt>(FRUSTUM_SIDE::Near)].SetNormal(Vector3F(
+			viewProjectionMatrix.Get(0, 3) + viewProjectionMatrix.Get(0, 2),
+			viewProjectionMatrix.Get(1, 3) + viewProjectionMatrix.Get(1, 2),
+			viewProjectionMatrix.Get(2, 3) + viewProjectionMatrix.Get(2, 2)));
+
+		for (int i = 0; i < MAX_NUM_FRUSTUM_PLANES; i++)
+			_planes[i].Normalize();
+	}
+
+	const PlaneF& Frustum::GetRight(void) const
+	{
+		return _planes[static_cast<UInt>(FRUSTUM_SIDE::Right)];
+	}
+
+	const PlaneF& Frustum::GetLeft(void) const
+	{
+		return _planes[static_cast<UInt>(FRUSTUM_SIDE::Left)];
+	}
+
+	const PlaneF& Frustum::GetBottom(void) const
+	{
+		return _planes[static_cast<UInt>(FRUSTUM_SIDE::Bottom)];
+	}
+
+	const PlaneF& Frustum::GetTop(void) const
+	{
+		return _planes[static_cast<UInt>(FRUSTUM_SIDE::Top)];
+	}
+
+	const PlaneF& Frustum::GetNear(void) const
+	{
+		return _planes[static_cast<UInt>(FRUSTUM_SIDE::Near)];
+	}
+
+	const PlaneF& Frustum::GetFar(void) const
+	{
+		return _planes[static_cast<int>(FRUSTUM_SIDE::Far)];
 	}
 }

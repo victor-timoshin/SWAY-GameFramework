@@ -13,8 +13,12 @@ namespace Render
 	{
 	}
 
-	void RenderQueue::AddRenderable(Core::Render::IRenderGeometryBase* geometry, UInt groupID, UInt priority)
+	void RenderQueue::AddRenderable(Core::Render::IRenderGeometryBase* geometry, UInt groupId, UInt priority)
 	{
+		//Core::Render::IRenderGeometryBase* geometry = NULL;
+		//geometry = new Core::Render::RenderGeometry(renderable);
+		//geometry->BuildVBOs(library);
+
 		renderGeometries.push_back(geometry);
 	}
 
@@ -22,11 +26,11 @@ namespace Render
 	{
 	}
 
-	void RenderQueue::Render(void)
+	void RenderQueue::Render(UInt shaderProgram)
 	{
 		for (UInt i = 0; i < renderGeometries.size(); ++i)
 		{
-			renderGeometries[i]->Draw();
+			//renderGeometries[i]->Draw(shaderProgram);
 		}
 	}
 

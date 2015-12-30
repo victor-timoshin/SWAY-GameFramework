@@ -1,5 +1,7 @@
-#ifndef RENDERGEOMETRY_H
+﻿#ifndef RENDERGEOMETRY_H
 #define RENDERGEOMETRY_H
+
+#include "Debug/RenderLineDebug.h"
 
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../Math/Inc/Vertex.h"
@@ -11,15 +13,24 @@ namespace Core
 		class RenderGeometry : public IRenderGeometryBase
 		{
 		public:
-			/// <summary>����������� ������.</summary>
+			/// <summary>Конструктор класса.</summary>
 			RenderGeometry(Scene::IRenderableBase* renderable);
 
-			/// <summary>���������� ������.</summary>
+			/// <summary>Деструктор класса.</summary>
 			virtual ~RenderGeometry(void);
 
 			virtual void BuildVBOs(void* library);
 
-			virtual void Draw(void);
+			void SetDebugLines(RenderLineDebug* lineDebug) {
+				_lineDebug = lineDebug;
+			}
+
+			/// <summary>Отрисовывает геометрию.</summary>
+			virtual void Draw(Scene::ICameraBase* camera);
+
+			virtual void SetMaterial(IMaterialBase* material);
+
+			virtual IMaterialBase* GetMaterial(void) const;
 
 			virtual void SetInstanceId(UInt id);
 
@@ -27,12 +38,16 @@ namespace Core
 
 			virtual Scene::IRenderableBase* GetRenderableComponent(void);
 		private:
-			Scene::IRenderableBase* renderableComponent;
+			IMaterialBase* _material;
 
-			Gapi::IBufferBase* vertexBuffer;
-			Gapi::IBufferBase* indexBuffer;
+			Scene::IRenderableBase* _renderableComponent;
 
-			UInt instanceId;
+			Gapi::IBufferBase* _vertexBuffer; // Буфер вершин.
+			Gapi::IBufferBase* _indexBuffer; // Буфер индексов.
+
+			UInt _instanceId;
+
+			RenderLineDebug* _lineDebug;
 		};
 	}
 }

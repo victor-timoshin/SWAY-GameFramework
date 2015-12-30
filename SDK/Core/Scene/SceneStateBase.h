@@ -1,4 +1,4 @@
-#ifndef SCENESTATEBASE_H
+п»ї#ifndef SCENESTATEBASE_H
 #define SCENESTATEBASE_H
 
 #include "../../../SDK/SceneGraph/SceneGraphBase.h"
@@ -9,13 +9,13 @@ namespace Scene
 	class ISceneStateBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		ISceneStateBase(void) {}
 		
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~ISceneStateBase(void) {}
 
-		virtual void Enter(Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
+		virtual void Enter(Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph) = 0;
 
 		virtual void Exit(void) = 0;
 

@@ -6,13 +6,13 @@ namespace Scene
 	/// <param name="name">Имя узла.</param>
 	SceneNode::SceneNode(std::string name) : ISceneNodeBase(name)
 	{
-		matrixWorld.Identity();
+		_matrixWorld.SetIdentity();
 
-		orientation.Identity();
-		rotation.Identity();
+		_orientation.Identity();
+		_rotation.Identity();
 
-		position = Math::Vector3(0.0f, 0.0f, 0.0f);
-		scale = Math::Vector3(1.0f, 1.0f, 1.0f);
+		_position = VEC3F_ZERO;
+		_scale = VEC3F_ONE;
 	}
 
 	ISceneNodeBase* SceneNode::CreateChild(const char* name)
@@ -26,34 +26,34 @@ namespace Scene
 	void SceneNode::Attach(ISceneComponentBase* subscriber)
 	{
 		subscriber->Notify(this);
-		components.insert(IComponentMap::value_type(subscriber->GetComponentName(), subscriber));
+		_components.insert(IComponentMap::value_type(subscriber->GetComponentName(), subscriber));
 	}
 
 	void SceneNode::Detach(ISceneComponentBase* subscriber)
 	{
-		IComponentMap::iterator i = components.find(subscriber->GetComponentName());
-		if (i != components.end() && i->second == subscriber)
+		IComponentMap::iterator i = _components.find(subscriber->GetComponentName());
+		if (i != _components.end() && i->second == subscriber)
 		{
-			components.erase(i);
+			_components.erase(i);
 			subscriber->Notify(nullptr);
 		}
 	}
 
 	void SceneNode::DetachAll(void)
 	{
-		for (IComponentMap::iterator i = components.begin(); i != components.end(); ++i)
+		for (IComponentMap::iterator i = _components.begin(); i != _components.end(); ++i)
 		{
 			ISceneComponentBase* subscriber = i->second;
 			subscriber->Notify(nullptr);
 		}
 
-		components.clear();
+		_components.clear();
 	}
 
 	ISceneComponentBase* SceneNode::GetAttachedComponentByName(const char* name)
 	{
-		IComponentMap::iterator i = components.find(name);
-		if (i != components.end())
+		IComponentMap::iterator i = _components.find(name);
+		if (i != _components.end())
 			return i->second;
 
 		return nullptr;
@@ -68,18 +68,18 @@ namespace Scene
 		}
 	}
 
-	void SceneNode::SetPosition(const Math::Vector3& positionV, TransformSpace relativeTo)
+	void SceneNode::SetPosition(const Math::Vector3F& position, TransformSpace relativeTo)
 	{
 		switch (relativeTo)
 		{
 		case TRANSFORM_PARENT:
-			position = positionV;
+			_position = position;
 			break;
 		case TRANSFORM_WORLD:
-			position = positionV;
+			_position = position;
 			break;
 		case TRANSFORM_LOCAL:
-			position = positionV;
+			_position = position;
 			break;
 		}
 
@@ -88,21 +88,21 @@ namespace Scene
 
 	void SceneNode::SetPosition(float x, float y, float z, TransformSpace relativeTo)
 	{
-		SetPosition(Math::Vector3(x, y, z), relativeTo);
+		SetPosition(Math::Vector3F(x, y, z), relativeTo);
 	}
 
-	void SceneNode::SetTranslate(const Math::Vector3& translate, TransformSpace relativeTo)
+	void SceneNode::SetTranslate(const Math::Vector3F& translate, TransformSpace relativeTo)
 	{
 		switch (relativeTo)
 		{
 		case TRANSFORM_PARENT:
-			position += translate;
+			_position += translate;
 			break;
 		case TRANSFORM_WORLD:
-			position += translate;
+			_position += translate;
 			break;
 		case TRANSFORM_LOCAL:
-			//position += orientation * translate;
+			//_position += orientation * translate;
 			break;
 		}
 
@@ -111,23 +111,23 @@ namespace Scene
 
 	void SceneNode::SetTranslate(float x, float y, float z, TransformSpace relativeTo)
 	{
-		SetTranslate(Math::Vector3(x, y, z), relativeTo);
+		SetTranslate(Math::Vector3F(x, y, z), relativeTo);
 	}
 
-	void SceneNode::SetRotation(Math::Vector3 axis, float angle, TransformSpace relativeTo)
+	void SceneNode::SetRotation(Math::Vector3F axis, float angle, TransformSpace relativeTo)
 	{
-		rotation.FromAxisAngle(axis, Math::DegreesToRadians(angle));
+		_rotation.FromAxisAngle(axis, Math::DegreesToRadians(angle));
 
 		switch (relativeTo)
 		{
 		case TRANSFORM_PARENT:
-			orientation = rotation * orientation;
+			_orientation = _rotation * _orientation;
 			break;
 		case TRANSFORM_WORLD:
-			orientation = orientation * rotation;
+			_orientation = _orientation * _rotation;
 			break;
 		case TRANSFORM_LOCAL:
-			orientation = orientation * rotation;
+			_orientation = _orientation * _rotation;
 			break;
 		}
 
@@ -136,63 +136,75 @@ namespace Scene
 
 	void SceneNode::SetScale(float x, float y, float z)
 	{
-		scale = Math::Vector3(x, y, z);
+		_scale = Math::Vector3F(x, y, z);
 
 		// TODO: update
 	}
 
 	void SceneNode::SetOrientation(float w, float x, float y, float z)
 	{
-		orientation = Math::Quaternion(w, x, y, z);
+		_orientation = Math::Quaternion(w, x, y, z);
 
 		// TODO: update
 	}
 
 	void SceneNode::SetOrientation(const Math::Quaternion& orientationQ)
 	{
-		orientation = orientationQ;
+		_orientation = orientationQ;
 
 		// TODO: update
 	}
 
-	Math::Matrix4 SceneNode::GetWorldMatrixTransform(void)
+	Math::Matrix4F SceneNode::GetWorldMatrix(void)
 	{
-		Math::Quaternion temp;
+		SceneNode* parent = static_cast<SceneNode*>(GetParentNode());
+		if (parent)
+			Math::Matrix4F::Multiply(parent->GetWorldMatrix(), GetMatrix(), &_matrixWorld);
+		else
+			_matrixWorld = GetMatrix();
 
-		temp *= orientation;
-		orientation.Normalize();
+		return _matrixWorld;
+	}
 
-		orientation.ToRotationMatrix(matrixWorld);
+	Math::Matrix4F SceneNode::GetMatrix(void)
+	{
+		_orientation.Normalize();
+		_orientation.ToRotationMatrix(_matrixWorld);
 
-		Math::Matrix4 scaleMatrix;
-		scaleMatrix.Identity();
+		Math::Matrix4F positionMatrix;
+		positionMatrix.SetIdentity();
 
-		scaleMatrix[0][0] = scale._x;
-		scaleMatrix[1][1] = scale._y;
-		scaleMatrix[2][2] = scale._z;
+		positionMatrix.Set(3, 0, _position._x);
+		positionMatrix.Set(3, 1, _position._y);
+		positionMatrix.Set(3, 2, _position._z);
 
-		matrixWorld *= scaleMatrix;
+		_matrixWorld.Multiply(positionMatrix);
 
-		matrixWorld[3][0] = position._x;
-		matrixWorld[3][1] = position._y;
-		matrixWorld[3][2] = position._z;
+		Math::Matrix4F scaleMatrix;
+		scaleMatrix.SetIdentity();
 
-		return matrixWorld;
+		scaleMatrix.Set(0, 0, _scale._x);
+		scaleMatrix.Set(1, 1, _scale._y);
+		scaleMatrix.Set(2, 2, _scale._z);
+
+		_matrixWorld.Multiply(scaleMatrix);
+
+		return _matrixWorld;
 	}
 
 	const Math::Quaternion& SceneNode::GetOrientation(void) const
 	{
-		return orientation;
+		return _orientation;
 	}
 
-	const Math::Vector3& SceneNode::GetPosition(void) const
+	const Math::Vector3F& SceneNode::GetPosition(void) const
 	{
-		return position;
+		return _position;
 	}
 
-	Math::Vector3 SceneNode::GetScale(void)
+	Math::Vector3F SceneNode::GetScale(void)
 	{
-		return scale;
+		return _scale;
 	}
 
 	ISceneNodeBase* RegisterSceneNode(std::string name)

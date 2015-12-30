@@ -1,7 +1,10 @@
-#ifndef RENDERGEOMETRYBASE_H
+п»ї#ifndef RENDERGEOMETRYBASE_H
 #define RENDERGEOMETRYBASE_H
 
 #include "../../../SDK/Core/Scene/RenderableBase.h"
+#include "../../../SDK/Core/Render/MaterialBase.h"
+
+#include "../../../SDK/SceneGraph/CameraBase.h"
 
 #include "../../../SDK/Gapi/BufferBase.h"
 #include "../../../SDK/Gapi/ShaderBase.h"
@@ -13,15 +16,20 @@ namespace Core
 		class IRenderGeometryBase
 		{
 		public:
-			/// <summary>Конструктор класса.</summary>
+			/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 			IRenderGeometryBase(Scene::IRenderableBase* renderable) {}
 
-			/// <summary>Деструктор класса.</summary>
+			/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 			virtual ~IRenderGeometryBase(void) {}
 
 			virtual void BuildVBOs(void* library) = 0;
 
-			virtual void Draw(void) = 0;
+			/// <summary>РћС‚СЂРёСЃРѕРІС‹РІР°РµС‚ РіРµРѕРјРµС‚СЂРёСЋ.</summary>
+			virtual void Draw(Scene::ICameraBase* camera) = 0;
+
+			virtual void SetMaterial(Render::IMaterialBase* material) = 0;
+
+			virtual Render::IMaterialBase* GetMaterial(void) const = 0;
 
 			virtual void SetInstanceId(UInt id) = 0;
 

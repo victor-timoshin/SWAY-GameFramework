@@ -1,4 +1,4 @@
-#ifndef FILESTREAM_H
+﻿#ifndef FILESTREAM_H
 #define FILESTREAM_H
 
 #include "../../../SDK/Core/Utils/StreamBase.h"
@@ -10,13 +10,27 @@ namespace Core
 		class FileStream : public IStreamBase
 		{
 		public:
-			/// <summary>����������� ������.</summary>
+			/// <summary>Конструктор класса.</summary>
 			FileStream(void);
 
-			/// <summary>���������� ������.</summary>
-			virtual ~FileStream(void) { }
+			/// <summary>Деструктор класса.</summary>
+			virtual ~FileStream(void);
 
-			virtual void Open(const char* filename, FILEMODES mode, bool binary);
+			/// <summary>Открытие файла.</summary>
+			/// <param name="filename">Имя файла.</param>
+			/// <param name="mode">Режим открытия.</param>
+			virtual void Open(const char* filename, FILE_MODE mode, bool binary);
+
+			/// <summary>Открытие файла.</summary>
+			/// <param name="filename">Имя файла.</param>
+			/// <param name="mode">Режим открытия.</param>
+			virtual bool OpenStream(const std::string& filename, STREAM_MODE mode);
+
+			virtual void CloseStream(void);
+
+			virtual bool IsOpenStream(void);
+
+			virtual std::ifstream& GetStream(void);
 
 			virtual void Close(void);
 
@@ -34,7 +48,7 @@ namespace Core
 			FILE* file;
 			UInt numBytes;
 
-			std::ifstream in;
+			std::ifstream in; // Объект класса для чтения из файла.
 			std::ofstream out;
 		};
 	}

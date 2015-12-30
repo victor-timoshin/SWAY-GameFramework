@@ -7,52 +7,66 @@
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Platform.h"
 
-#include "../../../SDK/GUI/FontBase.h"
+#include "Debug/RenderLineDebug.h"
 
-namespace Render
+namespace Core
 {
-	class Scene::IRenderableBase;
-	class RenderSystem : public IRenderSystemBase
+	namespace Render
 	{
-	public:
-		/// <summary>Конструктор класса.</summary>
-		RenderSystem(void);
+		class Scene::IRenderableBase;
+		class RenderSystem : public IRenderSystemBase
+		{
+		public:
+			/// <summary>Конструктор класса.</summary>
+			RenderSystem(void);
 
-		/// <summary>Деструктор класса.</summary>
-		virtual ~RenderSystem(void);
+			/// <summary>Деструктор класса.</summary>
+			virtual ~RenderSystem(void);
 
-		virtual void SetRenderableComponent(Scene::IRenderableBase* renderable);
+			virtual void SetRenderableComponent(Scene::IRenderableBase* renderable, IMaterialBase* material);
 
-		virtual bool Initialize(const char* libraryName);
+			virtual bool Initialize(const char* libraryName);
 
-		virtual bool CreateDevice(HWND windowHandle);
+			virtual bool CreateDevice(HWND windowHandle);
 
-		virtual Gapi::IDeviceBase* GetDevice(void);
+			virtual Gapi::IDeviceBase* GetDevice(void);
 
-		virtual bool CreateMaterial(const char* vertexShader, const char* fragmentShader);
+			virtual bool CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName);
 
-		virtual bool CreateTTFont(const char* filename);
+			virtual IMaterialBase* GetMaterialByName(const char* name);
 
-		virtual void CreateBuffer(Scene::IRenderableBase* renderable);
+			virtual GUI::IFontBase* CreateTTFont(const char* name, const char* filename);
 
-		virtual void RemoveBuffer(UInt idx);
+			virtual GUI::IFontBase* GetTTFont(std::string name);
 
-		virtual Core::Render::IRenderGeometryBase* GetGeometryByIndex(UInt idx);
+			virtual void CreateBuffer(Scene::IRenderableBase* renderable, IMaterialBase* material);
 
-		virtual void FrameDrawed(Scene::ICameraBase* camera);
+			virtual void RemoveBuffer(UInt idx);
 
-	private:
-		void* library;
-		Gapi::IDeviceBase* device;
-		Render::IMaterialBase* material;
+			virtual IRenderGeometryBase* GetGeometryByIndex(UInt idx);
 
-		std::vector<Core::Render::IRenderGeometryBase*> renderGeometries;
-		int numDisplayObjects;
+			virtual void FrameDrawed(Scene::ICameraBase* camera);
 
-		Scene::IRenderableBase* renderableComponent;
+			virtual int GetNumDisplayObjects(void) const;
 
-		GUI::IFontBase* font;
-	};
+		private:
+			void* library;
+			Gapi::IDeviceBase* device;
+
+			typedef std::map<std::string, IMaterialBase*> IMaterialMap;
+			IMaterialMap _materials;
+
+			std::vector<IRenderGeometryBase*> renderGeometries;
+			int _numDisplayObjects;
+
+			Scene::IRenderableBase* renderableComponent;
+
+
+			RenderLineDebug* _lineDebug;
+			//std::vector<GUI::IFontBase*> _fonts;
+			GUI::IFontManagerBase* _fontManager;
+		};
+	}
 }
 
 #endif // RENDERSYSTEM_H

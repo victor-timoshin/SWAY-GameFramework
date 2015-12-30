@@ -1,19 +1,14 @@
 ﻿#ifndef FRUSTUM_H
 #define FRUSTUM_H
 
-#include "BoundingVolume.h"
-#include "Matrix4.h"
+#include "FrustumSide.h"
+#include "FrustumAspect.h"
+#include "BoundingBox.h"
+#include "Matrix4F.h"
+#include "Plane.h"
 
 namespace Math
 {
-	typedef struct PlaneDataDesc
-	{
-		float _a;
-		float _b;
-		float _c;
-		float _d;
-	} LPLANEDATA_DESC, PPLANEDATA_DESC;
-
 	class CORE_API Frustum
 	{
 	public:
@@ -23,15 +18,27 @@ namespace Math
 		/// <summary>Деструктор класса.</summary>
 		~Frustum(void);
 
-		bool ContainsBoundingVolume(Math::BoundingVolume& box, Math::Vector3& position);
+		/// <summary>Проверяет нахождения бокса в пирамиде видимости.</summary>
+		FRUSTUM_ASPECT IsBoundingBoxInside(const BoundingBox& box) const;
 
-		void Generate(const Math::Matrix4& viewMatrix, const Math::Matrix4& projectionMatrix);
+		FRUSTUM_ASPECT IsPointInside(const Vector3F& point) const;
+		
+		void Construct(const Matrix4F& viewProjectionMatrix);
 
-	protected:
-		void NormalizePlane(LPLANEDATA_DESC& plane);
+		const PlaneF& GetRight(void) const;
+
+		const PlaneF& GetLeft(void) const;
+
+		const PlaneF& GetBottom(void) const;
+
+		const PlaneF& GetTop(void) const;
+
+		const PlaneF& GetNear(void) const;
+
+		const PlaneF& GetFar(void) const;
 
 	private:
-		LPLANEDATA_DESC planes[6];
+		PlaneF _planes[MAX_NUM_FRUSTUM_PLANES];
 	};
 }
 

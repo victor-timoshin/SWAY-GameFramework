@@ -4,73 +4,100 @@
 #include "../../SDK/GUI/FontBase.h"
 #include "../../SDK/Platform.h"
 
-#include "../../SDK/Gapi/BufferBase.h"
-#include "../../SDK/Gapi/ShaderBase.h"
-#include "../../SDK/Gapi/ShaderBase.h"
-#include "../../SDK/Gapi/TextureBase.h"
-
+#include "Graphics.h"
+#include "Glyph.h"
 #include "../StdAfx.h"
-
-#include "../../SDK/Core/Scene/GeometryPacket.h"
-
-#include "../../SDK/Core/Utils/LoggerBase.h"
-#include "../../Math/Inc/Matrix4.h"
-
-#include <gl/gl.h>
-#include <gl/glu.h>
-
-#include "../../GapiOpenGL/Inc/GL/glext.h"
-
-#pragma comment (lib, "opengl32.lib")
-#pragma comment (lib, "glu32.lib")
-
-#pragma comment(lib, "Core_Win32_Debug")
 
 namespace GUI
 {
-	typedef struct FontCharacter {
-		UInt textureID;
-		Math::Vector2 size;
-		Math::Vector2 bearing;
-		GLuint advance;
-	} LFONT_CHARACTER, *PFONT_CHARACTER;
+	typedef struct FontInfo
+	{
+
+	} LFONT_INFO, *PFONT_INFO;
 
 	class Font : public IFontBase
 	{
-	public:
-		static PFNGLACTIVETEXTUREPROC glActiveTextureARB;
+		DECL_PROPERTY_VIRTUAL_STRING(FamilyName, _familyName) // Имя шрифта.
+		DECL_PROPERTY_VIRTUAL_STRING(StyleName, _styleName) // Имя стиля.
+		DECL_PROPERTY_VIRTUAL_STRING(Text, _text) // Строка текста.
 
+	public:
 		/// <summary>Конструктор класса.</summary>
 		Font(void);
 
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Font(void);
 
-		virtual void Create(const char* filename);
+		/// <summary>Загружает шрифт из файла.</summary>
+		virtual bool LoadFromFile(FT_Library library, const char* path);
+
+		virtual bool LoadFromMemory(FT_Library library, const UByte* memory, UInt size);
+
+		virtual void FreeFont(void);
+
+		virtual bool HasLoaded(void) const;
+
+		/// <summary>Устанавливает размер.</summary>
+		virtual void SetSize(int width, int height);
+
+		virtual void Create(void);
 
 		virtual void Destroy(void);
 
-		virtual void Draw2DText(std::string text, UInt positionX, UInt positionY, float scale, Math::Vector3 color);
+		virtual void SetPosition(Math::Vec2F position);
 
-	private:
-		void* gapiLibrary;
-		FT_Library freeTypeLibrary; // Структура для инициализации библиотеки.
-		FT_Face freeTypeFace; // Шрифт, который загружается при помощи FT_Library.
-		FT_Error freeTypeError;
+		virtual void SetPosition(float x, float y);
 
-		Gapi::IBufferBase* vertexBuffer;
-		Gapi::IBufferBase* indexBuffer;
-		Gapi::IShaderBase* shader;
-		Gapi::ITextureBase* texture;
+		virtual void SetScale(float scale);
 
-		std::map<char, LFONT_CHARACTER> Characters;
-		GLuint VAO, VBO;
+		virtual void SetColor(const Math::Color& color);
 
-		Math::PVERTEX_TEXCOORD vertices;
-		UInt offset;
+		virtual void Draw2DText(void);
 
-		UInt numVertices;
-		UInt numIndices;
+		/// <summary>Устанавливает толщину обводки символа.</summary>
+		void SetOutlineThickness(UInt thickness);
+
+		/// <summary>Получает толщину обводки символа.</summary>
+		UInt GetOutlineThickness(void) const;
+
+		FT_Face GetFace(void) const { return _face; }
+
+	protected:
+		void CopyBitmapToBufferData(FT_Bitmap& bitmap, UByte* expandedData, int imgW, unsigned w, unsigned h, int row, int col);
+
+		UInt GetGlyphIndex(const char charcode) const;
+
+		float GetAdvance(const char charcode) const;
+
+		float GetOffset(const char charcode) const;
+
+		float GetWidth(const char charcode) const;
+
+	public:
+		FT_Face _face;  // Объект для хранения шрифта.
+		FT_Encoding _encoding;
+
+		int _italic;
+		int _bold;
+		int _monospace;
+
+		int _width;
+		int _height;
+
+		int _ascender;
+		int _descender;
+		int _maxAdvance;
+
+		bool _isLoaded;
+
+		Graphics* _graphics;
+
+		std::map<UInt, LGLYPH_INFO> _glyphInfo;
+
+		LFONT_STYLE _fontStyle;
+
+		Math::Vec2F _position;
+		float _scale;
 	};
 }
 

@@ -15,9 +15,39 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GUI\StdAfx.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\Control.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GUI\Inc\Glyph.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GUI\Inc\FontManager.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GUI\Inc\Graphics.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GUI\Inc\Tooltip.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\GUI\Src\Font.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GUI\Src\Control.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GUI\Src\Glyph.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GUI\Src\FontManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GUI\Src\Graphics.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GUI\Src\Tooltip.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

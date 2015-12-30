@@ -1,69 +1,96 @@
-#ifndef MATERIAL_H
+п»ї#ifndef MATERIAL_H
 #define MATERIAL_H
 
 #include "../../../SDK/Core/Render/MaterialBase.h"
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Gapi/ShaderBase.h"
 #include "../../../SDK/Gapi/TextureBase.h"
+#include "../../../SDK/Gapi/TextureSamplerBase.h"
+#include "../../../SDK/Core/Imaging/LoaderBase.h"
+#include "../../../Math/Inc/Matrix4F.h"
+
+#include "Effect.h"
+#include "Image.h"
+
+#include "../Xml/Document.h"
+
 #include "../../../SDK/Platform.h"
 
 #include <vector>
+#include <list>
 
-namespace Render
+#include <functional> // std::function
+
+namespace Core
 {
-	class Material : public IMaterialBase
+	namespace Render
 	{
-	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="library">Хендл библиотеки.</param>
-		/// <param name="device">Указатель на графический девайс.</param>
-		Material(void* library, Gapi::IDeviceBase* device);
+		class Material : public IMaterialBase
+		{
+			DECL_PROPERTY_VIRTUAL_STRING(Name, _name) // РРјСЏ РјР°С‚РµСЂРёР°Р»Р°.
 
-		/// <summary>Деструктор класса.</summary>
-		virtual ~Material(void);
+		public:
+			/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			/// <param name="library">РҐРµРЅРґР» Р±РёР±Р»РёРѕС‚РµРєРё.</param>
+			/// <param name="device">РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РіСЂР°С„РёС‡РµСЃРєРёР№ РґРµРІР°Р№СЃ.</param>
+			Material(void* library, Gapi::IDeviceBase* device);
 
-		virtual bool Create(const char* vertexShader, const char* fragmentShader);
+			/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			virtual ~Material(void);
 
-		virtual void Destroy(void);
+			virtual bool Create(const char* vertexShader, const char* fragmentShader, const char* textureName);
 
-		/// <summary>Устанавливает свойства отражения окружающего цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		virtual void SetAmbient(float red, float green, float blue);
+			virtual void Destroy(void);
 
-		/// <summary>Устанавливает свойства диффузного отражения цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		/// <param name="alpha"></param>
-		virtual void SetDiffuse(float red, float green, float blue, float alpha);
+			virtual void Bind(void);
 
-		/// <summary>Устанавливает свойства зеркального отражения цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		/// <param name="alpha"></param>
-		virtual void SetSpecular(float red, float green, float blue, float alpha);
+			virtual void Unbind(void);
 
-		/// <summary>Устанавливает свойства блеска</summary>
-		/// <param name="value"></param>
-		virtual void SetShininess(float value);
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РѕС‚СЂР°Р¶РµРЅРёСЏ РѕРєСЂСѓР¶Р°СЋС‰РµРіРѕ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			virtual void SetAmbient(float red, float green, float blue);
 
-		/// <summary>Получает указатель на шейдерную программу.</summary>
-		virtual Gapi::IShaderBase* GetShader(void);
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РґРёС„С„СѓР·РЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			/// <param name="alpha"></param>
+			virtual void SetDiffuse(float red, float green, float blue, float alpha);
 
-		virtual Gapi::ITextureBase* GetTexture(void);
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р·РµСЂРєР°Р»СЊРЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			/// <param name="alpha"></param>
+			virtual void SetSpecular(float red, float green, float blue, float alpha);
 
-		/// <summary>Получает имя материала.</summary>
-		virtual const char* GetName(void) const;
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р±Р»РµСЃРєР°</summary>
+			/// <param name="value"></param>
+			virtual void SetShininess(float value);
 
-	private:
-		char* name; // Имя материала.
-		Gapi::IDeviceBase* renderDevice;
-		Gapi::IShaderBase* shader;
-		Gapi::ITextureBase* texture;
-	};
+			/// <summary>РџРѕР»СѓС‡Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ.</summary>
+			virtual Gapi::IShaderBase* GetShader(void);
+
+		protected:
+			void AddTexture(std::string textureName);
+
+			void AddShader(const char* vertexShader, const char* fragmentShader);
+
+		private:
+			Gapi::IDeviceBase* _renderDevice;
+
+			Effect* _effect;
+
+			std::vector<Image*> _images;
+			Image* _image;
+
+			std::list<std::string> _supportedExtensionTextures;
+
+			Xml::Document* _xmlDocument;
+		};
+	}
 }
 
 #endif // MATERIAL_H

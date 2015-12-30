@@ -7,38 +7,32 @@ namespace Math
 {
 	class CORE_API Color
 	{
+		DECL_PROPERTY_INLINE_FLOAT(R, _r) // Канал красного цвета.
+		DECL_PROPERTY_INLINE_FLOAT(G, _g) // Канал зеленого цвета.
+		DECL_PROPERTY_INLINE_FLOAT(B, _b) // Канал синего цвета.
+		DECL_PROPERTY_INLINE_FLOAT(A, _a) // Альфа-канал.
+
 	public:
 		/// <summary>Конструктор класса.</summary>
 		Color(void);
 
 		/// <summary>Конструктор класса.</summary>
-		Color(const float r, const float g, const float b, const float a = 1.0f);
+		Color(const float rgba);
+
+		/// <summary>Конструктор класса.</summary>
+		Color(const float r, const float g, const float b, const float a);
 
 		/// <summary>Деструктор класса.</summary>
-		~Color(void);
+		~Color(void) {}
 
-		void SetRedChannel(float channel);
+		void Set(float r, float g, float b, float a = 1.0f);
 
-		float GetRedChannel(void) const;
+		void Set(float rgba);
 
-		void SetGreenChannel(float channel);
-
-		float GetGreenChannel(void) const;
-
-		void SetBlueChannel(float channel);
-
-		float GetBlueChannel(void) const;
-
-		void SetAlphaChannel(float channel);
-
-		float GetAlphaChannel(void) const;
-
-	public:
-		float _r; // Канал красного цвета.
-		float _g; // Канал зеленого цвета.
-		float _b; // Канал синего цвета.
-		float _a; // Альфа-канал.
+		Vector4 ToVector4(void) const;
 	};
 }
+
+#define COLOR_WHITE Math::Color(1.0f, 1.0f, 1.0f, 1.0f)
 
 #endif // COLOR_H

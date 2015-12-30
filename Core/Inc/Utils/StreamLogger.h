@@ -1,4 +1,4 @@
-#ifndef STREAMLOGGER_H
+п»ї#ifndef STREAMLOGGER_H
 #define STREAMLOGGER_H
 
 #include "../../../SDK/Core/Utils/LoggerBase.h"
@@ -13,14 +13,14 @@ namespace Utils
 	class CORE_API StreamLogger : public Utils::ILoggerBase, public Utils::TSingleton<StreamLogger>
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="filename">Имя файла.</param>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="filename">РРјСЏ С„Р°Р№Р»Р°.</param>
 		StreamLogger(const char* filename);
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~StreamLogger(void);
 
-		virtual void Write(Utils::LOGLEVELS level, const char* format, ...);
+		virtual void Write(Utils::LOG_LEVEL level, const char* format, ...);
 
 	private:
 		//std::ostream* stream;

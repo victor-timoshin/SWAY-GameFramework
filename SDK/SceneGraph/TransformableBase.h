@@ -24,15 +24,15 @@ namespace Scene
 		/// <summary>Деструктор класса.</summary>
 		virtual ~ITransformableBase(void) {}
 
-		virtual void SetPosition(const Math::Vector3& position, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
+		virtual void SetPosition(const Math::Vector3F& position, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
 
 		virtual void SetPosition(float x, float y, float z, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
 
-		virtual void SetTranslate(const Math::Vector3& translate, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
+		virtual void SetTranslate(const Math::Vector3F& translate, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
 
 		virtual void SetTranslate(float x, float y, float z, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
 
-		virtual void SetRotation(Math::Vector3 axis, float angle, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
+		virtual void SetRotation(Math::Vector3F axis, float angle, TransformSpace relativeTo = TRANSFORM_WORLD) = 0;
 
 		virtual void SetScale(float x, float y, float z) = 0;
 
@@ -40,13 +40,15 @@ namespace Scene
 
 		virtual void SetOrientation(const Math::Quaternion& orientation) = 0;
 
-		virtual Math::Matrix4 GetWorldMatrixTransform(void) = 0;
+		virtual Math::Matrix4F GetWorldMatrix(void) = 0;
+
+		virtual Math::Matrix4F GetMatrix(void) = 0;
 
 		virtual const Math::Quaternion& GetOrientation(void) const = 0;
 
-		virtual const Math::Vector3& GetPosition(void) const = 0;
+		virtual const Math::Vector3F& GetPosition(void) const = 0;
 
-		virtual Math::Vector3 GetScale(void) = 0;
+		virtual Math::Vector3F GetScale(void) = 0;
 	};
 }
 

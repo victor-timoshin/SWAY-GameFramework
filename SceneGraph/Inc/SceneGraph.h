@@ -27,10 +27,21 @@ namespace Scene
 
 		virtual void DestroyCamera(const char* name);
 
+		/// <summary>Устанавливает активную камеру.</summary>
 		virtual void SetActiveCamera(ICameraBase* camera);
 
+		/// <summary>Устанавливает активную камеру по имени.</summary>
+		/// <param name="name">Имя камеры.</param>
+		virtual void SetActiveCameraByName(const char* name);
+
+		/// <summary>Получает указатель на активную камеру.</summary>
 		virtual ICameraBase* GetActiveCamera(void);
 
+		/// <summary>Получает число камер в сцене.</summary>
+		virtual int GetCameraCount(void) const;
+
+		/// <summary>Создает спрайт.</summary>
+		/// <param name="name">Имя спрайта.</param>
 		virtual ISceneComponentBase* CreateSprite(const char* name);
 
 		virtual ISceneComponentBase* CreateBox(const char* name);
@@ -43,13 +54,13 @@ namespace Scene
 		virtual void Clear(void);
 
 	private:
-		ISceneNodeBase* rootSceneNode;
+		ISceneNodeBase* _rootSceneNode;
 
 		std::vector<IRenderableBase*> renderables;
 
 		typedef std::map<std::string, ICameraBase*> ICameraMap;
-		ICameraMap cameras;
-		ICameraBase* activeCamera;
+		ICameraMap _cameras;
+		ICameraBase* _activeCamera;
 	};
 }
 

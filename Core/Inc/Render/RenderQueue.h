@@ -15,11 +15,11 @@ namespace Render
 		/// <summary>Деструктор класса.</summary>
 		virtual ~RenderQueue(void);
 
-		virtual void AddRenderable(Core::Render::IRenderGeometryBase* geometry, UInt groupID, UInt priority);
+		virtual void AddRenderable(Core::Render::IRenderGeometryBase* geometry, UInt groupId, UInt priority);
 
 		virtual void PreRender(void);
 
-		virtual void Render(void);
+		virtual void Render(UInt shaderProgram);
 
 		virtual void PostRender(void);
 

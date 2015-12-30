@@ -16,7 +16,7 @@ namespace Utils
 		/// <summary>Деструктор класса.</summary>
 		virtual ~FileLogger(void);
 
-		virtual void Write(Utils::LOGLEVELS level, const char* format, ...);
+		virtual void Write(Utils::LOG_LEVEL level, const char* format, ...);
 
 	private:
 		Core::Utils::IStreamBase* stream;

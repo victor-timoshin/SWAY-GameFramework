@@ -74,10 +74,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\GUI\Inc\Tooltip.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\Graphics.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\FontManager.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\Control.h" />
+    <ClInclude Include="..\..\..\GUI\Inc\Glyph.h" />
     <ClInclude Include="..\..\..\GUI\Inc\Font.h" />
     <ClInclude Include="..\..\..\GUI\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\GUI\Src\Tooltip.cpp" />
+    <ClCompile Include="..\..\..\GUI\Src\Graphics.cpp" />
+    <ClCompile Include="..\..\..\GUI\Src\FontManager.cpp" />
+    <ClCompile Include="..\..\..\GUI\Src\Control.cpp" />
+    <ClCompile Include="..\..\..\GUI\Src\Glyph.cpp" />
     <ClCompile Include="..\..\..\GUI\Src\Font.cpp" />
   </ItemGroup>
   <ItemGroup>

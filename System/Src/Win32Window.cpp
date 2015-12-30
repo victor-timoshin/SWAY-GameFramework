@@ -1,4 +1,4 @@
-#include "../Inc/Win32Window.h"
+п»ї#include "../Inc/Win32Window.h"
 #include "../../OIS/Inc/RawInputManagement.h"
 
 OIS::IInputBase* inputManagement;
@@ -7,8 +7,8 @@ namespace System
 {
 	const TCHAR Win32Window::WindowClassName[] = TEXT("SWAY_WindowClassName");
 
-	/// <summary>Конструктор класса.</summary>
-	/// <param name="desc">Описание окна.</param>
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+	/// <param name="desc">РћРїРёСЃР°РЅРёРµ РѕРєРЅР°.</param>
 	Win32Window::Win32Window(const LWINDOWDESC& desc) : IWindowBase(desc)
 		, windowDesc(desc)
 	{
@@ -19,49 +19,49 @@ namespace System
 		inputManagement = OIS::RegisterInputManagement();
 	}
 
-	/// <summary>Деструктор класса.</summary>
+	/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	Win32Window::~Win32Window(void)
 	{
 		Unregister();
 		Destroy();
 	}
 
-	/// <summary>Ругистрирует класс окна.</summary>
+	/// <summary>Р СѓРіРёСЃС‚СЂРёСЂСѓРµС‚ РєР»Р°СЃСЃ РѕРєРЅР°.</summary>
 	void Win32Window::Register(void)
 	{
 		WNDCLASSEX windowClassTemp = { 0 };
 
-		if (GetClassInfoEx(hInstance, WindowClassName, &windowClassTemp) == FALSE)
+		if (GetClassInfoEx(hInstance, Win32Window::WindowClassName, &windowClassTemp) == FALSE)
 		{
 			WNDCLASSEX windowClass;
-			windowClass.cbSize = sizeof WNDCLASSEX; // Размер структуры.
-			windowClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; // Битовые флаги, определяющие стиль окна.
-			windowClass.lpfnWndProc = (WNDPROC)windowDesc.proc; // Адрес оконной процедуры.
-			windowClass.cbClsExtra = 0; // Размер дополнительной памяти класса.
-			windowClass.cbWndExtra = 0; // Размер дополнительной памяти окна.
-			windowClass.hInstance = hInstance; // Хэндл экземпляра приложения, которому принадлежит оконная процедура.
-			windowClass.hIcon = NULL; // Хэндл значка (32x32 пикселя).
-			windowClass.hIconSm = NULL; // Хэндл маленького значка (16x16 пикселей).
-			windowClass.hCursor = LoadCursor(NULL, IDC_ARROW); // Хэндл курсора окна по умолчанию.
-			windowClass.hbrBackground = static_cast<HBRUSH>(GetStockObject(NULL_BRUSH)); // Хэндл кисти окна по умолчанию или цвет фона.
-			windowClass.lpszMenuName = NULL; // Оконное меню (имя ресурса).
-			windowClass.lpszClassName = WindowClassName; // Имя класса.
+			windowClass.cbSize = sizeof WNDCLASSEX; // Р Р°Р·РјРµСЂ СЃС‚СЂСѓРєС‚СѓСЂС‹.
+			windowClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; // Р‘РёС‚РѕРІС‹Рµ С„Р»Р°РіРё, РѕРїСЂРµРґРµР»СЏСЋС‰РёРµ СЃС‚РёР»СЊ РѕРєРЅР°.
+			windowClass.lpfnWndProc = (WNDPROC)windowDesc.proc; // РђРґСЂРµСЃ РѕРєРѕРЅРЅРѕР№ РїСЂРѕС†РµРґСѓСЂС‹.
+			windowClass.cbClsExtra = 0; // Р Р°Р·РјРµСЂ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РїР°РјСЏС‚Рё РєР»Р°СЃСЃР°.
+			windowClass.cbWndExtra = 0; // Р Р°Р·РјРµСЂ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РїР°РјСЏС‚Рё РѕРєРЅР°.
+			windowClass.hInstance = hInstance; // РҐСЌРЅРґР» СЌРєР·РµРјРїР»СЏСЂР° РїСЂРёР»РѕР¶РµРЅРёСЏ, РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРЅР°РґР»РµР¶РёС‚ РѕРєРѕРЅРЅР°СЏ РїСЂРѕС†РµРґСѓСЂР°.
+			windowClass.hIcon = NULL; // РҐСЌРЅРґР» Р·РЅР°С‡РєР° (32x32 РїРёРєСЃРµР»СЏ).
+			windowClass.hIconSm = NULL; // РҐСЌРЅРґР» РјР°Р»РµРЅСЊРєРѕРіРѕ Р·РЅР°С‡РєР° (16x16 РїРёРєСЃРµР»РµР№).
+			windowClass.hCursor = LoadCursor(NULL, IDC_ARROW); // РҐСЌРЅРґР» РєСѓСЂСЃРѕСЂР° РѕРєРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
+			windowClass.hbrBackground = static_cast<HBRUSH>(GetStockObject(NULL_BRUSH)); // РҐСЌРЅРґР» РєРёСЃС‚Рё РѕРєРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РёР»Рё С†РІРµС‚ С„РѕРЅР°.
+			windowClass.lpszMenuName = NULL; // РћРєРѕРЅРЅРѕРµ РјРµРЅСЋ (РёРјСЏ СЂРµСЃСѓСЂСЃР°).
+			windowClass.lpszClassName = WindowClassName; // РРјСЏ РєР»Р°СЃСЃР°.
 
-			RegisterClassEx(&windowClass);
+			ATOM windowAtom = RegisterClassEx(&windowClass);
 		}
 	}
 
-	/// <summary>Разрегистрация класса.</summary>
+	/// <summary>Р Р°Р·СЂРµРіРёСЃС‚СЂР°С†РёСЏ РєР»Р°СЃСЃР°.</summary>
 	void Win32Window::Unregister(void)
 	{
 		UnregisterClass(WindowClassName, hInstance);
 	}
 
-	/// <summary>Создает новое окно.</summary>
+	/// <summary>РЎРѕР·РґР°РµС‚ РЅРѕРІРѕРµ РѕРєРЅРѕ.</summary>
 	void Win32Window::Create(void)
 	{
 		UInt32 windowExStyle = WS_EX_APPWINDOW;
-		UInt32 windowStyle = WS_OVERLAPPEDWINDOW; // Стиль отображения окна по умолчанию.
+		UInt32 windowStyle = WS_OVERLAPPEDWINDOW; // РЎС‚РёР»СЊ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РѕРєРЅР° РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ.
 		int x, y, h, w;
 
 		if (windowDesc.mode == WINDOWMODE::EWM_FULLSCREEN)
@@ -75,7 +75,7 @@ namespace System
 		}
 		else
 		{
-			/*  Изменение размеров клиентской области окна. */
+			/*  РР·РјРµРЅРµРЅРёРµ СЂР°Р·РјРµСЂРѕРІ РєР»РёРµРЅС‚СЃРєРѕР№ РѕР±Р»Р°СЃС‚Рё РѕРєРЅР°. */
 			RECT windowRect = { 0, 0, windowDesc.width, windowDesc.height };
 			x = CW_USEDEFAULT;
 			y = CW_USEDEFAULT;
@@ -84,26 +84,26 @@ namespace System
 			AdjustWindowRectEx(&windowRect, windowStyle, false, windowExStyle);
 		}
 
-		/* Создается новое окно. */
+		/* РЎРѕР·РґР°РµС‚СЃСЏ РЅРѕРІРѕРµ РѕРєРЅРѕ. */
 		windowDesc.handle = CreateWindowEx(windowExStyle, WindowClassName,
 			windowDesc.title, windowStyle, x, y, w, h, NULL, NULL, hInstance, NULL);
 	}
 
-	/// <summary>Уничтожает окно.</summary>
+	/// <summary>РЈРЅРёС‡С‚РѕР¶Р°РµС‚ РѕРєРЅРѕ.</summary>
 	void Win32Window::Destroy(void)
 	{
 		DestroyWindow(windowDesc.handle);
 	}
 
-	/// <summary>Обновляет окно.</summary>
+	/// <summary>РћР±РЅРѕРІР»СЏРµС‚ РѕРєРЅРѕ.</summary>
 	void Win32Window::Update(void)
 	{
 		UpdateWindow(windowDesc.handle);
 	}
 
-	/// <summary>Цикл обработки сообщений от окна.</summary>
-	/// <param name="state">Состояние цикла.</param>
-	bool Win32Window::MessageLoop(MESSAGELOOPSTATE state)
+	/// <summary>Р¦РёРєР» РѕР±СЂР°Р±РѕС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ РѕС‚ РѕРєРЅР°.</summary>
+	/// <param name="state">РЎРѕСЃС‚РѕСЏРЅРёРµ С†РёРєР»Р°.</param>
+	bool Win32Window::MessageLoop(MESSAGE_LOOP_STATE messageLoopState)
 	{
 		HACCEL accelTable = 0;
 		MSG message;
@@ -112,47 +112,84 @@ namespace System
 		while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
 		{
 			if (message.message == WM_QUIT)
-				state = EMLS_END;
+				messageLoopState = MESSAGE_LOOP_STATE::End;
 
 			if (!TranslateAccelerator(windowDesc.handle, accelTable, &message))
 			{
-				TranslateMessage(&message); // Преобразует ввод клавиш.
-				DispatchMessage(&message); // Отправляет сообщения в обработчик.
+				TranslateMessage(&message); // РџСЂРµРѕР±СЂР°Р·СѓРµС‚ РІРІРѕРґ РєР»Р°РІРёС€.
+				DispatchMessage(&message); // РћС‚РїСЂР°РІР»СЏРµС‚ СЃРѕРѕР±С‰РµРЅРёСЏ РІ РѕР±СЂР°Р±РѕС‚С‡РёРє.
 			}
 		}
 
-		return state != EMLS_END;
+		return (messageLoopState == MESSAGE_LOOP_STATE::Run) ? true : false;
 	}
 
-	/// <summary>Устанавлиет заголовок.</summary>
-	/// <param name="text">Текст заголовка.</param>
-	void Win32Window::SetText(const TCHAR* text)
+	/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРµС‚ Р·Р°РіРѕР»РѕРІРѕРє.</summary>
+	/// <param name="text">РўРµРєСЃС‚ Р·Р°РіРѕР»РѕРІРєР°.</param>
+	void Win32Window::SetTitle(const char* text)
 	{
+		windowDesc.title = text;
 		SetWindowText(windowDesc.handle, text);
 	}
 
-	/// <summary>Показывает окно.</summary>
+	const char* Win32Window::GetTitle(void)
+	{
+		return windowDesc.title;
+	}
+
+	/// <summary>РџРѕРєР°Р·С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
 	void Win32Window::Show(void)
 	{
 		ShowWindow(windowDesc.handle, SW_SHOW);
 	}
 
-	/// <summary>Скрывает окно.</summary>
+	void Win32Window::ShowDeactivated(void)
+	{
+		ShowWindow(windowDesc.handle, SW_SHOWNOACTIVATE);
+		SetWindowPos(windowDesc.handle, HWND_TOP, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE);
+	}
+
+	void Win32Window::ShowRestored(void)
+	{
+		ShowWindow(windowDesc.handle, SW_RESTORE);
+	}
+
+	/// <summary>Р Р°Р·РІРµСЂС‚С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
+	void Win32Window::ShowMaximized(void)
+	{
+		ShowWindow(windowDesc.handle, SW_MAXIMIZE);
+	}
+
+	/// <summary>РЎРІРµСЂС‚С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
+	void Win32Window::ShowMinimized(void)
+	{
+		ShowWindow(windowDesc.handle, SW_MINIMIZE);
+	}
+
+	/// <summary>РЎРєСЂС‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
 	void Win32Window::Hide(void)
 	{
 		ShowWindow(windowDesc.handle, SW_HIDE);
 	}
 
-	/// <summary>Развертывает окно.</summary>
-	void Win32Window::Maximize(void)
+	bool Win32Window::IsVisible(void)
 	{
-		ShowWindow(windowDesc.handle, SW_MAXIMIZE);
+		return IsWindowVisible(windowDesc.handle) != 0;
 	}
 
-	/// <summary>Свертывает окно.</summary>
-	void Win32Window::Minimize(void)
+	void Win32Window::Enable(void)
 	{
-		ShowWindow(windowDesc.handle, SW_MINIMIZE);
+		EnableWindow(windowDesc.handle, TRUE);
+	}
+
+	void Win32Window::Disable(void)
+	{
+		EnableWindow(windowDesc.handle, FALSE);
+	}
+
+	bool Win32Window::IsEnabled(void)
+	{
+		return IsWindowEnabled(windowDesc.handle) != 0;
 	}
 
 	const LWINDOWDESC& Win32Window::GetWindowDesc(void) const
@@ -177,9 +214,9 @@ namespace System
 			break;
 
 		case WM_INPUT:
-			deviceContext = GetDC(handle); // Получает контекст.
+			deviceContext = GetDC(handle); // РџРѕР»СѓС‡Р°РµС‚ РєРѕРЅС‚РµРєСЃС‚.
 			inputManagement->HandleMessage(deviceContext, lParam);
-			ReleaseDC(handle, deviceContext); // Освобождает контекст.
+			ReleaseDC(handle, deviceContext); // РћСЃРІРѕР±РѕР¶РґР°РµС‚ РєРѕРЅС‚РµРєСЃС‚.
 			break;
 
 		case WM_PAINT:

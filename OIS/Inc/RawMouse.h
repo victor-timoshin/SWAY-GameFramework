@@ -32,23 +32,37 @@ namespace OIS
 
 		virtual void SetCursorSensitivity(int value);
 
-		virtual Math::Vector2 GetCursorPositionAbsolute(void);
+		virtual Math::Vec2F GetCursorPositionAbsolute(void);
 
-		virtual Math::Vector2 GetCursorPositionRelative(void);
+		virtual Math::Vec2F GetCursorPositionRelative(void);
+
+		virtual bool HasMouseLeftButtonDown(void) const;
+
+		virtual bool HasMouseLeftButtonUp(void) const;
+
+		virtual bool HasMouseMiddleButtonDown(void) const;
+
+		virtual bool HasMouseMiddleButtonUp(void) const;
+
+		virtual bool HasMouseRightButtonDown(void) const;
+
+		virtual bool HasMouseRightButtonUp(void) const;
+
+		virtual short GetMouseWheel(void) const;
 
 #pragma endregion
 
 	private:
-		HWND windowHandle;
-		RAWMOUSE mouseDevice;
+		HWND _windowHandle;
+		RAWMOUSE _mouseDevice;
 
-		long xPositionAbsolute;
-		long yPositionAbsolute;
+		long _xPositionAbsolute;
+		long _yPositionAbsolute;
 
-		long xPositionRelative;
-		long yPositionRelative;
+		long _xPositionRelative;
+		long _yPositionRelative;
 
-		long sensitivity;
+		long _sensitivity;
 	};
 }
 

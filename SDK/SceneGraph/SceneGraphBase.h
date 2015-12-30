@@ -23,9 +23,18 @@ namespace Scene
 
 		virtual void DestroyCamera(const char* name) = 0;
 
+		/// <summary>Устанавливает активную камеру.</summary>
 		virtual void SetActiveCamera(ICameraBase* camera) = 0;
 
+		/// <summary>Устанавливает активную камеру по имени.</summary>
+		/// <param name="name">Имя камеры.</param>
+		virtual void SetActiveCameraByName(const char* name) = 0;
+
+		/// <summary>Получает указатель на активную камеру.</summary>
 		virtual ICameraBase* GetActiveCamera(void) = 0;
+
+		/// <summary>Получает число камер в сцене.</summary>
+		virtual int GetCameraCount(void) const = 0;
 
 		virtual ISceneComponentBase* CreateSprite(const char* name) = 0;
 

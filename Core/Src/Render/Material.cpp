@@ -1,97 +1,157 @@
-#include "../../../Core/Inc/Render/Material.h"
+п»ї#include "../../../Core/Inc/Render/Material.h"
+#include "../../../Core/Inc/Imaging/Codecs/PNGLoader.h"
+#include "../../../Core/Inc/Imaging/Codecs/BMPLoader.h"
+#include "../../../Core/Inc/Imaging/Codecs/TGALoader.h"
 
-namespace Render
+#include "../../../SDK//Core/Utils/File.h"
+
+#define MAX_IMAGE_COUNT 2
+
+namespace Core
 {
-	/// <summary>Конструктор класса.</summary>
-	/// <param name="library">Хендл библиотеки.</param>
-	/// <param name="device">Указатель на графический девайс.</param>
-	Material::Material(void* library, Gapi::IDeviceBase* device)
-		: renderDevice(device), shader(NULL), texture(NULL)
+	namespace Render
 	{
-		typedef Gapi::IShaderBase* IShaderCallback(void);
-		shader = reinterpret_cast<IShaderCallback*>(GetProcAddress((HMODULE)library, "RegisterShaderProgram"))();
-	}
+		DEF_PROPERTY_STRING(Material, Name, _name)
 
-	/// <summary>Деструктор класса.</summary>
-	Material::~Material(void)
-	{
-		Destroy();
-	}
-
-	bool Material::Create(const char* vertexShader, const char* fragmentShader)
-	{
-		if (shader->Create())
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="library">РҐРµРЅРґР» Р±РёР±Р»РёРѕС‚РµРєРё.</param>
+		/// <param name="device">РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РіСЂР°С„РёС‡РµСЃРєРёР№ РґРµРІР°Р№СЃ.</param>
+		Material::Material(void* library, Gapi::IDeviceBase* device)
+			: _renderDevice(device)
+			, _effect(nullptr)
+			, _image(nullptr)
 		{
-			std::vector<UInt> shaders;
-			shaders.push_back(shader->Compile(Gapi::SHADERTYPES::EST_VERTEX, shader->Load(vertexShader).c_str()));
-			shaders.push_back(shader->Compile(Gapi::SHADERTYPES::EST_FRAGMENT, shader->Load(fragmentShader).c_str()));
+			//_images.reserve(MAX_TEXTURE_COUNT);
 
-			shader->Attach(shaders);
-			shader->Link();
-			shader->Validate();
+			_supportedExtensionTextures.push_back("tga");
+			_supportedExtensionTextures.push_back("bmp");
+			_supportedExtensionTextures.push_back("png");
+
+			_effect = new Effect(library, device);
+			_image = new Image(library, device);
+		}
+
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		Material::~Material(void)
+		{
+			Destroy();
+		}
+
+		bool Material::Create(const char* vertexShader, const char* fragmentShader, const char* textureName)
+		{
+			_xmlDocument = new Xml::Document();
+
+			AddTexture(textureName);
+			AddShader(vertexShader, fragmentShader);
 
 			return true;
 		}
 
-		return false;
-	}
+		void Material::Destroy(void)
+		{
+			SAFE_DELETE(_effect);
+			SAFE_DELETE(_image);
+		}
 
-	void Material::Destroy(void)
-	{
-		SAFE_DELETE(shader);
-		SAFE_DELETE(texture);
-	}
+		void Material::Bind(void)
+		{
+			_effect->GetShader()->Bind();
 
-	/// <summary>Устанавливает свойства отражения окружающего цвета.</summary>
-	/// <param name="red"></param>
-	/// <param name="green"></param>
-	/// <param name="blue"></param>
-	void Material::SetAmbient(float red, float green, float blue)
-	{
+			_image->GetTexture()->SetActive(0);
+			_image->GetTexture()->Bind();
+		}
 
-	}
+		void Material::Unbind(void)
+		{
+			_image->GetTexture()->Unbind();
 
-	/// <summary>Устанавливает свойства диффузного отражения цвета.</summary>
-	/// <param name="red"></param>
-	/// <param name="green"></param>
-	/// <param name="blue"></param>
-	/// <param name="alpha"></param>
-	void Material::SetDiffuse(float red, float green, float blue, float alpha)
-	{
+			_effect->GetShader()->Unbind();
+		}
 
-	}
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РѕС‚СЂР°Р¶РµРЅРёСЏ РѕРєСЂСѓР¶Р°СЋС‰РµРіРѕ С†РІРµС‚Р°.</summary>
+		/// <param name="red"></param>
+		/// <param name="green"></param>
+		/// <param name="blue"></param>
+		void Material::SetAmbient(float red, float green, float blue)
+		{
+		}
 
-	/// <summary>Устанавливает свойства зеркального отражения цвета.</summary>
-	/// <param name="red"></param>
-	/// <param name="green"></param>
-	/// <param name="blue"></param>
-	/// <param name="alpha"></param>
-	void Material::SetSpecular(float red, float green, float blue, float alpha)
-	{
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РґРёС„С„СѓР·РЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+		/// <param name="red"></param>
+		/// <param name="green"></param>
+		/// <param name="blue"></param>
+		/// <param name="alpha"></param>
+		void Material::SetDiffuse(float red, float green, float blue, float alpha)
+		{
+		}
 
-	}
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р·РµСЂРєР°Р»СЊРЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+		/// <param name="red"></param>
+		/// <param name="green"></param>
+		/// <param name="blue"></param>
+		/// <param name="alpha"></param>
+		void Material::SetSpecular(float red, float green, float blue, float alpha)
+		{
+		}
 
-	/// <summary>Устанавливает свойства блеска.</summary>
-	/// <param name="value"></param>
-	void Material::SetShininess(float value)
-	{
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р±Р»РµСЃРєР°.</summary>
+		/// <param name="value"></param>
+		void Material::SetShininess(float value)
+		{
+		}
 
-	}
+		/// <summary>РџРѕР»СѓС‡Р°РµС‚ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С€РµР№РґРµСЂРЅСѓСЋ РїСЂРѕРіСЂР°РјРјСѓ.</summary>
+		Gapi::IShaderBase* Material::GetShader(void)
+		{
+			return _effect->GetShader();
+		}
 
-	/// <summary>Получает указатель на шейдерную программу.</summary>
-	Gapi::IShaderBase* Material::GetShader(void)
-	{
-		return shader;
-	}
+		void Material::AddTexture(std::string textureName)
+		{
+			Core::Utils::ToLowercase(textureName);
 
-	/// <summary>Получает имя материала.</summary>
-	const char* Material::GetName(void) const
-	{
-		return name;
-	}
+			std::string fileExtension = Core::Utils::GetFileExtension(textureName);
+			for (const auto& ext : _supportedExtensionTextures)
+			{
+				if (ext == fileExtension)
+					continue;
+			}
 
-	Gapi::ITextureBase* Material::GetTexture(void)
-	{
-		return texture;
+			if (fileExtension.compare("tga") == 0)
+			{
+				Imaging::TGALoader tgaLoader;
+				_image->GetTexture()->Load(tgaLoader.LoadFromFile(textureName));
+			}
+			else if (fileExtension.compare("bmp") == 0)
+			{
+				Imaging::BMPLoader bmpLoader;
+				_image->GetTexture()->Load(bmpLoader.LoadFromFile(textureName));
+			}
+			else if (fileExtension.compare("png") == 0)
+			{
+				Imaging::PNGLoader pngLoader;
+				_image->GetTexture()->Load(pngLoader.LoadFromFile(textureName));
+			}
+			else
+			{
+				_image->GetTexture()->CreateNullTexture(256, 256);
+			}
+
+			_image->Apply();
+		}
+
+		void Material::AddShader(const char* vertexShader, const char* fragmentShader)
+		{
+			if (_effect->GetShader()->Create())
+			{
+				std::vector<UInt> shaders;
+				shaders.push_back(_effect->GetShader()->Compile(Gapi::SHADER_TYPE::Vertex, _effect->GetShader()->Load(vertexShader)));
+				shaders.push_back(_effect->GetShader()->Compile(Gapi::SHADER_TYPE::Fragment, _effect->GetShader()->Load(fragmentShader)));
+
+				_effect->GetShader()->Attach(shaders);
+				_effect->GetShader()->Link();
+				_effect->GetShader()->Validate();
+			}
+		}
 	}
 }

@@ -1,8 +1,8 @@
-#include "../../../Core/Inc/Scene/SceneManagement.h"
+п»ї#include "../../../Core/Inc/Scene/SceneManagement.h"
 
 namespace Scene
 {
-	/// <summary>Деструктор класса.</summary>
+	/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	SceneManagement::~SceneManagement(void)
 	{
 		while (!stateStack.empty())
@@ -22,7 +22,7 @@ namespace Scene
 		stateStack.back()->FrameEnded();
 	}
 
-	void SceneManagement::ChangeState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
+	void SceneManagement::ChangeState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
 		while (!stateStack.empty())
 		{
@@ -34,7 +34,7 @@ namespace Scene
 		stateStack.back()->Enter(renderSystem, sceneGraph);
 	}
 
-	void SceneManagement::PushState(ISceneStateBase* sceneState, Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
+	void SceneManagement::PushState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
 		if (!stateStack.empty())
 			stateStack.back()->Pause();

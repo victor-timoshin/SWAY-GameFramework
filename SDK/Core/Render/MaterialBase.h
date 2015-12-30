@@ -1,50 +1,62 @@
-#ifndef MATERIALBASE_H
+п»ї#ifndef MATERIALBASE_H
 #define MATERIALBASE_H
 
 #include "../../../Math/Inc/Vector4.h"
 #include "../../../SDK/Platform.h"
 
-namespace Render
+namespace Core
 {
-	class IMaterialBase
+	namespace Render
 	{
-	public:
-		/// <summary>Конструктор класса.</summary>
-		IMaterialBase(void) {}
+		class IMaterialBase
+		{
+		public:
+			/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			IMaterialBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
-		virtual ~IMaterialBase(void) {}
+			/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			virtual ~IMaterialBase(void) {}
 
-		virtual bool Create(const char* vertexShader, const char* fragmentShader) = 0;
+			virtual bool Create(const char* vertexShader, const char* fragmentShader, const char* textureName) = 0;
 
-		virtual void Destroy(void) = 0;
+			virtual void Destroy(void) = 0;
 
-		/// <summary>Устанавливает свойства отражения окружающего цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		virtual void SetAmbient(float red, float green, float blue) = 0;
+			virtual void Bind(void) = 0;
 
-		/// <summary>Устанавливает свойства диффузного отражения цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		/// <param name="alpha"></param>
-		virtual void SetDiffuse(float red, float green, float blue, float alpha) = 0;
+			virtual void Unbind(void) = 0;
 
-		/// <summary>Устанавливает свойства зеркального отражения цвета.</summary>
-		/// <param name="red"></param>
-		/// <param name="green"></param>
-		/// <param name="blue"></param>
-		/// <param name="alpha"></param>
-		virtual void SetSpecular(float red, float green, float blue, float alpha) = 0;
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РѕС‚СЂР°Р¶РµРЅРёСЏ РѕРєСЂСѓР¶Р°СЋС‰РµРіРѕ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			virtual void SetAmbient(float red, float green, float blue) = 0;
 
-		/// <summary>устанавливает свойства блеска</summary>
-		/// <param name="value"></param>
-		virtual void SetShininess(float value) = 0;
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° РґРёС„С„СѓР·РЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			/// <param name="alpha"></param>
+			virtual void SetDiffuse(float red, float green, float blue, float alpha) = 0;
 
-		virtual const char* GetName(void) const = 0;
-	};
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р·РµСЂРєР°Р»СЊРЅРѕРіРѕ РѕС‚СЂР°Р¶РµРЅРёСЏ С†РІРµС‚Р°.</summary>
+			/// <param name="red"></param>
+			/// <param name="green"></param>
+			/// <param name="blue"></param>
+			/// <param name="alpha"></param>
+			virtual void SetSpecular(float red, float green, float blue, float alpha) = 0;
+
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРІРѕР№СЃС‚РІР° Р±Р»РµСЃРєР°.</summary>
+			/// <param name="value"></param>
+			virtual void SetShininess(float value) = 0;
+			
+			/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РёРјСЏ РјР°С‚РµСЂРёР°Р»Р°.</summary>
+			/// <param name="name">РРјСЏ РјР°С‚РµСЂРёР°Р»Р°.</param>
+			virtual void SetName(std::string name) = 0;
+
+			/// <summary>РџРѕР»СѓС‡Р°РµС‚ РёРјСЏ РјР°С‚РµСЂРёР°Р»Р°.</summary>
+			virtual std::string GetName(void) const = 0;
+		};
+	}
 }
 
 #endif // MATERIALBASE_H

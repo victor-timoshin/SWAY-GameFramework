@@ -1,5 +1,6 @@
 ﻿#include "../../GapiOpenGL/Inc/GpuBuffer.h"
 #include "../../GapiOpenGL/Inc/Device.h"
+#include "../../GapiOpenGL/Inc/WrapFunc.h"
 
 #include <vector>
 
@@ -7,79 +8,51 @@
 
 namespace Gapi
 {
-	UInt GpuBuffer::GetBufferType(BUFFERTYPES type)
+	UInt GpuBuffer::GetBufferType(BUFFER_TYPE type)
 	{
 		switch (type)
 		{
-		case EBT_VERTEX: return GL_ARRAY_BUFFER_ARB;
-		case EBT_INDEX: return GL_ELEMENT_ARRAY_BUFFER_ARB;
+		case ByfferType::Vertex: return GL_ARRAY_BUFFER_ARB;
+		case ByfferType::Index:  return GL_ELEMENT_ARRAY_BUFFER_ARB;
+		default:
+			break;
 		}
-
-		return (BUFFERTYPES)-1;
 	}
 
-	UInt GpuBuffer::GetBufferUsage(BUFFER_USAGES usage)
+	UInt GpuBuffer::GetBufferUsage(BUFFER_USAGE usage)
 	{
 		switch (usage)
 		{
-		case EBU_STATIC: return GL_STATIC_DRAW_ARB;
-		case EBU_DYNAMIC: return GL_DYNAMIC_DRAW_ARB;
+		case BUFFER_USAGE::Static:  return GL_STATIC_DRAW_ARB;
+		case BUFFER_USAGE::Dynamic: return GL_DYNAMIC_DRAW_ARB;
+		case BUFFER_USAGE::Stream:  return GL_STREAM_DRAW_ARB;
+		default:
+			break;
 		}
-
-		return (BUFFER_USAGES)-1;
 	}
 
-	UInt GpuBuffer::GetPrimitiveType(PRIMITIVETYPES type)
+	UInt GpuBuffer::GetPrimitiveType(PRIMITIVE_TYPE type)
 	{
 		switch (type)
 		{
-		case EPT_POINTLIST: return GL_POINTS;
-		case EPT_LINELIST: return GL_LINES;
-		case EPT_LINESTRIP: return GL_LINE_STRIP;
-		case EPT_TRIANGLELIST: return GL_TRIANGLES;
-		case EPT_TRIANGLESTRIP: return GL_TRIANGLE_STRIP;
+		case PRIMITIVE_TYPE::PointList:        return GL_POINTS;
+		case PRIMITIVE_TYPE::LineList:         return GL_LINES;
+		case PRIMITIVE_TYPE::LineStrip:     return GL_LINE_STRIP;
+		case PRIMITIVE_TYPE::TriangleList:     return GL_TRIANGLES;
+		case PRIMITIVE_TYPE::TriangleStrip: return GL_TRIANGLE_STRIP;
+		default:
+			break;
 		}
-
-		return (PRIMITIVETYPES)-1;
 	}
-
-	PFNGLGENBUFFERSARBPROC GpuBuffer::glGenBuffersARB = NULL;
-	PFNGLBINDBUFFERARBPROC GpuBuffer::glBindBufferARB = NULL;
-	PFNGLBUFFERDATAARBPROC GpuBuffer::glBufferDataARB = NULL;
-	PFNGLBUFFERSUBDATAARBPROC GpuBuffer::glBufferSubDataARB = NULL;
-	PFNGLMAPBUFFERARBPROC GpuBuffer::glMapBufferARB = NULL;
-	PFNGLUNMAPBUFFERARBPROC GpuBuffer::glUnmapBufferARB = NULL;
-	PFNGLDELETEBUFFERSARBPROC GpuBuffer::glDeleteBuffersARB = NULL;
-	PFNGLGETBUFFERPARAMETERIVARBPROC GpuBuffer::glGetBufferParameterivARB = NULL;
-
-	PFNGLGENVERTEXARRAYSPROC GpuBuffer::glGenVertexArraysARB = NULL;
-	PFNGLBINDVERTEXARRAYPROC GpuBuffer::glBindVertexArrayARB = NULL;
-	PFNGLVERTEXATTRIBPOINTERPROC GpuBuffer::glVertexAttribPointerARB = NULL;
-	PFNGLGETATTRIBLOCATIONARBPROC GpuBuffer::glGetAttribLocationARB = NULL;
-	PFNGLENABLEVERTEXATTRIBARRAYPROC GpuBuffer::glEnableVertexAttribArrayARB = NULL;
-	PFNGLDISABLEVERTEXATTRIBARRAYPROC GpuBuffer::glDisableVertexAttribArrayARB = NULL;
 
 	/// <summary>Конструктор класса.</summary>
 	GpuBuffer::GpuBuffer(void)
-		: bufferID(0), bufferType(0), byteStride(0), numElements(0)
+		: _bufferID(0)
+		, _bufferArrayID(0)
+		, _byteStride(0)
+		, _numElements(0)
 	{
-		LOAD_EXTENSION(PFNGLGENBUFFERSARBPROC, glGenBuffersARB);
-		LOAD_EXTENSION(PFNGLBINDBUFFERARBPROC, glBindBufferARB);
-		LOAD_EXTENSION(PFNGLBUFFERDATAARBPROC, glBufferDataARB);
-		LOAD_EXTENSION(PFNGLBUFFERSUBDATAARBPROC, glBufferSubDataARB);
-		LOAD_EXTENSION(PFNGLMAPBUFFERARBPROC, glMapBufferARB);
-		LOAD_EXTENSION(PFNGLUNMAPBUFFERARBPROC, glUnmapBufferARB);
-		LOAD_EXTENSION(PFNGLDELETEBUFFERSARBPROC, glDeleteBuffersARB);
-		LOAD_EXTENSION(PFNGLGETBUFFERPARAMETERIVARBPROC, glGetBufferParameterivARB);
-
-		LOAD_EXTENSION(PFNGLGENVERTEXARRAYSPROC, glGenVertexArraysARB);
-		LOAD_EXTENSION(PFNGLBINDVERTEXARRAYPROC, glBindVertexArrayARB);
-		LOAD_EXTENSION(PFNGLVERTEXATTRIBPOINTERPROC, glVertexAttribPointerARB);
-		LOAD_EXTENSION(PFNGLGETATTRIBLOCATIONARBPROC, glGetAttribLocationARB);
-		LOAD_EXTENSION(PFNGLENABLEVERTEXATTRIBARRAYPROC, glEnableVertexAttribArrayARB);
-		LOAD_EXTENSION(PFNGLDISABLEVERTEXATTRIBARRAYPROC, glDisableVertexAttribArrayARB);
-
-		memset(&vertexFormatDesc, 0, sizeof(LVERTEX_FORMAT_DESC));
+		memset(&_vertexFormatDesc, 0, sizeof(LVERTEX_FORMAT_DESC));
 	}
 
 	/// <summary>Деструктор класса.</summary>
@@ -89,72 +62,75 @@ namespace Gapi
 	}
 
 	/// <summary>Устанавливает декларацию вершин.</summary>
-	void GpuBuffer::SetVertexDeclaration(const PVERTEX_ELEMENT_DESC elementDesc, UInt numAttributes)
+	void GpuBuffer::SetVertexDeclaration(const std::vector<LVERTEX_ELEMENT_DESC>& elements)
 	{
-		std::vector<int> offset(numAttributes, 0);
+		std::vector<int> offset(elements.size(), 0);
+		int stream = 0;
 
-		for (UInt i = 0; i < numAttributes; ++i)
+		for (UInt i = 0; i < elements.size(); ++i)
 		{
-			int stream = elementDesc[i].stream;
+			int stream = elements[i].stream;
+			Gapi::VERTEX_ELEMENT_TYPE type = elements[i].type;
+			Gapi::VERTEX_ELEMENT_FORMAT format = elements[i].format;
 
-			switch (elementDesc[i].type)
+			switch (type)
 			{
-			case VERTEXELEMENTTYPES::EVET_POSITION:
-				vertexFormatDesc.position.size = 3;
-				vertexFormatDesc.position.offset = offset[stream];
-				vertexFormatDesc.position.stream = stream;
-				vertexFormatDesc.position.type = elementDesc[i].type;
-				vertexFormatDesc.position.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::Position:
+				_vertexFormatDesc.position.size = 3;
+				_vertexFormatDesc.position.offset = offset[stream];
+				_vertexFormatDesc.position.stream = stream;
+				_vertexFormatDesc.position.type = type;
+				_vertexFormatDesc.position.format = format;
 
 				offset[stream] += 12;
 				break;
 
-			case VERTEXELEMENTTYPES::EVET_COLOR:
-				vertexFormatDesc.color.size = 4;
-				vertexFormatDesc.color.offset = offset[stream];
-				vertexFormatDesc.color.stream = stream;
-				vertexFormatDesc.color.type = elementDesc[i].type;
-				vertexFormatDesc.color.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::Color:
+				_vertexFormatDesc.color.size = 4;
+				_vertexFormatDesc.color.offset = offset[stream];
+				_vertexFormatDesc.color.stream = stream;
+				_vertexFormatDesc.color.type = type;
+				_vertexFormatDesc.color.format = format;
 
 				offset[stream] += 16;
 				break;
 
-			case VERTEXELEMENTTYPES::EVET_TEXCOORD:
-				vertexFormatDesc.texCoord.size = 2;
-				vertexFormatDesc.texCoord.offset = offset[stream];
-				vertexFormatDesc.texCoord.stream = stream;
-				vertexFormatDesc.texCoord.type = elementDesc[i].type;
-				vertexFormatDesc.texCoord.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::TexCoord:
+				_vertexFormatDesc.texCoord.size = 2;
+				_vertexFormatDesc.texCoord.offset = offset[stream];
+				_vertexFormatDesc.texCoord.stream = stream;
+				_vertexFormatDesc.texCoord.type = type;
+				_vertexFormatDesc.texCoord.format = format;
 
 				offset[stream] += 8;
 				break;
 
-			case VERTEXELEMENTTYPES::EVET_NORMAL:
-				vertexFormatDesc.normal.size = 3;
-				vertexFormatDesc.normal.offset = offset[stream];
-				vertexFormatDesc.normal.stream = stream;
-				vertexFormatDesc.normal.type = elementDesc[i].type;
-				vertexFormatDesc.normal.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::Normal:
+				_vertexFormatDesc.normal.size = 3;
+				_vertexFormatDesc.normal.offset = offset[stream];
+				_vertexFormatDesc.normal.stream = stream;
+				_vertexFormatDesc.normal.type = type;
+				_vertexFormatDesc.normal.format = format;
 
 				offset[stream] += 12;
 				break;
 
-			case VERTEXELEMENTTYPES::EVET_TANGENT:
-				vertexFormatDesc.tangent.size = 3;
-				vertexFormatDesc.tangent.offset = offset[stream];
-				vertexFormatDesc.tangent.stream = stream;
-				vertexFormatDesc.tangent.type = elementDesc[i].type;
-				vertexFormatDesc.tangent.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::Tangent:
+				_vertexFormatDesc.tangent.size = 3;
+				_vertexFormatDesc.tangent.offset = offset[stream];
+				_vertexFormatDesc.tangent.stream = stream;
+				_vertexFormatDesc.tangent.type = type;
+				_vertexFormatDesc.tangent.format = format;
 
 				offset[stream] += 12;
 				break;
 
-			case VERTEXELEMENTTYPES::EVET_BITANGENT:
-				vertexFormatDesc.bitangent.size = 3;
-				vertexFormatDesc.bitangent.offset = offset[stream];
-				vertexFormatDesc.bitangent.stream = stream;
-				vertexFormatDesc.bitangent.type = elementDesc[i].type;
-				vertexFormatDesc.bitangent.format = elementDesc[i].format;
+			case VERTEX_ELEMENT_TYPE::Bitangent:
+				_vertexFormatDesc.bitangent.size = 3;
+				_vertexFormatDesc.bitangent.offset = offset[stream];
+				_vertexFormatDesc.bitangent.stream = stream;
+				_vertexFormatDesc.bitangent.type = type;
+				_vertexFormatDesc.bitangent.format = format;
 
 				offset[stream] += 12;
 				break;
@@ -165,232 +141,250 @@ namespace Gapi
 		}
 	}
 
-	UInt GpuBuffer::CreateArray(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage)
+	void GpuBuffer::CreateArray(BUFFER_TYPE type, UInt stride, UInt count, BUFFER_USAGE usage)
 	{
-		bufferType = GpuBuffer::GetBufferType(type);
+		_bufferTarget = GpuBuffer::GetBufferType(type);
 
-		byteStride = stride;
-		numElements = count;
+		_byteStride = stride;
+		_numElements = count;
 
-		UInt dataSize = numElements * byteStride;
+		UInt dataSize = _numElements * _byteStride;
 
-		glGenVertexArraysARB(1, &bufferID);
-		CHECK_GLERROR();
-		glGenBuffersARB(1, &bufferID);
-		CHECK_GLERROR();
-		glBindVertexArrayARB(bufferID);
-		CHECK_GLERROR();
-		glBindBufferARB(bufferType, bufferID);
-		CHECK_GLERROR();
-		glBufferDataARB(bufferType, dataSize, NULL, GpuBuffer::GetBufferUsage(usage));
-		CHECK_GLERROR();
+		GL_ARB_VertexArrayObject::GenerateVertexArrays(1, &_bufferArrayID, SOURCE_LOCATION);
+		GL_ARB_VertexArrayObject::BindVertexArray(_bufferArrayID, SOURCE_LOCATION);
 
-		return bufferID;
+		GL_ARB_VertexBufferObject::GenerateBuffers(1, &_bufferID, SOURCE_LOCATION);
+
+		GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+		GL_ARB_VertexBufferObject::BufferData(_bufferTarget, dataSize, nullptr, GpuBuffer::GetBufferUsage(usage), SOURCE_LOCATION);
 	}
 
-	UInt GpuBuffer::Create(BUFFERTYPES type, UInt stride, UInt count, BUFFER_USAGES usage)
+	void GpuBuffer::Create(BUFFER_TYPE type, UInt stride, UInt count, BUFFER_USAGE usage)
 	{
-		bufferType = GpuBuffer::GetBufferType(type);
+		_bufferTarget = GpuBuffer::GetBufferType(type);
 
-		byteStride = stride;
-		numElements = count;
+		_byteStride = stride;
+		_numElements = count;
 
-		UInt dataSize = numElements * byteStride;
+		UInt dataSize = _numElements * _byteStride;
 
-		glGenBuffersARB(1, &bufferID);
-		CHECK_GLERROR();
-		glBindBufferARB(bufferType, bufferID);
-		CHECK_GLERROR();
-		glBufferDataARB(bufferType, dataSize, NULL, GpuBuffer::GetBufferUsage(usage));
-		CHECK_GLERROR();
+		GL_ARB_VertexBufferObject::GenerateBuffers(1, &_bufferID, SOURCE_LOCATION);
+
+		GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+
+		GL_ARB_VertexBufferObject::BufferData(_bufferTarget, dataSize, nullptr, GpuBuffer::GetBufferUsage(usage), SOURCE_LOCATION);
 
 		int bufferSize = 0;
-		glGetBufferParameterivARB(bufferType, GL_BUFFER_SIZE_ARB, &bufferSize);
+		GL_ARB_VertexBufferObject::GetBufferParameterI(_bufferTarget, GL_BUFFER_SIZE_ARB, &bufferSize, SOURCE_LOCATION);
 		if (dataSize != bufferSize)
 		{
-			glDeleteBuffersARB(1, &bufferID);
-			bufferID = 0;
+			GL_ARB_VertexBufferObject::DeleteBuffers(1, &_bufferID);
+			_bufferID = 0;
 		}
-
-		CHECK_GLERROR();
-
-		return bufferID;
 	}
 
 	void GpuBuffer::Destroy(void)
 	{
-		glDeleteBuffersARB(1, &bufferID);
+		if (_bufferID != 0)
+			GL_ARB_VertexBufferObject::DeleteBuffers(1, &_bufferID);
+
+		if (_bufferArrayID != 0)
+			GL_ARB_VertexArrayObject::DeleteVertexArrays(1, &_bufferArrayID);
 	}
 
 	void GpuBuffer::SetData(void* source)
 	{
-		if (bufferID)
+		if (_bufferID != 0)
 		{
-			glBindBufferARB(bufferType, bufferID);
-			glBufferSubDataARB(bufferType, 0/*offset*/, numElements * byteStride, source);
-			glBindBufferARB(bufferType, 0);
-
-			CHECK_GLERROR();
+			GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::BufferSubData(_bufferTarget, 0, _numElements * _byteStride, source, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::UnbindBuffer(_bufferTarget, SOURCE_LOCATION);
 		}
 	}
 
-	void* GpuBuffer::Lock(void)
+	void* GpuBuffer::Map(void)
 	{
-		void* buffer = 0;
-		if (bufferID)
+		void* mappedBuffer = nullptr;
+		if (_bufferID != 0)
 		{
-			glBindBufferARB(bufferType, bufferID);
-			buffer = glMapBufferARB(bufferType, /*GL_READ_WRITE*/GL_WRITE_ONLY_ARB);
-			glBindBufferARB(bufferType, 0);
-
-			CHECK_GLERROR();
+			GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+			mappedBuffer = GL_ARB_VertexBufferObject::MapBuffer(_bufferTarget, /*GL_READ_WRITE*/GL_WRITE_ONLY_ARB, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::UnbindBuffer(_bufferTarget, SOURCE_LOCATION);
 		}
 
-		return buffer;
+		return mappedBuffer;
 	}
 
-	void GpuBuffer::Unlock(void)
+	void* GpuBuffer::MapRange(int offset, int length)
 	{
-		if (bufferID)
+		void* mappedBuffer = nullptr;
+		if (_bufferID != 0)
 		{
-			glBindBufferARB(bufferType, bufferID);
-			glUnmapBufferARB(bufferType);
-			glBindBufferARB(bufferType, 0);
+			GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+			mappedBuffer = GL_ARB_MapBufferRange::MapBufferRange(_bufferTarget, offset, length, GL_MAP_WRITE_BIT | GL_MAP_UNSYNCHRONIZED_BIT, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::UnbindBuffer(_bufferTarget, SOURCE_LOCATION);
+		}
 
-			CHECK_GLERROR();
+		return mappedBuffer;
+	}
+
+	void GpuBuffer::Unmap(void)
+	{
+		if (_bufferID != 0)
+		{
+			GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::UnmapBuffer(_bufferTarget, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::UnbindBuffer(_bufferTarget, SOURCE_LOCATION);
 		}
 	}
 
-	void GpuBuffer::BindVertexArray(void)
+	void GpuBuffer::BindVertexArray()
 	{
-		glBindVertexArrayARB(bufferType);
+		GL_ARB_VertexArrayObject::BindVertexArray(_bufferArrayID, SOURCE_LOCATION);
+	}
+	void GpuBuffer::UnbindVertexArray()
+	{
+		GL_ARB_VertexArrayObject::UnbindVertexArray(SOURCE_LOCATION);
 	}
 
-	void GpuBuffer::UnbindVertexArray(void)
+	void GpuBuffer::RenderW(PRIMITIVE_TYPE primitiveType, IBufferBase* indexBufferBase, UInt first, UInt numVertices, UInt shaderProgram)
 	{
-		glBindVertexArrayARB(0);
-	}
-
-	void GpuBuffer::RenderW(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt shaderProgram)
-	{
-		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.position.size != FORMAT_UNDEFINED)
 		{
-			GLint texCoord = glGetAttribLocationARB(shaderProgram, "texCoord");
+			int vertex = 0;// GL_ARB_VertexShader::GetAttributeLocation(shaderProgram, "position", SOURCE_LOCATION);
 
-			glEnableVertexAttribArrayARB(texCoord);
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glVertexAttribPointerARB(texCoord, vertexFormatDesc.texCoord.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.texCoord.offset));
-
-			CHECK_GLERROR();
+			//GL_ARB_VertexShader::BindAttributeLocation(shaderProgram, 0, "position", SOURCE_LOCATION);
+			GL_ARB_VertexProgram::EnableVertexAttributeArray(vertex, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::BindBuffer(GL_ARRAY_BUFFER_ARB, _bufferID, SOURCE_LOCATION);
+			GL_ARB_VertexProgram::VertexAttributePointer(vertex, _vertexFormatDesc.position.size, GL_FLOAT, GL_FALSE, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.position.offset), SOURCE_LOCATION);
 		}
 
-		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.color.size != FORMAT_UNDEFINED)
 		{
-			GLint vertex = glGetAttribLocationARB(shaderProgram, "position");
+			int vertex = 1;// GL_ARB_VertexShader::GetAttributeLocation(shaderProgram, "textColor", SOURCE_LOCATION);
 
-			glEnableVertexAttribArrayARB(vertex);
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glVertexAttribPointerARB(vertex, vertexFormatDesc.position.size, GL_FLOAT, GL_FALSE, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
-
-			CHECK_GLERROR();
+			GL_ARB_VertexProgram::EnableVertexAttributeArray(vertex, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::BindBuffer(GL_ARRAY_BUFFER_ARB, _bufferID, SOURCE_LOCATION);
+			GL_ARB_VertexProgram::VertexAttributePointer(vertex, _vertexFormatDesc.color.size, GL_FLOAT, GL_FALSE, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.color.offset), SOURCE_LOCATION);
 		}
 
-		glDrawArrays(GpuBuffer::GetPrimitiveType(primitiveType), 0, numVertices);
+		if (_vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		{
+			int texCoord = GL_ARB_VertexShader::GetAttributeLocation(shaderProgram, "texCoord", SOURCE_LOCATION);
 
-		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
-			glDisableVertexAttribArrayARB(0);
+			GL_ARB_VertexProgram::EnableVertexAttributeArray(texCoord, SOURCE_LOCATION);
+			GL_ARB_VertexBufferObject::BindBuffer(GL_ARRAY_BUFFER_ARB, _bufferID, SOURCE_LOCATION);
+			GL_ARB_VertexProgram::VertexAttributePointer(texCoord, _vertexFormatDesc.texCoord.size, GL_FLOAT, GL_FALSE, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.texCoord.offset), SOURCE_LOCATION);
+		}
 
-		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
-			glDisableVertexAttribArrayARB(1);
+		//GL_ARB_VertexArrayObject::BindVertexArray(_bufferArrayID, SOURCE_LOCATION);
+
+		glDrawArrays(GpuBuffer::GetPrimitiveType(primitiveType), first, numVertices);
+
+		//GL_ARB_VertexArrayObject::UnbindVertexArray(SOURCE_LOCATION);
+
+		if (_vertexFormatDesc.position.size != FORMAT_UNDEFINED)
+			GL_ARB_VertexProgram::DisableVertexAttributeArray(0, SOURCE_LOCATION);
+
+		if (_vertexFormatDesc.color.size != FORMAT_UNDEFINED)
+			GL_ARB_VertexProgram::DisableVertexAttributeArray(1, SOURCE_LOCATION);
+
+		if (_vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+			GL_ARB_VertexProgram::DisableVertexAttributeArray(2, SOURCE_LOCATION);
 	}
 
-	void GpuBuffer::Render(PRIMITIVETYPES primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount)
+	void GpuBuffer::Render(PRIMITIVE_TYPE primitiveType, IBufferBase* indexBufferBase, UInt numVertices, UInt primitiveCount, UInt shaderProgram)
 	{
 		GpuBuffer* indexBuffer = static_cast<GpuBuffer*>(indexBufferBase);
 
-		if (vertexFormatDesc.bitangent.size != FORMAT_UNDEFINED)
+		//if (vertexFormatDesc.bitangent.size != FORMAT_UNDEFINED)
+		//{
+		//}
+
+		//if (vertexFormatDesc.tangent.size != FORMAT_UNDEFINED)
+		//{
+		//}
+
+		GL_ARB_VertexBufferObject::BindBuffer(_bufferTarget, _bufferID, SOURCE_LOCATION);
+
+		if (_vertexFormatDesc.position.size != FORMAT_UNDEFINED)
 		{
+			glEnableClientState(GL_VERTEX_ARRAY);
+			glVertexPointer(_vertexFormatDesc.position.size, GL_FLOAT, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.position.offset));
+			CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 		}
 
-		if (vertexFormatDesc.tangent.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.color.size != FORMAT_UNDEFINED)
 		{
+			glEnableClientState(GL_COLOR_ARRAY);
+			glColorPointer(_vertexFormatDesc.color.size, GL_FLOAT, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.color.offset));
+			CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 		}
 
-		if (vertexFormatDesc.normal.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		{
+			GL_ARB_Multitexture::ClientActiveTexture(GL_TEXTURE0_ARB, SOURCE_LOCATION);
+			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+			glTexCoordPointer(_vertexFormatDesc.texCoord.size, GL_FLOAT, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.texCoord.offset));
+		
+			CHECK_OPENGL_ERROR(SOURCE_LOCATION);
+		}
+
+		if (_vertexFormatDesc.normal.size != FORMAT_UNDEFINED)
 		{
 			glEnableClientState(GL_NORMAL_ARRAY);
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glNormalPointer(GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.normal.offset));
+			glNormalPointer(GL_FLOAT, _byteStride, BUFFER_OFFSET(_vertexFormatDesc.normal.offset));
 
-			CHECK_GLERROR();
+			CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 		}
 
-		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		if (indexBuffer != nullptr)
 		{
-			glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glTexCoordPointer(vertexFormatDesc.texCoord.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.texCoord.offset));
+			GL_ARB_VertexBufferObject::BindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB, indexBuffer->GetID(), SOURCE_LOCATION);
 
-			CHECK_GLERROR();
-		}
+			glDrawElements(GpuBuffer::GetPrimitiveType(primitiveType), 36/*indexBuffer->GetElementCount()*/, GL_UNSIGNED_BYTE, 0/*offset*/);
+			CHECK_OPENGL_ERROR(SOURCE_LOCATION);
 
-		if (vertexFormatDesc.color.size != FORMAT_UNDEFINED)
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glEnableClientState(GL_COLOR_ARRAY);
-			glColorPointer(vertexFormatDesc.color.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.color.offset));
-
-			CHECK_GLERROR();
-		}
-
-		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
-		{
-			glBindBufferARB(GL_ARRAY_BUFFER_ARB, bufferID);
-			glEnableClientState(GL_VERTEX_ARRAY);
-			glVertexPointer(vertexFormatDesc.position.size, GL_FLOAT, byteStride, BUFFER_OFFSET(vertexFormatDesc.position.offset));
-
-			CHECK_GLERROR();
-		}
-
-		if (indexBuffer != NULL)
-		{
-			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, indexBuffer->GetID());
-			CHECK_GLERROR();
-
-			glDrawElements(GpuBuffer::GetPrimitiveType(primitiveType), indexBuffer->GetElementCount(), GL_UNSIGNED_BYTE, 0/*offset*/);
-			CHECK_GLERROR();
-
-			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
-			CHECK_GLERROR();
+			GL_ARB_VertexBufferObject::UnbindBuffer(GL_ELEMENT_ARRAY_BUFFER_ARB, SOURCE_LOCATION);
 		}
 		else
 		{
 			glDrawArrays(GpuBuffer::GetPrimitiveType(primitiveType), 0, numVertices);
 		}
 
-		if (vertexFormatDesc.position.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.position.size != FORMAT_UNDEFINED)
 			glDisableClientState(GL_VERTEX_ARRAY);
 
-		if (vertexFormatDesc.color.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.color.size != FORMAT_UNDEFINED)
 			glDisableClientState(GL_COLOR_ARRAY);
 
-		if (vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.texCoord.size != FORMAT_UNDEFINED)
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
-		if (vertexFormatDesc.normal.size != FORMAT_UNDEFINED)
+		if (_vertexFormatDesc.normal.size != FORMAT_UNDEFINED)
 			glDisableClientState(GL_NORMAL_ARRAY);
 
-		glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+		GL_ARB_VertexBufferObject::UnbindBuffer(GL_ARRAY_BUFFER_ARB, SOURCE_LOCATION);
 	}
 
 	UInt GpuBuffer::GetID(void)
 	{
-		return bufferID;
+		return _bufferID;
 	}
 
 	UInt GpuBuffer::GetElementCount(void)
 	{
-		return numElements;
+		return _numElements;
+	}
+
+	void GpuBuffer::SetByteStride(UInt stride)
+	{
+		_byteStride = stride;
+	}
+
+	UInt GpuBuffer::GetByteStride(void) const
+	{
+		return _byteStride;
 	}
 
 	IBufferBase* RegisterBuffer(void)

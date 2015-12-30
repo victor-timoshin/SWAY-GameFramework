@@ -13,14 +13,20 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\GapiOpenGL\Src\Device.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\ShaderProgram.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\FrameBuffer.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\Texture.cpp" />
     <ClCompile Include="..\..\..\GapiOpenGL\Src\GpuBuffer.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\TextureSampler.cpp" />
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\WrapFunc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Device.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\ShaderProgram.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\FrameBuffer.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\GpuBuffer.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\TextureSampler.h" />
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\WrapFunc.h" />
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>

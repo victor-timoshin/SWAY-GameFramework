@@ -2,9 +2,6 @@
 #define SCENECOMPONENTBASE_H
 
 #include "../Core/Scene/RenderableBase.h"
-//#include "../Math/BoundingVolume.h"
-//#include "../Math/Matrix4.h"
-//#include "../Math/Vertex.h"
 #include "../Gapi/Types.h"
 #include "../Platform.h"
 

@@ -1,90 +1,128 @@
-#include "../Inc/Camera.h"
+Ôªø#include "../Inc/Camera.h"
 
 namespace Scene
 {
-	const Math::Vector3 Camera::WORLD_XAXIS(1.0f, 0.0f, 0.0f);
-	const Math::Vector3 Camera::WORLD_YAXIS(0.0f, 1.0f, 0.0f);
-	const Math::Vector3 Camera::WORLD_ZAXIS(0.0f, 0.0f, 1.0f);
+	DEF_PROPERTY_FLOAT(Camera, FieldOfView, _fieldOfView)
+	DEF_PROPERTY_FLOAT(Camera, AspectRatio, _aspectRatio)
+	DEF_PROPERTY_FLOAT(Camera, NearPlane, _nearPlane)
+	DEF_PROPERTY_FLOAT(Camera, FarPlane, _farPlane)
 
-	/// <summary> ÓÌÒÚÛÍÚÓ ÍÎ‡ÒÒ‡.</summary>
-	/// <param name="name">»Ïˇ Í‡ÏÂ˚.</param>
+	DEF_PROPERTY(Camera, Math::Vec3F, XAxis, _xAxis)
+	DEF_PROPERTY(Camera, Math::Vec3F, YAxis, _yAxis)
+	DEF_PROPERTY(Camera, Math::Vec3F, ZAxis, _zAxis)
+
+	/// <summary>–ö–æ–Ω—Å—Ç—Ä—É–∫—Ç–æ—Ä –∫–ª–∞—Å—Å–∞.</summary>
+	/// <param name="name">–ò–º—è –∫–∞–º–µ—Ä—ã.</param>
 	Camera::Camera(std::string name) : ICameraBase(name)
 	{
-		projectionMatrix.Identity();
-		viewMatrix.Identity();
+		_projectionMatrix.SetIdentity();
+		_viewMatrix.SetIdentity();
+		_viewProjectionMatrix.SetIdentity();
 
-		fov = 45.0f;
-		orientation.Identity();
-		eye = Math::Vector3(0.0f, 0.0f, 0.0f);
+		_position = VEC3F_ZERO;
+		_target = VEC3F_ZERO;
 
-		xAxis = Math::Vector3(1.0f, 0.0f, 0.0f);
-		yAxis = Math::Vector3(0.0f, 1.0f, 0.0f);
-		zAxis = Math::Vector3(0.0f, 0.0f, 1.0f);
+		_orientation.Identity();
+
+		_fieldOfView = CAMERA_FOV;
+
+		_xAxis = VEC3F_UNIT_X;
+		_yAxis = VEC3F_UNIT_Y;
+		_zAxis = VEC3F_UNIT_Z;
+
+		_enableFrustum = true;
 	}
 
-	void Camera::LookAt(void)
+	/// <summary>–î–µ—Å—Ç—Ä—É–∫—Ç–æ—Ä –∫–ª–∞—Å—Å–∞.</summary>
+	Camera::~Camera(void)
 	{
-		zAxis.Normalize();
-		xAxis = Math::Cross(yAxis, zAxis);
-		xAxis.Normalize();
-
-		yAxis = Math::Cross(zAxis, xAxis);
-		yAxis.Normalize();
-		xAxis.Normalize();
-
-		viewMatrix[0][0] = xAxis._x;
-		viewMatrix[1][0] = xAxis._y;
-		viewMatrix[2][0] = xAxis._z;
-		viewMatrix[3][0] = -Math::DotProduct(xAxis, eye);
-
-		viewMatrix[0][1] = yAxis._x;
-		viewMatrix[1][1] = yAxis._y;
-		viewMatrix[2][1] = yAxis._z;
-		viewMatrix[3][1] = -Math::DotProduct(yAxis, eye);
-
-		viewMatrix[0][2] = zAxis._x;
-		viewMatrix[1][2] = zAxis._y;
-		viewMatrix[2][2] = zAxis._z;
-		viewMatrix[3][2] = -Math::DotProduct(zAxis, eye);
-
-		orientation.FromRotationMatrix(viewMatrix);
 	}
 
-	void Camera::Perspective(float fovF, float aspectRatio, float nearClipF, float farClipF)
+	void Camera::LookAt(const Math::Vec3F& target)
 	{
-		nearClip = nearClipF;
-		farClip = farClipF;
-
-		projectionMatrix.Perspective(fov, aspectRatio, nearClip, farClip);
+		LookAt(_position, target, VEC3F_UNIT_Y);
 	}
 
-	void Camera::OrthoOffCenter(float left, float top, float right, float bottom, float nearClipF, float farClipF)
+	void Camera::LookAt(const Math::Vec3F& eye, const Math::Vec3F& target, const Math::Vec3F& up)
 	{
-		nearClip = nearClipF;
-		farClip = farClipF;
+		_position = eye;
+		_target = target;
 
-		projectionMatrix.OrthoOffCenter(left, top, right, bottom, nearClip, farClip);
+		_zAxis = _position - target;
+		_zAxis.Normalize();
+
+		_xAxis = Math::Cross(up, _zAxis);
+		_xAxis.Normalize();
+
+		_yAxis = Math::Cross(_zAxis, _xAxis);
+		_yAxis.Normalize();
+
+		_viewMatrix.Set(0, 0, _xAxis._x);
+		_viewMatrix.Set(1, 0, _xAxis._y);
+		_viewMatrix.Set(2, 0, _xAxis._z);
+		_viewMatrix.Set(3, 0, -Math::DotProduct(_xAxis, _position));
+
+		_viewMatrix.Set(0, 1, _yAxis._x);
+		_viewMatrix.Set(1, 1, _yAxis._y);
+		_viewMatrix.Set(2, 1, _yAxis._z);
+		_viewMatrix.Set(3, 1, -Math::DotProduct(_yAxis, _position));
+
+		_viewMatrix.Set(0, 2, _zAxis._x);
+		_viewMatrix.Set(1, 2, _zAxis._y);
+		_viewMatrix.Set(2, 2, _zAxis._z);
+		_viewMatrix.Set(3, 2, -Math::DotProduct(_zAxis, _position));
+
+		_orientation.FromRotationMatrix(_viewMatrix);
+	}
+
+	void Camera::Perspective(float fov, float aspectRatio, float nearClip, float farClip)
+	{
+		_fieldOfView = fov;
+		_aspectRatio = aspectRatio;
+		_nearPlane = nearClip;
+		_farPlane = farClip;
+
+		_mode = PROJECTION_MODE::Perspective;
+		_projectionMatrix.Perspective(_fieldOfView, aspectRatio, _nearPlane, _farPlane);
+
+		if (_enableFrustum)
+			_frustum.Construct(GetViewProjectionMatrix());
+	}
+
+	void Camera::OrthoOffCenter(float left, float top, float right, float bottom, float nearClip, float farClip)
+	{
+		_nearPlane = nearClip;
+		_farPlane = farClip;
+
+		_mode = PROJECTION_MODE::Orthographic;
+		_projectionMatrix.OrthographicOffCenter(left, top, right, bottom, _nearPlane, _farPlane);
+
+		if (_enableFrustum)
+			_frustum.Construct(GetViewProjectionMatrix());
 	}
 
 	void Camera::Update(void)
 	{
-		orientation.Normalize();
-		orientation.ToRotationMatrix(viewMatrix);
+		_orientation.Normalize();
+		_orientation.ToRotationMatrix(_viewMatrix);
 
-		xAxis = Math::Vector3(viewMatrix[0][0], viewMatrix[1][0], viewMatrix[2][0]);
-		yAxis = Math::Vector3(viewMatrix[0][1], viewMatrix[1][1], viewMatrix[2][1]);
-		zAxis = Math::Vector3(viewMatrix[0][2], viewMatrix[1][2], viewMatrix[2][2]);
+		_xAxis = Math::Vec3F(_viewMatrix.Get(0, 0), _viewMatrix.Get(1, 0), _viewMatrix.Get(2, 0));
+		_yAxis = Math::Vec3F(_viewMatrix.Get(0, 1), _viewMatrix.Get(1, 1), _viewMatrix.Get(2, 1));
+		_zAxis = Math::Vec3F(_viewMatrix.Get(0, 2), _viewMatrix.Get(1, 2), _viewMatrix.Get(2, 2));
 
-		viewMatrix[3][0] = -Math::DotProduct(xAxis, eye);
-		viewMatrix[3][1] = -Math::DotProduct(yAxis, eye);
-		viewMatrix[3][2] = -Math::DotProduct(zAxis, eye);
+		_viewMatrix.Set(3, 0, -Math::DotProduct(_xAxis, _position));
+		_viewMatrix.Set(3, 1, -Math::DotProduct(_yAxis, _position));
+		_viewMatrix.Set(3, 2, -Math::DotProduct(_zAxis, _position));
+
+		if (_enableFrustum)
+			_frustum.Construct(GetViewProjectionMatrix());
 	}
 
-	void Camera::Move(Math::Vector3& direction)
+	void Camera::Move(Math::Vec3F& direction)
 	{
-		eye += xAxis * direction._x;
-		eye += yAxis * direction._y;
-		eye += zAxis * direction._z;
+		_position += _xAxis * direction._x;
+		_position += _yAxis * direction._y;
+		_position += _zAxis * direction._z;
 
 		Update();
 	}
@@ -95,82 +133,117 @@ namespace Scene
 
 		if (yaw != 0.0f)
 		{
-			rotation.FromAxisAngle(WORLD_YAXIS, Math::DegreesToRadians(yaw));
-			orientation = rotation * orientation;
+			rotation.FromAxisAngle(VEC3F_UNIT_Y, Math::DegreesToRadians(yaw));
+			_orientation = rotation * _orientation;
 		}
 
 		if(pitch != 0.0f)
 		{
-			rotation.FromAxisAngle(WORLD_XAXIS, Math::DegreesToRadians(pitch));
-			orientation = orientation * rotation;
+			rotation.FromAxisAngle(VEC3F_UNIT_X, Math::DegreesToRadians(pitch));
+			_orientation = _orientation * rotation;
 		}
 
 		if(roll != 0.0f)
 		{
-			rotation.FromAxisAngle(WORLD_ZAXIS, Math::DegreesToRadians(roll));
-			orientation = orientation * rotation;
+			rotation.FromAxisAngle(VEC3F_UNIT_Z, Math::DegreesToRadians(roll));
+			_orientation = _orientation * rotation;
 		}
 
 		Update();
 	}
 
-	const Math::Matrix4& Camera::GetViewMatrix(void)
+	const Math::Matrix4F& Camera::GetProjectionMatrix(void)
 	{
-		return viewMatrix;
+		return _projectionMatrix;
 	}
 
-	const Math::Matrix4& Camera::GetProjectionMatrix(void)
+	const Math::Matrix4F& Camera::GetViewMatrix(void)
 	{
-		return projectionMatrix;
+		return _viewMatrix;
 	}
 
-	void Camera::SetPosition(Math::Vector3& eyeV)
+	const Math::Matrix4F& Camera::GetViewProjectionMatrix(void)
 	{
-		eye = eyeV;
+		Math::Matrix4F::Multiply(_projectionMatrix, _viewMatrix, &_viewProjectionMatrix);
+		return _viewProjectionMatrix;
 	}
 
-	Math::Vector3 Camera::GetPosition(void) const
+	const Math::Matrix4F& Camera::GetInverseViewProjectionMatrix(void)
 	{
-		return eye;
+		Math::Mat4F inverse;
+		GetViewProjectionMatrix().Invert(&inverse);
+
+		return inverse;
+	}
+
+	void Camera::SetFrustum(bool enable)
+	{
+		_enableFrustum = enable;
+
+		if (_enableFrustum)
+			_frustum.Construct(GetViewProjectionMatrix());
+	}
+
+	const Math::Frustum& Camera::GetFrustum(void)
+	{
+		return _frustum;
+	}
+
+	bool Camera::IsVisible(const Math::BoundingBox& box) const
+	{
+		if (_enableFrustum && _frustum.IsBoundingBoxInside(box) != Math::FRUSTUM_ASPECT::Outside)
+			return true;
+
+		return false;
+	}
+
+	void Camera::SetPosition(Math::Vec3F& position)
+	{
+		_position = position;
+	}
+
+	Math::Vec3F Camera::GetPosition(void) const
+	{
+		return _position;
 	}
 
 	Math::Quaternion Camera::GetOrientation(void) const
 	{
-		return orientation;
+		return _orientation;
 	}
 
-	void Camera::SetNearClipDistance(float value)
+	Math::Vec3F Camera::GetFront(void) const
 	{
-		nearClip = value;
+		return -_zAxis;
 	}
 
-	float Camera::GetNearClipDistance(void) const
+	Math::Vec3F Camera::GetBack(void) const
 	{
-		return nearClip;
+		return _zAxis;
 	}
 
-	void Camera::SetFarClipDistance(float value)
+	Math::Vec3F Camera::GetLeft(void) const
 	{
-		farClip = value;
+		return -_xAxis;
 	}
 
-	float Camera::GetFarClipDistance(void) const
+	Math::Vec3F Camera::GetRight(void) const
 	{
-		return farClip;
+		return _xAxis;
 	}
 
-	Math::Vector3 Camera::GetXAxis(void)
+	Math::Vec3F Camera::GetUp(void) const
 	{
-		return xAxis;
+		return _yAxis;
 	}
 
-	Math::Vector3 Camera::GetYAxis(void)
+	Math::Vec3F Camera::GetDown(void) const
 	{
-		return yAxis;
+		return -_yAxis;
 	}
 
-	Math::Vector3 Camera::GetZAxis(void)
+	PROJECTION_MODE Camera::GetMode(void) const
 	{
-		return zAxis;
+		return _mode;
 	}
 }

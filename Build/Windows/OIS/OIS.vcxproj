@@ -40,6 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\</OutDir>
+    <LibraryPath>C:\Users\Bonus\Documents\GitHub\SWAY-GameFramework\Libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -54,6 +55,7 @@
       <ModuleDefinitionFile>Definitions.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>$(OutDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)\Libs\$(TargetName)_Win32_Debug.lib</ImportLibrary>
+      <AdditionalDependencies>Math_Win32_Debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -23,6 +23,15 @@
     <ClCompile Include="..\..\..\GapiOpenGL\Src\Device.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\WrapFunc.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\TextureSampler.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GapiOpenGL\Src\FrameBuffer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\GapiOpenGL\StdAfx.h" />
@@ -36,6 +45,15 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GapiOpenGL\Inc\Texture.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\WrapFunc.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\TextureSampler.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GapiOpenGL\Inc\FrameBuffer.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>

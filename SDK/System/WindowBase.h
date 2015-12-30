@@ -1,9 +1,9 @@
-#ifndef IWINDOWBASE_H
+п»ї#ifndef IWINDOWBASE_H
 #define IWINDOWBASE_H
 
 #include "WindowModes.h"
 #include "WindowDesc.h"
-#include "MessageLoopStates.h"
+#include "MessageLoopState.h"
 
 #include "../OIS/InputBase.h"
 #include "../Platform.h"
@@ -13,47 +13,61 @@ namespace System
 	class IWindowBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="desc">Описание окна.</param>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="desc">РћРїРёСЃР°РЅРёРµ РѕРєРЅР°.</param>
 		IWindowBase(const LWINDOWDESC& desc) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~IWindowBase(void) {}
 
-		/// <summary>Ругистрирует класс окна.</summary>
+		/// <summary>Р СѓРіРёСЃС‚СЂРёСЂСѓРµС‚ РєР»Р°СЃСЃ РѕРєРЅР°.</summary>
 		virtual void Register(void) = 0;
 
-		/// <summary>Разрегистрация класса.</summary>
+		/// <summary>Р Р°Р·СЂРµРіРёСЃС‚СЂР°С†РёСЏ РєР»Р°СЃСЃР°.</summary>
 		virtual void Unregister(void) = 0;
 
-		/// <summary>Создает новое окно.</summary>
+		/// <summary>РЎРѕР·РґР°РµС‚ РЅРѕРІРѕРµ РѕРєРЅРѕ.</summary>
 		virtual void Create(void) = 0;
 
-		/// <summary>Уничтожает окно.</summary>
+		/// <summary>РЈРЅРёС‡С‚РѕР¶Р°РµС‚ РѕРєРЅРѕ.</summary>
 		virtual void Destroy(void) = 0;
 
-		/// <summary>Обновляет окно.</summary>
+		/// <summary>РћР±РЅРѕРІР»СЏРµС‚ РѕРєРЅРѕ.</summary>
 		virtual void Update(void) = 0;
 
-		/// <summary>Цикл обработки сообщений от окна.</summary>
-		/// <param name="state">Состояние цикла.</param>
-		virtual bool MessageLoop(MESSAGELOOPSTATE state = EMLS_RUN) = 0;
+		/// <summary>Р¦РёРєР» РѕР±СЂР°Р±РѕС‚РєРё СЃРѕРѕР±С‰РµРЅРёР№ РѕС‚ РѕРєРЅР°.</summary>
+		/// <param name="state">РЎРѕСЃС‚РѕСЏРЅРёРµ С†РёРєР»Р°.</param>
+		virtual bool MessageLoop(MESSAGE_LOOP_STATE state) = 0;
 
-		/// <summary>Устанавлиет заголовок.</summary>
-		/// <param name="text">Текст заголовка.</param>
-		virtual void SetText(const TCHAR* text) = 0;
+		/// <summary>РЈСЃС‚Р°РЅР°РІР»РёРµС‚ Р·Р°РіРѕР»РѕРІРѕРє.</summary>
+		/// <param name="text">РўРµРєСЃС‚ Р·Р°РіРѕР»РѕРІРєР°.</param>
+		virtual void SetTitle(const char* text) = 0;
 
-		/// <summary>Показывает окно.</summary>
+		virtual const char* GetTitle(void) = 0;
+
+		/// <summary>РџРѕРєР°Р·С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
 		virtual void Show(void) = 0;
 
-		/// <summary>Скрывает окно.</summary>
+		virtual void ShowDeactivated(void) = 0;
+
+		virtual void ShowRestored(void) = 0;
+
+		/// <summary>Р Р°Р·РІРµСЂС‚С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
+		virtual void ShowMaximized(void) = 0;
+
+		/// <summary>РЎРІРµСЂС‚С‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
+		virtual void ShowMinimized(void) = 0;
+
+		/// <summary>РЎРєСЂС‹РІР°РµС‚ РѕРєРЅРѕ.</summary>
 		virtual void Hide(void) = 0;
 
-		/// <summary>Развертывает окно.</summary>
-		virtual void Maximize(void) = 0;
+		virtual bool IsVisible(void) = 0;
 
-		/// <summary>Свертывает окно.</summary>
-		virtual void Minimize(void) = 0;
+		virtual void Enable(void) = 0;
+
+		virtual void Disable(void) = 0;
+
+		virtual bool IsEnabled(void) = 0;
 
 		virtual const LWINDOWDESC& GetWindowDesc(void) const = 0;
 

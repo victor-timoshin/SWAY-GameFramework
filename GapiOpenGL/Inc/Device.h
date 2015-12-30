@@ -10,6 +10,7 @@ namespace Gapi
 	{
 	public:
 		/// <summary>Конструктор класса.</summary>
+		/// <param name="handle">Хендл окна.</param>
 		Device(HWND handle);
 
 		/// <summary>Деструктор класса.</summary>
@@ -25,7 +26,11 @@ namespace Gapi
 
 		virtual void DoneCurrentContext(void);
 
-		virtual void Clear(CLEARFLAGS flags);
+		virtual void Clear(CLEARFLAG flags);
+
+		virtual void SetClearDepth(int value);
+
+		virtual void SetClearStencil(int value);
 
 		virtual void SetClearColor(float red, float green, float blue, float alpha) const;
 
@@ -39,24 +44,23 @@ namespace Gapi
 
 		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height);
 
-		virtual void SetCullFormat(CULL_FORMATS format);
+		virtual void SetCullFormat(CULL_FORMAT format);
 
 #pragma region Capabilities
 
-		virtual const char* GetGlVersionString(void);
+		virtual const char* GetVersion(void);
 
-		virtual const char* GetGlVendorString(void);
+		virtual const char* GetVendorName(void);
 
-		virtual const char* GetGlRendererString(void);
+		virtual const char* GetRendererName(void);
 
-		virtual const char* GetGlslVersionString(void);
+		virtual const char* GetGLSLVersion(void);
 
 		virtual void GetGlInfo(std::ostream& ostr);
 
-#pragma endregion
+		//virtual const char* GetExtensionStringList(void);
 
-	protected:
-		bool IsExtensionSupported(const char* name);
+#pragma endregion
 
 	private:
 		HWND windowHandle;
@@ -65,10 +69,10 @@ namespace Gapi
 
 		Utils::ILoggerBase* logger;
 
-		const char* glVersion;
-		const char* glVendor;
-		const char* glRenderer;
-		const char* glslVersion;
+		const char* _version;
+		const char* _vendorName;
+		const char* _rendererName;
+		const char* _GLSLVersion;
 
 		int majorVersion;
 		int minorVersion;

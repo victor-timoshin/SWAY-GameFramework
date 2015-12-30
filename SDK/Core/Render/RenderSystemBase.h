@@ -1,45 +1,57 @@
-#ifndef RENDERSYSTEMBASE_H
+п»ї#ifndef RENDERSYSTEMBASE_H
 #define RENDERSYSTEMBASE_H
 
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../SDK/SceneGraph/CameraBase.h"
+#include "../../../SDK/GUI/FontManagerBase.h"
+#include "../../../SDK/GUI/FontBase.h"
 #include "../../../SDK/Platform.h"
 
-namespace Render
+namespace Core
 {
-	class Scene::IRenderableBase;
-	class IRenderSystemBase
+	namespace Render
 	{
-	public:
-		/// <summary>Конструктор класса.</summary>
-		IRenderSystemBase(void) {}
+		class Scene::IRenderableBase;
+		class IRenderSystemBase
+		{
+		public:
+			/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			IRenderSystemBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
-		virtual ~IRenderSystemBase(void) {}
+			/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+			virtual ~IRenderSystemBase(void) {}
 
-		virtual void SetRenderableComponent(Scene::IRenderableBase* renderable) = 0;
+			virtual void SetRenderableComponent(Scene::IRenderableBase* renderable, IMaterialBase* material) = 0;
 
-		virtual bool Initialize(const char* libraryName) = 0;
+			virtual bool Initialize(const char* libraryName) = 0;
 
-		virtual bool CreateDevice(HWND windowHandle) = 0;
+			virtual bool CreateDevice(HWND windowHandle) = 0;
 
-		virtual Gapi::IDeviceBase* GetDevice(void) = 0;
+			virtual Gapi::IDeviceBase* GetDevice(void) = 0;
 
-		virtual bool CreateMaterial(const char* vertexShader, const char* fragmentShader) = 0;
+			virtual bool CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName) = 0;
 
-		virtual bool CreateTTFont(const char* filename) = 0;
+			virtual IMaterialBase* GetMaterialByName(const char* name) = 0;
 
-		virtual void CreateBuffer(Scene::IRenderableBase* renderable) = 0;
+			virtual GUI::IFontBase* CreateTTFont(const char* name, const char* filename) = 0;
 
-		virtual void RemoveBuffer(UInt idx) = 0;
+			virtual GUI::IFontBase* GetTTFont(std::string name) = 0;
 
-		virtual Core::Render::IRenderGeometryBase* GetGeometryByIndex(UInt idx) = 0;
+			virtual void CreateBuffer(Scene::IRenderableBase* renderable, IMaterialBase* material) = 0;
 
-		virtual void FrameDrawed(Scene::ICameraBase* camera) = 0;
-	};
+			virtual void RemoveBuffer(UInt idx) = 0;
 
-	CORE_API IRenderSystemBase* RegisterRenderSystem(void);
+			virtual IRenderGeometryBase* GetGeometryByIndex(UInt idx) = 0;
+
+			virtual void FrameDrawed(Scene::ICameraBase* camera) = 0;
+
+			virtual int GetNumDisplayObjects(void) const = 0;
+		};
+
+		CORE_API IRenderSystemBase* RegisterRenderSystem(void);
+	}
+
 }
 
 #endif // RENDERSYSTEMBASE_H

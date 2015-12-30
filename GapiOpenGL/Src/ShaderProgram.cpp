@@ -1,4 +1,5 @@
 ﻿#include "../../GapiOpenGL/Inc/ShaderProgram.h"
+#include "../../GapiOpenGL/Inc/WrapFunc.h"
 
 namespace Gapi
 {
@@ -8,59 +9,23 @@ namespace Gapi
 	//std::string fragmentSource = Load(fragmentShader);
 	////std::string fragmentShader = "#version 400\n #define COMPILING_FS\n" + fragmentSource;
 
-	UInt ShaderProgram::GetShaderType(SHADERTYPES type)
+	UInt ShaderProgram::GetShaderType(SHADER_TYPE type)
 	{
 		switch (type)
 		{
-			case EST_VERTEX: return GL_VERTEX_SHADER_ARB;
-			case EST_FRAGMENT: return GL_FRAGMENT_SHADER_ARB;
+		case SHADER_TYPE::Vertex:   return GL_VERTEX_SHADER_ARB;
+		case SHADER_TYPE::Fragment: return GL_FRAGMENT_SHADER_ARB;
+		default:
+			break;
 		}
-
-		return (SHADERTYPES)-1;
 	}
-
-	PFNGLCREATEPROGRAMOBJECTARBPROC ShaderProgram::glCreateProgramObjectARB = NULL;
-	PFNGLDELETEPROGRAMSARBPROC ShaderProgram::glDeleteProgramsARB = NULL;
-	PFNGLATTACHOBJECTARBPROC ShaderProgram::glAttachObjectARB = NULL;
-	PFNGLDETACHOBJECTARBPROC ShaderProgram::glDetachObjectARB = NULL;
-	PFNGLLINKPROGRAMARBPROC ShaderProgram::glLinkProgramARB = NULL;
-	PFNGLUSEPROGRAMOBJECTARBPROC ShaderProgram::glUseProgramObjectARB = NULL;
-	PFNGLCREATESHADEROBJECTARBPROC ShaderProgram::glCreateShaderObjectARB = NULL;
-	PFNGLDELETEOBJECTARBPROC ShaderProgram::glDeleteObjectARB = NULL;
-	PFNGLSHADERSOURCEARBPROC ShaderProgram::glShaderSourceARB = NULL;
-	PFNGLCOMPILESHADERARBPROC ShaderProgram::glCompileShaderARB = NULL;
-	PFNGLVALIDATEPROGRAMARBPROC ShaderProgram::glValidateProgramARB = NULL;
-	PFNGLGETATTRIBLOCATIONARBPROC ShaderProgram::glGetAttribLocationARB = NULL;
-	PFNGLGETUNIFORMLOCATIONARBPROC ShaderProgram::glGetUniformLocationARB = NULL;
-	PFNGLUNIFORMMATRIX4FVARBPROC ShaderProgram::glUniformMatrix4fvARB = NULL;
-	PFNGLUNIFORM3FARBPROC ShaderProgram::glUniform3fARB = NULL;
-	PFNGLUNIFORM4FARBPROC ShaderProgram::glUniform4fARB = NULL;
-
-	PFNGLGETOBJECTPARAMETERIVARBPROC ShaderProgram::glGetObjectParameterivARB = NULL;
-	PFNGLGETINFOLOGARBPROC ShaderProgram::glGetInfoLogARB = NULL;
 
 	/// <summary>Конструктор класса.</summary>
 	ShaderProgram::ShaderProgram(void)
+		: _programID(0)
+		, _vertexShaderID(0)
+		, _fragmentShaderID(0)
 	{
-		LOAD_EXTENSION(PFNGLCREATEPROGRAMOBJECTARBPROC, glCreateProgramObjectARB);
-		LOAD_EXTENSION(PFNGLDELETEPROGRAMSARBPROC, glDeleteProgramsARB);
-		LOAD_EXTENSION(PFNGLATTACHOBJECTARBPROC, glAttachObjectARB);
-		LOAD_EXTENSION(PFNGLDETACHOBJECTARBPROC, glDetachObjectARB);
-		LOAD_EXTENSION(PFNGLLINKPROGRAMARBPROC, glLinkProgramARB);
-		LOAD_EXTENSION(PFNGLUSEPROGRAMOBJECTARBPROC, glUseProgramObjectARB);
-		LOAD_EXTENSION(PFNGLCREATESHADEROBJECTARBPROC, glCreateShaderObjectARB);
-		LOAD_EXTENSION(PFNGLDELETEOBJECTARBPROC, glDeleteObjectARB);
-		LOAD_EXTENSION(PFNGLSHADERSOURCEARBPROC, glShaderSourceARB);
-		LOAD_EXTENSION(PFNGLCOMPILESHADERARBPROC, glCompileShaderARB);
-		LOAD_EXTENSION(PFNGLVALIDATEPROGRAMARBPROC, glValidateProgramARB);
-		LOAD_EXTENSION(PFNGLGETATTRIBLOCATIONARBPROC, glGetAttribLocationARB);
-		LOAD_EXTENSION(PFNGLGETUNIFORMLOCATIONARBPROC, glGetUniformLocationARB);
-		LOAD_EXTENSION(PFNGLUNIFORMMATRIX4FVARBPROC, glUniformMatrix4fvARB);
-		LOAD_EXTENSION(PFNGLUNIFORM3FARBPROC, glUniform3fARB);
-		LOAD_EXTENSION(PFNGLUNIFORM4FARBPROC, glUniform4fARB);
-
-		LOAD_EXTENSION(PFNGLGETOBJECTPARAMETERIVARBPROC, glGetObjectParameterivARB);
-		LOAD_EXTENSION(PFNGLGETINFOLOGARBPROC, glGetInfoLogARB);
 	}
 
 	/// <summary>Деструктор класса.</summary>
@@ -74,7 +39,7 @@ namespace Gapi
 		std::ifstream in(filename, std::ios::binary);
 		if (!in.is_open())
 		{
-			Utils::StreamLoggerWrite(Utils::LOGLEVELS::ELL_ERROR, "ERROR: Could not open the file");
+			Utils::StreamLoggerWrite(Utils::LOG_LEVEL::Error, "ERROR: Could not open the file");
 			std::cerr << "ERROR: Could not open the file" << filename << std::endl;
 			exit(1);
 		}
@@ -84,7 +49,7 @@ namespace Gapi
 
 		if (source.length() == 0)
 		{
-			Utils::StreamLoggerWrite(Utils::LOGLEVELS::ELL_ERROR, "ERROR: Any data in the file");
+			Utils::StreamLoggerWrite(Utils::LOG_LEVEL::Error, "ERROR: Any data in the file");
 			std::cerr << "ERROR: Any data in the file" << std::endl;
 			exit(1);
 		}
@@ -95,64 +60,38 @@ namespace Gapi
 	bool ShaderProgram::Create(void)
 	{
 		bool result = true;
-
-		programIDs.resize(1);
-		for (size_t i = 0; i < programIDs.size(); ++i)
-		{
-			programIDs[i] = glCreateProgramObjectARB();
-			result &= programIDs[i] != 0;
-		}
-
-		CHECK_GLERROR();
+		_programID = GL_ARB_ShaderObjects::CreateProgramObject(SOURCE_LOCATION);
 		return result;
 	}
 
 	void ShaderProgram::Destroy(void)
 	{
-		for (size_t i = 0; i < programIDs.size(); ++i)
+		if (_programID != 0)
 		{
-			if (programIDs[i] != 0)
-			{
-				glDeleteProgramsARB(1, &programIDs[i]);
-				programIDs[i] = 0;
-			}
+			GL_ARB_VertexProgram::DeletePrograms(1, &_programID, SOURCE_LOCATION);
+			_programID = 0;
 		}
-
-		programIDs.clear();
 	}
 
-	UInt ShaderProgram::Compile(SHADERTYPES type, const char* source)
+	UInt ShaderProgram::Compile(SHADER_TYPE type, std::string source)
 	{
-		UInt shaderID = glCreateShaderObjectARB(ShaderProgram::GetShaderType(type));
-		CHECK_GLERROR();
+		UInt objectID = GL_ARB_ShaderObjects::CreateShaderObject(ShaderProgram::GetShaderType(type), SOURCE_LOCATION);
 
-		glShaderSourceARB(shaderID, 1, (const GLcharARB**)&source, NULL);
-		CHECK_GLERROR();
+		GL_ARB_ShaderObjects::ShaderSource(objectID, 1, (const GLcharARB**)source.c_str(), NULL, SOURCE_LOCATION);
+		GL_ARB_ShaderObjects::CompileShader(objectID, SOURCE_LOCATION);
 
-		glCompileShaderARB(shaderID);
-		CHECK_GLERROR();
-
-		if (CheckStatus(shaderID, GL_OBJECT_COMPILE_STATUS_ARB))
+		if (CheckStatus(objectID, GL_OBJECT_COMPILE_STATUS_ARB))
 			std::cout << "The shaders compilation was successfully" << std::endl;
 		else
 			std::cerr << "ERROR: The shaders compilation fail" << std::endl;
 
-		return shaderID;
+		return objectID;
 	}
 
 	bool ShaderProgram::Attach(std::vector<UInt> shaders)
 	{
-		if (programIDs.empty())
-			return false;
-
-		for (size_t i = 0; i < programIDs.size(); ++i)
-		{
-			for (auto shaderID: shaders)
-				glAttachObjectARB(programIDs[i], shaderID);
-		}
-
-		//for (size_t currentShaderIdx = 0; currentShaderIdx < shaders.size(); ++currentShaderIdx)
-		//	glDetachObjectARB(programID, shaders[currentShaderIdx]);
+		for (auto shaderID : shaders)
+			GL_ARB_ShaderObjects::AttachObject(_programID, shaderID, SOURCE_LOCATION);
 
 		std::for_each(shaders.begin(), shaders.end(), glDeleteObjectARB);
 
@@ -161,19 +100,13 @@ namespace Gapi
 
 	bool ShaderProgram::Link(void)
 	{
-		if (programIDs.empty())
-			return false;
-
-		for (size_t i = 0; i < programIDs.size(); ++i)
+		GL_ARB_ShaderObjects::LinkProgram(_programID, SOURCE_LOCATION);
+		if (CheckStatus(_programID, GL_OBJECT_LINK_STATUS_ARB))
+			std::cout << "The linking was successfully" << std::endl;
+		else
 		{
-			glLinkProgramARB(programIDs[i]);
-			if (CheckStatus(programIDs[i], GL_OBJECT_LINK_STATUS_ARB))
-				std::cout << "The linking was successfully" << std::endl;
-			else
-			{
-				std::cerr << "ERROR: The linking fail" << std::endl;
-				return false;
-			}
+			std::cerr << "ERROR: The linking fail" << std::endl;
+			return false;
 		}
 
 		return true;
@@ -181,19 +114,13 @@ namespace Gapi
 
 	bool ShaderProgram::Validate(void)
 	{
-		if (programIDs.empty())
-			return false;
-
-		for (size_t i = 0; i < programIDs.size(); ++i)
+		GL_ARB_ShaderObjects::ValidateProgram(_programID, SOURCE_LOCATION);
+		if (CheckStatus(_programID, GL_OBJECT_VALIDATE_STATUS_ARB))
+			std::cout << "The validate program was successfully" << std::endl;
+		else
 		{
-			glValidateProgramARB(programIDs[i]);
-			if (CheckStatus(programIDs[i], GL_OBJECT_VALIDATE_STATUS_ARB))
-				std::cout << "The validate program was successfully" << std::endl;
-			else
-			{
-				std::cerr << "ERROR: The validate program fail" << std::endl;
-				return false;
-			}
+			std::cerr << "ERROR: The validate program fail" << std::endl;
+			return false;
 		}
 
 		return true;
@@ -202,45 +129,78 @@ namespace Gapi
 	int ShaderProgram::GetUniformLocation(const char* name)
 	{
 		int location;
-		for (size_t i = 0; i < programIDs.size(); ++i)
-			location = glGetUniformLocationARB(programIDs[i], name);
-
+		location = GL_ARB_ShaderObjects::GetUniformLocation(_programID, name, SOURCE_LOCATION);
 		return location;
 	}
 
 	int ShaderProgram::GetAttributeLocation(const char* name)
 	{
 		int location;
-		for (size_t i = 0; i < programIDs.size(); ++i)
-			location = glGetAttribLocationARB(programIDs[i], name);
-
+		location = GL_ARB_VertexShader::GetAttributeLocation(_programID, name, SOURCE_LOCATION);
 		return location;
 	}
 
 	void ShaderProgram::SetUniformMatrix4(int location, bool transpose, const void* value)
 	{
-		glUniformMatrix4fvARB(location, 1, transpose, (const GLfloat*)value);
+		GL_ARB_ShaderObjects::UniformMatrix4(location, 1, transpose, (const GLfloat*)value, SOURCE_LOCATION);
 	}
 
-	void ShaderProgram::SetUniform3f(int location, int x, int y, int z)
+	void ShaderProgram::SetUniform1I(int location, int value)
 	{
-		glUniform3fARB(location, x, y, z);
+		GL_ARB_ShaderObjects::Uniform1I(location, value, SOURCE_LOCATION);
 	}
 
-	void ShaderProgram::SetUniform4f(int location, int x, int y, int z, int w)
+	void ShaderProgram::SetUniform3F(int location, float x, float y, float z)
 	{
-		glUniform4fARB(location, x, y, z, w);
+		GL_ARB_ShaderObjects::Uniform3F(location, x, y, z, SOURCE_LOCATION);
+	}
+
+	void ShaderProgram::SetUniform4F(int location, float x, float y, float z, float w)
+	{
+		GL_ARB_ShaderObjects::Uniform4F(location, x, y, z, w, SOURCE_LOCATION);
+	}
+
+	void ShaderProgram::BindVertexAttributeArray(const char* name, UInt index, int size, UInt type, int stride, void* pointer)
+	{
+		int vertex = GL_ARB_VertexShader::GetAttributeLocation(_programID, name, SOURCE_LOCATION);
+
+		GL_ARB_VertexProgram::EnableVertexAttributeArray(index, SOURCE_LOCATION);
+		GL_ARB_VertexProgram::VertexAttributePointer(index, size, type, GL_FALSE, stride, pointer, SOURCE_LOCATION);
+	}
+
+	void ShaderProgram::BindClientStates(void)
+	{
+
+	}
+
+	void ShaderProgram::UnbindClientStates(void)
+	{
+		glDisableClientState(GL_VERTEX_ARRAY);
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_NORMAL_ARRAY);
+
+		GL_ARB_Multitexture::ClientActiveTexture(GL_TEXTURE0, SOURCE_LOCATION);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+
+		GL_ARB_Multitexture::ClientActiveTexture(GL_TEXTURE1, SOURCE_LOCATION);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		GL_ARB_Multitexture::ClientActiveTexture(GL_TEXTURE0, SOURCE_LOCATION);
 	}
 
 	void ShaderProgram::Bind(void)
 	{
-		for (size_t i = 0; i < programIDs.size(); ++i)
-			glUseProgramObjectARB(programIDs[i]);
+		GL_ARB_ShaderObjects::UseProgramObject(_programID, SOURCE_LOCATION);
 	}
 
 	void ShaderProgram::Unbind(void)
 	{
-		glUseProgramObjectARB(0);
+		GL_ARB_ShaderObjects::UseProgramObject(0, SOURCE_LOCATION);
+	}
+
+	UInt ShaderProgram::GetShaderProgram(void)
+	{
+		return _programID;
 	}
 
 	bool ShaderProgram::CheckStatus(UInt object, UInt name)
@@ -248,16 +208,16 @@ namespace Gapi
 		GLint compiled = 0;
 		GLint length = 0;
 
-		glGetObjectParameterivARB(object, name, &compiled);
+		GL_ARB_ShaderObjects::GetObjectParameterI(object, name, &compiled, SOURCE_LOCATION);
 		if (compiled == 0)
 		{
-			glGetObjectParameterivARB(object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &length);
+			GL_ARB_ShaderObjects::GetObjectParameterI(object, GL_OBJECT_INFO_LOG_LENGTH_ARB, &length, SOURCE_LOCATION);
 			if (length > 1)
 			{
 				char* log = (char*)malloc(length);
-				glGetInfoLogARB(object, length, &length, log);
+				GL_ARB_ShaderObjects::GetInfoLog(object, length, &length, log, SOURCE_LOCATION);
 
-				Utils::StreamLoggerWrite(Utils::LOGLEVELS::ELL_ERROR, log);
+				Utils::StreamLoggerWrite(Utils::LOG_LEVEL::Error, "%s", log);
 				std::cerr << log << std::endl;
 				free(log);
 			}

@@ -1,0 +1,59 @@
+﻿#include "../../../../Core/Inc/Imaging/Codecs/BMPLoader.h"
+
+namespace Imaging
+{
+	/// <summary>Конструктор класса.</summary>
+	BMPLoader::BMPLoader(void)
+	{
+	}
+
+	/// <summary>Деструктор класса.</summary>
+	BMPLoader::~BMPLoader(void)
+	{
+	}
+
+	Gapi::PTEXTURE_DESCRIPTION BMPLoader::LoadFromStream(std::istream& source)
+	{
+		LBITMAP_FILE_HEADER fileHeader;
+		LBITMAP_INFO_HEADER infoHeader;
+		LBITMAP_COLOR col;
+
+		source.read((char*)&fileHeader, sizeof(LBITMAP_FILE_HEADER));
+
+		int size = (fileHeader.size - fileHeader.offset);
+		char* image = new char[size];
+
+		//if file type = "BM"
+		//read rest of file
+		if (fileHeader.type == 19778)
+		{
+			source.read((char*)&infoHeader, sizeof(LBITMAP_INFO_HEADER));
+			source.read((char*)&col, sizeof(LBITMAP_COLOR));
+			source.read(image, size);
+			//source.close();
+		}
+		else
+			std::cout << "ERROR: FILE NOT BITMAP" << std::endl;
+
+		Gapi::PTEXTURE_DESCRIPTION textureDesc = (Gapi::PTEXTURE_DESCRIPTION)malloc(sizeof(Gapi::LTEXTURE_DESCRIPTION));
+		textureDesc->pixels = image;
+		textureDesc->width = (int)256;
+		textureDesc->height = (int)256;
+		textureDesc->pitch = 0;
+		textureDesc->bpp = 0;
+		textureDesc->format = Gapi::TEXTURE_FORMAT::EFT_BGR;
+		textureDesc->internalFormat = Gapi::TEXTURE_FORMAT::EFT_RGB8;
+
+		return textureDesc;
+	}
+
+	/// <summary>Загружает данные.</summary>
+	Gapi::PTEXTURE_DESCRIPTION BMPLoader::LoadFromFile(const std::string& path)
+	{
+		Core::Utils::FileStream stream;
+		if (!stream.OpenStream(path, Core::Utils::STREAM_MODE::Binary))
+			return nullptr;
+
+		return LoadFromStream(stream.GetStream());
+	}
+}

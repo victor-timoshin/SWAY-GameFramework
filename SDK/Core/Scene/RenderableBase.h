@@ -1,4 +1,4 @@
-#ifndef RENDERABLEBASE_H
+п»ї#ifndef RENDERABLEBASE_H
 #define RENDERABLEBASE_H
 
 #include "AttributePacket.h"
@@ -10,15 +10,15 @@ namespace Scene
 	class IRenderableBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		IRenderableBase(void) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~IRenderableBase(void) {}
 
-		virtual LATTRIBUTEPACKET GetAttributePacket(void) = 0;
+		virtual LATTRIBUTE_PACKET GetAttributePacket(void) = 0;
 
-		virtual void SetAttributePacket(LATTRIBUTEPACKET packet) = 0;
+		virtual void SetAttributePacket(LATTRIBUTE_PACKET packet) = 0;
 
 		virtual LGEOMETRYPACKET GetGeometryPacket(void) = 0;
 

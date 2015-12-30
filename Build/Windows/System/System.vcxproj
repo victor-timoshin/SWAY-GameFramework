@@ -75,10 +75,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\System\Inc\Timer.h" />
     <ClInclude Include="..\..\..\System\Inc\Win32Window.h" />
     <ClInclude Include="..\..\..\System\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\System\Src\Timer.cpp" />
     <ClCompile Include="..\..\..\System\Src\Win32Window.cpp" />
   </ItemGroup>
   <ItemGroup>

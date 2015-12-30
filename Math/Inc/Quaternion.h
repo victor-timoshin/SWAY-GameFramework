@@ -2,7 +2,7 @@
 #define QUATERNION_H
 
 #include "Vector3.h"
-#include "Matrix4.h"
+#include "Matrix4F.h"
 #include "../../SDK/Platform.h"
 
 namespace Math
@@ -33,11 +33,11 @@ namespace Math
 		/// <summary>Нормализует данный кватернион.</summary>
 		Quaternion Normalize(void) const;
 
-		void FromAxisAngle(Vector3 axis, float angle);
+		void FromAxisAngle(TVector3<float> axis, float angle);
 
-		void ToRotationMatrix(Matrix4& m) const;
+		void ToRotationMatrix(Matrix4F& m) const;
 
-		void FromRotationMatrix(Matrix4& m);
+		void FromRotationMatrix(Matrix4F& m);
 
 		bool operator == (const Quaternion& v) const;
 
@@ -57,8 +57,16 @@ namespace Math
 
 		Quaternion operator * (float scalar) const;
 
+		Vector3F operator * (const Vector3F& vector) const;
+
 		/// <summary>Умножает указанный скаляр на данный кватернион.</summary>
 		Quaternion Multiply(const float scalar) const;
+
+		Vector3F GetForward(void) const;
+
+		Vector3F GetUp(void) const;
+
+		Vector3F GetRight(void) const;
 
 	public:
 		float _x;
@@ -67,5 +75,7 @@ namespace Math
 		float _w;
 	};
 }
+
+#define QUATERNION_IDENTITY Math::Quaternion(0.0f, 0.0f, 0.0f, 1.0f)
 
 #endif // QUATERNION_H

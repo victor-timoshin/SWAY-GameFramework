@@ -1,4 +1,4 @@
-#include "../../../Core/Inc/Utils/FileLogger.h"
+п»ї#include "../../../Core/Inc/Utils/FileLogger.h"
 #include "../../../Core/Inc/Utils/FileStream.h"
 
 #include <stdarg.h>
@@ -6,22 +6,22 @@
 
 namespace Utils
 {
-	/// <summary>Конструктор класса.</summary>
-	/// <param name="filename">Имя файла.</param>
+	/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+	/// <param name="filename">РРјСЏ С„Р°Р№Р»Р°.</param>
 	FileLogger::FileLogger(const char* filename) : ILoggerBase(filename)
 		, stream(NULL)
 	{
 		stream = new Core::Utils::FileStream();
-		stream->Open(filename, Core::Utils::FILEMODES::EFM_WRITE, false);
+		stream->Open(filename, Core::Utils::FILE_MODE::Write, false);
 	}
 
-	/// <summary>Деструктор класса.</summary>
+	/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 	FileLogger::~FileLogger(void)
 	{
 		stream->Close();
 	}
 
-	void FileLogger::Write(Utils::LOGLEVELS level, const char* format, ...)
+	void FileLogger::Write(Utils::LOG_LEVEL level, const char* format, ...)
 	{
 		if (stream->IsOpen())
 		{
@@ -31,15 +31,15 @@ namespace Utils
 			char* priority;
 			switch (level)
 			{
-			case Utils::LOGLEVELS::ELL_INFO:
+			case LOG_LEVEL::Info:
 				priority = "INF| ";
 				break;
 
-			case Utils::LOGLEVELS::ELL_DEBUG:
+			case LOG_LEVEL::Debug:
 				priority = "DBG| ";
 				break;
 
-			case Utils::LOGLEVELS::ELL_ERROR:
+			case LOG_LEVEL::Error:
 				priority = "ERR| ";
 				break;
 			}

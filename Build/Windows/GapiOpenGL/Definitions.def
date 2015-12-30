@@ -3,3 +3,5 @@ EXPORTS
 	RegisterShaderProgram
 	RegisterBuffer
 	RegisterTexture
+	RegisterTextureSampler
+	RegisterFrameBuffer

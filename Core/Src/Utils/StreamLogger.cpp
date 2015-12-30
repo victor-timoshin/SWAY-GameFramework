@@ -17,7 +17,7 @@ namespace Utils
 		//SAFE_DELETE(stream);
 	}
 
-	void StreamLogger::Write(Utils::LOGLEVELS level, const char* format, ...)
+	void StreamLogger::Write(Utils::LOG_LEVEL level, const char* format, ...)
 	{
 		char bufferMessage[1024];
 
@@ -37,9 +37,9 @@ namespace Utils
 		return new StreamLogger(fileName);
 	}
 
-	void StreamLoggerWrite(LOGLEVELS level, const char* format, ...)
+	void StreamLoggerWrite(LOG_LEVEL level, const char* format, ...)
 	{
-		char bufferMessage[1024];
+		char bufferMessage[5024];
 
 		std::ofstream myfile("log_file.txt", std::ios_base::out | std::ios_base::app);
 

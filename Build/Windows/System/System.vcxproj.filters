@@ -15,12 +15,18 @@
     <ClInclude Include="..\..\..\System\Inc\Win32Window.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\System\Inc\Timer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\System\Src\Win32Window.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\System\Src\Timer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

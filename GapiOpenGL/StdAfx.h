@@ -21,13 +21,11 @@
 #define LOAD_EXTENSION(proc, name) \
 	name = (proc)wglGetProcAddress(#name);
 
-//REPORT
-//OPENGL_CHECKERROR
-#define CHECK_GLERROR() { \
+#define CHECK_OPENGL_ERROR(line) { \
 	GLenum error = glGetError(); \
 	if (error != GL_NO_ERROR) { \
 		while (error != GL_NO_ERROR) { \
-			Utils::StreamLoggerWrite(Utils::LOGLEVELS::ELL_ERROR, "glError: %i - %s caught at %s:%u", (int)error, (char*)gluErrorString(error), __FILE__, __LINE__); \
+			Utils::StreamLoggerWrite(Utils::LOG_LEVEL::Error, "glError: %i - %s caught at %s", (int)error, (char*)gluErrorString(error), line); \
 			error = glGetError(); \
 		} \
 	} \

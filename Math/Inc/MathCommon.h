@@ -6,22 +6,48 @@
 #include <math.h>
 
 #include "Vector3.h"
+#include "BoundingBox.h"
+#include "Matrix4F.h"
+
+#include "MathConstants.h"
 
 namespace Math
 {
-	static const float REAL_PI = 3.141592654f;
+	CORE_API int RandRangeI(int min, int max);
 
-	int CORE_API RandomInteger(int minimum, int maximum);
+	CORE_API double Uniform(void);
 
-	double CORE_API Uniform(void);
+	CORE_API Vector3F Cross(const Vector3F& a, const Vector3F& b);
 
-	Vector3 CORE_API Cross(const Vector3& a, const Vector3& b);
+	CORE_API float DotProduct(const Vector3F& a, const Vector3F& b);
 
-	float CORE_API DotProduct(const Vector3& a, const Vector3& b);
+	CORE_API float DegreesToRadians(float degrees);
 
-	float CORE_API DegreesToRadians(float degrees);
+	CORE_API float RadiansToDegrees(float radians);
 
-	float CORE_API RadiansToDegrees(float radians);
+	CORE_API int SnapToFloor(int input, int gap);
+
+	CORE_API Vector3F ToDirection(const Vector3F& vector);
+
+	CORE_API int MinI(int t1, int t2);
+
+	CORE_API float MinF(float t1, float t2);
+
+	template<typename T>
+	T Min(T t1, T t2)
+	{
+		return (t1 < t2 ? t1 : t2);
+	}
+
+	CORE_API int MaxI(int t1, int t2);
+
+	CORE_API float MaxF(float t1, float t2);
+
+	template<typename T>
+	T Max(T t1, T t2)
+	{
+		return (t1 < t2 ? t2 : t1);
+	}
 }
 
 #endif // MATHCOMMON_H
