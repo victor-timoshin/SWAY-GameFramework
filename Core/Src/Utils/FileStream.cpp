@@ -20,6 +20,8 @@ namespace Core
 		/// <param name="mode">Режим открытия.</param>
 		void FileStream::Open(const char* filename, FILE_MODE mode, bool binary)
 		{
+			_filename = filename;
+
 			switch (mode)
 			{
 			case FILE_MODE::Read:
@@ -38,13 +40,15 @@ namespace Core
 
 		/// <summary>Открытие файла.</summary>
 		/// <param name="filename">Имя файла.</param>
-		/// <param name="mode">Режим открытия.</param>
-		bool FileStream::OpenStream(const std::string& filename, STREAM_MODE mode)
+		/// <param name="type">Тип файла.</param>
+		bool FileStream::OpenStream(const std::string& filename, FILE_TYPE type)
 		{
+			_filename = filename;
+
 			//setlocale(LC_ALL, "rus");
 
 			std::ios::openmode openMode = std::ios::in; // Открыть файл для чтения.
-			if (mode == STREAM_MODE::Binary)
+			if (type == FILE_TYPE::Binary)
 				openMode |= std::ios::binary; // Открытие файла в двоичном режиме.
 
 			// Открываем файл для чтения.
@@ -82,7 +86,7 @@ namespace Core
 
 		void FileStream::Print(const char* str)
 		{
-			if (file != 0 && str != 0)
+			if (file != 0 AND str != 0)
 				fprintf(file, str);
 		}
 
@@ -99,6 +103,11 @@ namespace Core
 		UInt FileStream::GetFileLength(void) const
 		{
 			return numBytes;
+		}
+
+		std::string FileStream::GetFilename(void) const
+		{
+			return _filename;
 		}
 	}
 }

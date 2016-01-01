@@ -12,7 +12,7 @@ namespace Core
 				return false;
 			else
 			{
-				CreateDirectory(name, NULL);
+				CreateDirectory(name, nullptr);
 				return true;
 			}
 		}

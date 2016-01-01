@@ -75,7 +75,7 @@ namespace Gapi
 		glDeleteTextures(1, &_textureID);
 	}
 
-	void Texture::Load(Gapi::PTEXTURE_DESCRIPTION textureDesc)
+	void Texture::Load(Gapi::TEXTURE_DESCRIPTION_PTR textureDesc)
 	{
 		if (textureDesc->width == 0)
 			return;

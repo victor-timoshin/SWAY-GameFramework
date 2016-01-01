@@ -1,4 +1,4 @@
-#ifndef FILEDIRECTORY_H
+﻿#ifndef FILEDIRECTORY_H
 #define FILEDIRECTORY_H
 
 #include "../../../SDK/Platform.h"
@@ -12,10 +12,10 @@ namespace Core
 		public:
 			static const char* DefaultRootPath;
 
-			/* Constructor. */
+			/// <summary>Конструктор класса.</summary>
 			FileDirectory(void) {}
 
-			/* Destructor. */
+			/// <summary>Деструктор класса.</summary>
 			virtual ~FileDirectory(void) {}
 
 			virtual bool Create(const char* name);

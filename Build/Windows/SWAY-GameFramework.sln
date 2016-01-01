@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{5E1EF28F
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\Core\Utils\File.h = ..\..\SDK\Core\Utils\File.h
 		..\..\SDK\Core\Utils\FileMode.h = ..\..\SDK\Core\Utils\FileMode.h
+		..\..\SDK\Core\Utils\FileType.h = ..\..\SDK\Core\Utils\FileType.h
 		..\..\SDK\Core\Utils\Hierarchy.h = ..\..\SDK\Core\Utils\Hierarchy.h
 		..\..\SDK\Core\Utils\LoggerBase.h = ..\..\SDK\Core\Utils\LoggerBase.h
 		..\..\SDK\Core\Utils\LogLevel.h = ..\..\SDK\Core\Utils\LogLevel.h
@@ -121,16 +122,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GUI", "GUI", "{9E22C380-C12
 		..\..\SDK\GUI\VerticalAlign.h = ..\..\SDK\GUI\VerticalAlign.h
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Imaging", "Imaging", "{9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\SDK\Core\Imaging\LoaderBase.h = ..\..\SDK\Core\Imaging\LoaderBase.h
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageProvider", "ImageProvider", "{9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SapiOpenAL", "SapiOpenAL\SapiOpenAL.vcxproj", "{5F58EED2-E52F-4B0D-B698-AEC178BDE1F1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sapi", "Sapi", "{73879476-87FE-409C-9EC2-3BF991609DCD}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\Sapi\DeviceBase.h = ..\..\SDK\Sapi\DeviceBase.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageLoader", "ImageLoader", "{11C90938-1A3D-4CBE-AC92-9A7C9E2BABFE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\Core\ImageProvider\ImageLoader\ImageLoaderBase.h = ..\..\SDK\Core\ImageProvider\ImageLoader\ImageLoaderBase.h
 	EndProjectSection
 EndProject
 Global
@@ -187,5 +190,6 @@ Global
 		{9E22C380-C12D-473A-884E-46F80EF245DE} = {D643DD03-23C9-427F-A4A9-57571D238E47}
 		{9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD} = {19B628F7-193A-4BFE-A7CA-0C8EE8587180}
 		{73879476-87FE-409C-9EC2-3BF991609DCD} = {D643DD03-23C9-427F-A4A9-57571D238E47}
+		{11C90938-1A3D-4CBE-AC92-9A7C9E2BABFE} = {9A5E7E40-D4B6-4D44-BE20-8D2EB53AA5FD}
 	EndGlobalSection
 EndGlobal

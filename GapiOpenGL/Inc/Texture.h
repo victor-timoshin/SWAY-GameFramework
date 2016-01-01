@@ -23,7 +23,7 @@ namespace Gapi
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Texture(void);
 
-		virtual void Load(Gapi::PTEXTURE_DESCRIPTION textureDesc);
+		virtual void Load(Gapi::TEXTURE_DESCRIPTION_PTR textureDesc);
 
 		virtual void CreateNullTexture(int width, int height);
 

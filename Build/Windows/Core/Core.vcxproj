@@ -74,11 +74,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\BMPLoader.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\DDSLoader.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\PNGLoader.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\TGALoader.h" />
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\CodecFactory.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPLoader.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\DDSLoader.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\PNGLoader.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGALoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Debug\RenderLineDebug.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Effect.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Atlas.h" />
@@ -112,11 +112,11 @@
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\BMPLoader.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\DDSLoader.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\PNGLoader.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\TGALoader.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\Imaging\CodecFactory.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\DDSLoader.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\PNGLoader.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\TGALoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Debug\RenderLineDebug.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Effect.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Atlas.cpp" />
@@ -135,10 +135,12 @@
     <ClCompile Include="..\..\..\Core\Src\Tiled\TileLayer.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Tiled\Tile.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Tiled\TileSet.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Utils\FileHelper.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\StreamLogger.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\FileLogger.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\FileStream.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\FileDirectory.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Utils\StringHelper.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Xml\Node.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Xml\Document.cpp" />
   </ItemGroup>

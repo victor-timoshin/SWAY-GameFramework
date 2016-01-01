@@ -8,11 +8,6 @@ namespace Core
 {
 	namespace Utils
 	{
-		typedef enum StreamMode {
-			Text   = 0,
-			Binary = 1
-		} STREAM_MODE;
-
 		class IStreamBase
 		{
 		public:
@@ -25,7 +20,7 @@ namespace Core
 			/// <param name="filename">Имя файла.</param>
 			virtual void Open(const char* filename, FILE_MODE mode, bool binary) = 0;
 
-			virtual bool OpenStream(const std::string& filename, STREAM_MODE mode) = 0;
+			virtual bool OpenStream(const std::string& filename, FILE_TYPE type) = 0;
 
 			virtual void CloseStream(void) = 0;
 

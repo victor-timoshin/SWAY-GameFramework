@@ -8,8 +8,8 @@ namespace Gapi
 	typedef struct TextureDescription
 	{
 		void* pixels;
-		int width;
-		int height;
+		UInt width;
+		UInt height;
 		int pitch;
 		int bpp; // bits per pixel.
 		TEXTURE_FORMAT format;
@@ -17,7 +17,7 @@ namespace Gapi
 
 		//int channels;
 		//int bits;
-	} LTEXTURE_DESCRIPTION, *PTEXTURE_DESCRIPTION;
+	} TEXTURE_DESCRIPTION, *TEXTURE_DESCRIPTION_PTR;
 }
 
 #endif // TEXTUREDESCRIPTION_H

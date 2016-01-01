@@ -15,7 +15,7 @@ namespace Gapi
 		/// <summary>Деструктор класса.</summary>
 		virtual ~ITextureBase(void) {}
 
-		virtual void Load(Gapi::PTEXTURE_DESCRIPTION textureDesc) = 0;
+		virtual void Load(Gapi::TEXTURE_DESCRIPTION_PTR textureDesc) = 0;
 
 		virtual void CreateNullTexture(int width, int height) = 0;
 

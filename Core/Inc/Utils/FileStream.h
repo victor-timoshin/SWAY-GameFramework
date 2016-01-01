@@ -23,8 +23,8 @@ namespace Core
 
 			/// <summary>Открытие файла.</summary>
 			/// <param name="filename">Имя файла.</param>
-			/// <param name="mode">Режим открытия.</param>
-			virtual bool OpenStream(const std::string& filename, STREAM_MODE mode);
+			/// <param name="type">Тип файла.</param>
+			virtual bool OpenStream(const std::string& filename, FILE_TYPE type);
 
 			virtual void CloseStream(void);
 
@@ -44,12 +44,16 @@ namespace Core
 
 			virtual UInt GetFileLength(void) const;
 
+			std::string GetFilename(void) const;
+
 		private:
 			FILE* file;
 			UInt numBytes;
 
 			std::ifstream in; // Объект класса для чтения из файла.
 			std::ofstream out;
+
+			std::string _filename;
 		};
 	}
 }

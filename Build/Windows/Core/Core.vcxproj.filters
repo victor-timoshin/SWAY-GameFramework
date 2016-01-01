@@ -48,18 +48,6 @@
     <Filter Include="Inc\Render\Debug">
       <UniqueIdentifier>{bb90d64e-6116-465a-b59f-ff10bcbfa0b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Imaging">
-      <UniqueIdentifier>{6d2af95e-bba6-4d50-a900-890085a82957}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Imaging">
-      <UniqueIdentifier>{d385a716-b8ba-42e1-821b-1e89564123d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Imaging\Codecs">
-      <UniqueIdentifier>{8b313874-55d5-4ccf-9eec-0de047828723}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inc\Imaging\Codecs">
-      <UniqueIdentifier>{8032a6b7-305d-4221-bcce-f264a07a2a45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Inc\Tiled">
       <UniqueIdentifier>{216d3f7e-3eb9-4d30-8376-7462655c0835}</UniqueIdentifier>
     </Filter>
@@ -77,6 +65,18 @@
     </Filter>
     <Filter Include="Src\Resource">
       <UniqueIdentifier>{2bd8824a-69fa-48cc-a67e-c8f2e6a46354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ImageProvider">
+      <UniqueIdentifier>{6d2af95e-bba6-4d50-a900-890085a82957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\ImageProvider\ImageLoader">
+      <UniqueIdentifier>{8b313874-55d5-4ccf-9eec-0de047828723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\ImageProvider">
+      <UniqueIdentifier>{d385a716-b8ba-42e1-821b-1e89564123d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\ImageProvider\ImageLoader">
+      <UniqueIdentifier>{8032a6b7-305d-4221-bcce-f264a07a2a45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,23 +120,8 @@
     <ClInclude Include="..\..\..\Core\Inc\Render\RenderTarget.h">
       <Filter>Inc\Render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\BMPLoader.h">
-      <Filter>Inc\Imaging\Codecs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\DDSLoader.h">
-      <Filter>Inc\Imaging\Codecs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\PNGLoader.h">
-      <Filter>Inc\Imaging\Codecs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\Codecs\TGALoader.h">
-      <Filter>Inc\Imaging\Codecs</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Tiled\TileSet.h">
       <Filter>Inc\Tiled</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\Imaging\CodecFactory.h">
-      <Filter>Inc\Imaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Xml\Document.h">
       <Filter>Inc\Xml</Filter>
@@ -176,6 +161,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\Render\Atlas.h">
       <Filter>Inc\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPLoader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\DDSLoader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\PNGLoader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGALoader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h">
+      <Filter>Inc\ImageProvider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -218,23 +218,8 @@
     <ClCompile Include="..\..\..\Core\Src\Render\RenderTarget.cpp">
       <Filter>Src\Render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\BMPLoader.cpp">
-      <Filter>Src\Imaging\Codecs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\DDSLoader.cpp">
-      <Filter>Src\Imaging\Codecs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\PNGLoader.cpp">
-      <Filter>Src\Imaging\Codecs</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\Codecs\TGALoader.cpp">
-      <Filter>Src\Imaging\Codecs</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Tiled\TileSet.cpp">
       <Filter>Src\Tiled</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\Imaging\CodecFactory.cpp">
-      <Filter>Src\Imaging</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Xml\Document.cpp">
       <Filter>Src\Xml</Filter>
@@ -268,6 +253,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Render\Atlas.cpp">
       <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Utils\FileHelper.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Utils\StringHelper.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp">
+      <Filter>Src\ImageProvider\ImageLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\DDSLoader.cpp">
+      <Filter>Src\ImageProvider\ImageLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\PNGLoader.cpp">
+      <Filter>Src\ImageProvider\ImageLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\TGALoader.cpp">
+      <Filter>Src\ImageProvider\ImageLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp">
+      <Filter>Src\ImageProvider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

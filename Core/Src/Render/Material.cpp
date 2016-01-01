@@ -1,7 +1,7 @@
 ﻿#include "../../../Core/Inc/Render/Material.h"
-#include "../../../Core/Inc/Imaging/Codecs/PNGLoader.h"
-#include "../../../Core/Inc/Imaging/Codecs/BMPLoader.h"
-#include "../../../Core/Inc/Imaging/Codecs/TGALoader.h"
+#include "../../../Core/Inc/ImageProvider/ImageLoader/PNGLoader.h"
+#include "../../../Core/Inc/ImageProvider/ImageLoader/BMPLoader.h"
+#include "../../../Core/Inc/ImageProvider/ImageLoader/TGALoader.h"
 
 #include "../../../SDK//Core/Utils/File.h"
 
@@ -111,25 +111,19 @@ namespace Core
 			Core::Utils::ToLowercase(textureName);
 
 			std::string fileExtension = Core::Utils::GetFileExtension(textureName);
-			for (const auto& ext : _supportedExtensionTextures)
-			{
-				if (ext == fileExtension)
-					continue;
-			}
-
 			if (fileExtension.compare("tga") == 0)
 			{
-				Imaging::TGALoader tgaLoader;
+				ImageProvider::ImageLoader::TGALoader tgaLoader;
 				_image->GetTexture()->Load(tgaLoader.LoadFromFile(textureName));
 			}
 			else if (fileExtension.compare("bmp") == 0)
 			{
-				Imaging::BMPLoader bmpLoader;
+				ImageProvider::ImageLoader::BMPLoader bmpLoader;
 				_image->GetTexture()->Load(bmpLoader.LoadFromFile(textureName));
 			}
 			else if (fileExtension.compare("png") == 0)
 			{
-				Imaging::PNGLoader pngLoader;
+				ImageProvider::ImageLoader::PNGLoader pngLoader;
 				_image->GetTexture()->Load(pngLoader.LoadFromFile(textureName));
 			}
 			else

@@ -19,7 +19,7 @@ namespace GUI
 	/// <summary>Инициализация библиотеки FreeType.</summary>
 	bool FontManager::InitLibrary(void)
 	{
-		if (!HasLoaded())
+		if (NOT HasLoaded())
 		{
 			FT_Error error = FT_Init_FreeType(&_library);
 			if (error)
@@ -40,7 +40,7 @@ namespace GUI
 	/// <summary>Освобождает библиотеку FreeType.</summary>
 	void FontManager::FreeLibrary(void)
 	{
-		if (!HasLoaded())
+		if (NOT HasLoaded())
 			return;
 
 		if (_library)
@@ -58,14 +58,14 @@ namespace GUI
 
 	IFontBase* FontManager::AddFont(std::string name, std::string path)
 	{
-		if (!Core::Utils::FileExists(path))
+		if (NOT Core::Utils::FileExists(path))
 			return nullptr;
 
 		Font* font = nullptr;
 
 		font = new Font();
 		bool result = font->LoadFromFile(_library, path.c_str());
-		if (!result)
+		if (NOT result)
 		{
 			FreeLibrary();
 			return nullptr;

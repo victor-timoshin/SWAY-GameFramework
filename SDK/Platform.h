@@ -12,6 +12,7 @@
 #include <locale> // std::locale, std::toupper
 #include <vector>
 #include <map>
+#include <list>
 #include <set>
 
 #include <memory> // std::shared_ptr, std::unique_ptr
@@ -31,6 +32,8 @@ typedef unsigned long long UInt64;
 #include "Defines.h"
 #include "Conversion.h"
 
+//#include "Core/Utils/File.h"
+#include "Core/Utils/FileType.h"
 #include "Core/Utils/FileMode.h"
 #include "Core/Utils/LogLeveL.h"
 
