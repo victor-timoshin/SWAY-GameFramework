@@ -64,8 +64,6 @@ namespace GUI
 			return;
 
 
-
-
 		FT_Raster_Params params;
 		memset(&params, 0, sizeof(params));
 

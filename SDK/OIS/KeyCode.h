@@ -1,5 +1,5 @@
-#ifndef KEYCODES_H
-#define KEYCODES_H
+#ifndef KEYCODE_H
+#define KEYCODE_H
 
 #include <string>
 #include <map>
@@ -9,6 +9,8 @@ namespace OIS
 {
 	typedef enum KeyCode
 	{
+		Unknown = 0,
+
 		EKC_0 = 48,
 		EKC_1 = 49,
 		EKC_2 = 50,
@@ -114,50 +116,10 @@ namespace OIS
 		EKC_NUMPAD_7 = 103,
 		EKC_NUMPAD_8 = 104,
 		EKC_NUMPAD_9 = 105,
-	} KEYCODE;
+	} KEY_CODE;
 
-	static KEYCODE KeyCodeFromString(std::string name)
-	{
-		std::map<std::string, KEYCODE> keyMapping;
-
-		if (keyMapping.empty())
-		{
-			keyMapping["a"] = KEYCODE::EKC_A;
-			keyMapping["b"] = KEYCODE::EKC_B;
-			keyMapping["c"] = KEYCODE::EKC_C;
-			keyMapping["d"] = KEYCODE::EKC_D;
-			keyMapping["e"] = KEYCODE::EKC_E;
-			keyMapping["f"] = KEYCODE::EKC_F;
-			keyMapping["g"] = KEYCODE::EKC_G;
-			keyMapping["h"] = KEYCODE::EKC_H;
-			keyMapping["i"] = KEYCODE::EKC_I;
-			keyMapping["j"] = KEYCODE::EKC_J;
-			keyMapping["k"] = KEYCODE::EKC_K;
-			keyMapping["l"] = KEYCODE::EKC_L;
-			keyMapping["m"] = KEYCODE::EKC_M;
-			keyMapping["n"] = KEYCODE::EKC_N;
-			keyMapping["o"] = KEYCODE::EKC_O;
-			keyMapping["p"] = KEYCODE::EKC_P;
-			keyMapping["q"] = KEYCODE::EKC_Q;
-			keyMapping["r"] = KEYCODE::EKC_R;
-			keyMapping["s"] = KEYCODE::EKC_S;
-			keyMapping["t"] = KEYCODE::EKC_T;
-			keyMapping["u"] = KEYCODE::EKC_U;
-			keyMapping["v"] = KEYCODE::EKC_V;
-			keyMapping["w"] = KEYCODE::EKC_W;
-			keyMapping["x"] = KEYCODE::EKC_X;
-			keyMapping["y"] = KEYCODE::EKC_Y;
-			keyMapping["z"] = KEYCODE::EKC_Z;
-
-			keyMapping["up"] = KEYCODE::EKC_UP;
-			keyMapping["down"] = KEYCODE::EKC_DOWN;
-			keyMapping["right"] = KEYCODE::EKC_RIGHT;
-			keyMapping["left"] = KEYCODE::EKC_LEFT;
-		}
-
-		std::transform(name.begin(), name.end(), name.begin(), tolower);
-		return keyMapping[name];
-	}
+	static KEY_CODE GetKeycodeByName(std::string name);
+	static const char* GetNameByKeycode(KEY_CODE keycode);
 }
 
-#endif // KEYCODES_H
+#endif // KEYCODE_H

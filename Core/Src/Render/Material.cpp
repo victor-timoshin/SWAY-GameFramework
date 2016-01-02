@@ -3,7 +3,7 @@
 #include "../../../Core/Inc/ImageProvider/ImageLoader/BMPLoader.h"
 #include "../../../Core/Inc/ImageProvider/ImageLoader/TGALoader.h"
 
-#include "../../../SDK//Core/Utils/File.h"
+#include "../../../SDK/Core/Utils/File.h"
 
 #define MAX_IMAGE_COUNT 2
 

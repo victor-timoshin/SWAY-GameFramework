@@ -117,8 +117,8 @@ namespace Core
 				int rowBytes = png_get_rowbytes(png, info);
 
 				// Выделяем память под изображения.
-				png_byte* imageData = new png_byte[rowBytes * height];
-				if (NOT imageData)
+				png_byte* tempData = new png_byte[rowBytes * height];
+				if (NOT tempData)
 				{
 					png_destroy_read_struct(&png, &info, &endInfo);
 					source.close();
@@ -130,20 +130,20 @@ namespace Core
 				if (NOT rowPointers)
 				{
 					png_destroy_read_struct(&png, &info, &endInfo);
-					SAFE_DELETE_ARRAY(imageData);
+					SAFE_DELETE_ARRAY(tempData);
 					source.close();
 					return nullptr;
 				}
 
 				for (UInt i = 0; i < height; ++i)
-					rowPointers[height - 1 - i] = imageData + i * rowBytes;
+					rowPointers[height - 1 - i] = tempData + i * rowBytes;
 
 				png_read_image(png, rowPointers); // Читаем изображение.
 				png_read_end(png, endInfo);
 
 				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = nullptr;
 				textureDesc = (Gapi::TEXTURE_DESCRIPTION_PTR)malloc(sizeof(Gapi::TEXTURE_DESCRIPTION));
-				textureDesc->pixels = imageData;
+				textureDesc->pixels = tempData;
 				textureDesc->width = width;
 				textureDesc->height = height;
 				textureDesc->internalFormat = Gapi::TEXTURE_FORMAT::ETF_RGBA;

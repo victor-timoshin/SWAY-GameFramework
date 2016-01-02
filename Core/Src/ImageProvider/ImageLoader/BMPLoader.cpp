@@ -20,7 +20,7 @@ namespace Core
 			{
 				LBITMAP_FILE_HEADER fileHeader;
 				LBITMAP_INFO_HEADER infoHeader;
-				LBITMAP_COLOR col;
+				LBITMAP_COLOR color;
 
 				source.read((char*)&fileHeader, sizeof(LBITMAP_FILE_HEADER));
 
@@ -32,7 +32,7 @@ namespace Core
 				if (fileHeader.type == 19778)
 				{
 					source.read((char*)&infoHeader, sizeof(LBITMAP_INFO_HEADER));
-					source.read((char*)&col, sizeof(LBITMAP_COLOR));
+					source.read((char*)&color, sizeof(LBITMAP_COLOR));
 					source.read(image, size);
 					//source.close();
 				}

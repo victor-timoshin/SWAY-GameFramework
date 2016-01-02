@@ -68,19 +68,8 @@ namespace Core
 
 				source.read(reinterpret_cast<char*>(textureData), imageSize);
 
-
 				//source.seekg(0, std::ios::beg);
 				//source.read(reinterpret_cast<char*>(&header), sizeof(LTGAHEADER));
-
-				//std::cerr
-				//	<< "TGA: " << (int)header->idLength
-				//	<< ", " << (int)header->dataType
-				//	<< ", " << (int)header->bitPerPel
-				//	<< ", " << (int)header->colorMap
-				//	<< ", " << header->width
-				//	<< ", " << header->height
-				//	<< ", " << header->description
-				//	<< std::endl;
 
 				//if (header->dataType == 2) {
 				//LoadUncompressedTexture
@@ -122,10 +111,6 @@ namespace Core
 				// Получаем формат текстуры.
 				textureDesc->format = (imageBitDepth == 24 ? Gapi::TEXTURE_FORMAT::EFT_BGR : Gapi::TEXTURE_FORMAT::EFT_BGRA);
 				textureDesc->internalFormat = (textureDesc->format == Gapi::TEXTURE_FORMAT::EFT_BGR ? Gapi::TEXTURE_FORMAT::EFT_RGB8 : Gapi::TEXTURE_FORMAT::EFT_RGBA8);
-
-				// Освобождаем память.  
-				//if (textureData)
-				//	delete[] textureData;
 
 				return textureDesc;
 			}

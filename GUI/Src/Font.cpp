@@ -24,7 +24,7 @@ namespace GUI
 		: _face(nullptr)
 		, _encoding(FT_ENCODING_UNICODE)
 		, _isLoaded(false)
-		, _position(Math::Vec2F(0.0f, 0.0f))
+		, _position(VEC2F_ZERO)
 		, _scale(1.0f)
 	{
 		_fontStyle.textColor = Math::Color(1.0f);

@@ -1,7 +1,7 @@
 #ifndef INPUTBINDING_H
 #define INPUTBINDING_H
 
-#include "KeyCodes.h"
+#include "KeyCode.h"
 #include "../Platform.h"
 
 namespace OIS
@@ -10,12 +10,12 @@ namespace OIS
 
 	typedef struct InputBinding
 	{
-		KeyCode key;
+		KEY_CODE keyCode;
 		UInt modifiers;
 		UInt flags;
 		InputBindingFn fn;
 		const void* userData;
-	} LINPUT_BINDING, *PINPUT_BINDING;
+	} INPUT_BINDING, *INPUT_BINDING_PTR;
 }
 
 #endif // INPUTBINDING_H

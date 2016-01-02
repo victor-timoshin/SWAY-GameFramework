@@ -88,7 +88,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OIS", "OIS", "{9325D1B1-F15
 		..\..\SDK\OIS\InputBase.h = ..\..\SDK\OIS\InputBase.h
 		..\..\SDK\OIS\InputBinding.h = ..\..\SDK\OIS\InputBinding.h
 		..\..\SDK\OIS\Keyboard.h = ..\..\SDK\OIS\Keyboard.h
-		..\..\SDK\OIS\KeyCodes.h = ..\..\SDK\OIS\KeyCodes.h
+		..\..\SDK\OIS\KeyCode.h = ..\..\SDK\OIS\KeyCode.h
+		..\..\SDK\OIS\KeyMapping.h = ..\..\SDK\OIS\KeyMapping.h
 		..\..\SDK\OIS\Modifier.h = ..\..\SDK\OIS\Modifier.h
 		..\..\SDK\OIS\Mouse.h = ..\..\SDK\OIS\Mouse.h
 	EndProjectSection
