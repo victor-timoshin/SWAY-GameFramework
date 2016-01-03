@@ -5,7 +5,6 @@
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Gapi/TextureBase.h"
 #include "../../../SDK/Gapi/TextureSamplerBase.h"
-#include "../../../SDK/Core/Imaging/LoaderBase.h"
 #include "../../../SDK/Platform.h"
 
 #include "../Resource/Resource.h"

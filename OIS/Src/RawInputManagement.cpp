@@ -70,7 +70,7 @@ namespace OIS
 		return static_cast<RawKeyboard*>(rawInputDevices[0]);
 	}
 
-	IMouse* RawInputManagement::GetMouse()
+	IMouse* RawInputManagement::GetMouse(void)
 	{
 		return static_cast<RawMouse*>(rawInputDevices[1]);
 	}

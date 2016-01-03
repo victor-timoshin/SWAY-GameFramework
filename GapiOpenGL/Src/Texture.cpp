@@ -4,7 +4,7 @@
 
 namespace Gapi
 {
-	UInt Texture::GetTextureFormat(Gapi::TEXTURE_FORMAT format)
+	UInt Texture::GetTextureFormat(TEXTURE_FORMAT format)
 	{
 		switch (format)
 		{
@@ -23,7 +23,7 @@ namespace Gapi
 		}
 	}
 
-	UInt Texture::GetTextureTarget(Gapi::TEXTURE_TARGET target)
+	UInt Texture::GetTextureTarget(TEXTURE_TARGET target)
 	{
 		switch (target)
 		{

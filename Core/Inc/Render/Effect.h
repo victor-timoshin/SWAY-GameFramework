@@ -20,6 +20,10 @@ namespace Core
 			/// <summary>Деструктор класса.</summary>
 			virtual ~Effect(void);
 
+			virtual void Bind(void);
+
+			virtual void Unbind(void);
+
 			virtual std::string AddCompatibilityPrefixToShaderCode(const char* code);
 
 			virtual Gapi::IShaderBase* GetShader(void) {

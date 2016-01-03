@@ -21,13 +21,11 @@ namespace Core
 
 			void Unregister(const std::string& name);
 
-			Gapi::TEXTURE_DESCRIPTION_PTR Give(const std::string& name, const std::string& filename);
+			Gapi::TEXTURE_DESCRIPTION_PTR Give(const std::string& filename);
 
 		private:
 			typedef std::map<std::string, ImageLoader::IImageLoaderBase*> TImageLoaderMap;
 			TImageLoaderMap _imageLoaders;
-
-			std::list<std::string> _supportedExtensions;
 		};
 	}
 }

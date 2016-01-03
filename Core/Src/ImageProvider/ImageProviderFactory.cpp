@@ -2,6 +2,10 @@
 #include "../../../Core/Inc/Utils/FileStream.h"
 #include "../../../SDK/Core/Utils/File.h"
 
+#include "../../../Core/Inc/ImageProvider/ImageLoader/TGALoader.h"
+#include "../../../Core/Inc/ImageProvider/ImageLoader/BMPLoader.h"
+#include "../../../Core/Inc/ImageProvider/ImageLoader/PNGLoader.h"
+
 namespace Core
 {
 	namespace ImageProvider
@@ -9,9 +13,9 @@ namespace Core
 		/// <summary>Конструктор класса.</summary>
 		ImageProviderFactory::ImageProviderFactory(void)
 		{
-			_supportedExtensions.push_back("tga");
-			_supportedExtensions.push_back("bmp");
-			_supportedExtensions.push_back("png");
+			Register("tga", new ImageLoader::TGALoader);
+			Register("bmp", new ImageLoader::BMPLoader);
+			Register("png", new ImageLoader::PNGLoader);
 		}
 
 		/// <summary>Деструктор класса.</summary>
@@ -29,20 +33,13 @@ namespace Core
 			_imageLoaders.erase(name);
 		}
 
-		Gapi::TEXTURE_DESCRIPTION_PTR ImageProviderFactory::Give(const std::string& name, const std::string& filename)
+		Gapi::TEXTURE_DESCRIPTION_PTR ImageProviderFactory::Give(const std::string& filename)
 		{
-			TImageLoaderMap::iterator i = _imageLoaders.find(name);
+			TImageLoaderMap::iterator i = _imageLoaders.find(Core::Utils::GetFileExtension(filename));
 			if (i != _imageLoaders.end())
 			{
 				if (NOT Core::Utils::FileExists(filename))
 					return nullptr;
-
-				std::string fileExtension = Core::Utils::GetFileExtension(filename);
-				for (const auto& ext : _supportedExtensions)
-				{
-					if (ext == fileExtension)
-						continue;
-				}
 
 				Core::Utils::FileStream stream;
 				if (NOT stream.OpenStream(filename, Core::Utils::FILE_TYPE::Binary))

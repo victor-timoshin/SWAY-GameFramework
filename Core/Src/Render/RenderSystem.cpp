@@ -11,14 +11,14 @@ namespace Core
 	{
 		/// <summary>Конструктор класса.</summary>
 		RenderSystem::RenderSystem(void)
-			: device(nullptr)
+			: _device(nullptr)
 		{
 		}
 
 		/// <summary>Деструктор класса.</summary>
 		RenderSystem::~RenderSystem(void)
 		{
-			SAFE_DELETE(device);
+			SAFE_DELETE(_device);
 
 			for (IMaterialMap::iterator i = _materials.begin(); i != _materials.end(); ++i)
 			{
@@ -28,7 +28,7 @@ namespace Core
 
 			_materials.clear();
 
-			FreeLibrary((HMODULE)library);
+			FreeLibrary((HMODULE)_library);
 
 			_fontManager->RemoveFont();
 			SAFE_DELETE(_fontManager);
@@ -42,8 +42,8 @@ namespace Core
 
 		bool RenderSystem::Initialize(const char* libraryName)
 		{
-			library = LoadLibrary(libraryName/*.dll*/);
-			if (!library)
+			_library = LoadLibrary(libraryName/*.dll*/);
+			if (NOT _library)
 				return false;
 
 			return true;
@@ -52,30 +52,44 @@ namespace Core
 		bool RenderSystem::CreateDevice(HWND windowHandle)
 		{
 			typedef Gapi::IDeviceBase* IDeviceCallback(HWND);
-			device = reinterpret_cast<IDeviceCallback*>(GetProcAddress((HMODULE)library, "RegisterDevice"))(windowHandle);
-			if (!device->Create())
+			_device = reinterpret_cast<IDeviceCallback*>(GetProcAddress((HMODULE)_library, "RegisterDevice"))(windowHandle);
+			if (NOT _device->Create())
 				return false;
+
+			_device->EnableFeature(Gapi::FEATURE_TYPE::DepthTesting);
+			_device->EnableFeature(Gapi::FEATURE_TYPE::Culling);
+			_device->EnableFeature(Gapi::FEATURE_TYPE::Blending);
+			_device->EnableFeature(Gapi::FEATURE_TYPE::StencilTesting);
+
+			_device->SetCullFace(Gapi::CULL_FACE::Back);
+			_device->SetFrontFace(Gapi::FRONT_FACE::CounterClockWise);
+			_device->SetBlendFunction(Gapi::BLEND_FUNCTION::SourceAlpha, Gapi::BLEND_FUNCTION::OneMinusSourceAlpha);
+			_device->SetDepthFunction(Gapi::COMPARE_FUNCTION::Less);
+			_device->SetStencilFunction(Gapi::COMPARE_FUNCTION::Never, 0, 0xFFFFFFFF);
+			_device->SetStencilOperation(Gapi::STENCIL_OPERATION::Keep, Gapi::STENCIL_OPERATION::Keep, Gapi::STENCIL_OPERATION::Keep);
+
+			_device->SetColorMask(true, true, true, true);
+			_device->SetDepthMask(true);
+			_device->SetStencilMask(0xFFFFFFFF);
 
 			_fontManager = GUI::RegisterFontManager();
 
-			std::ofstream stream;
-			stream.open("info.txt", std::ios::out);
-			device->GetGlInfo(stream);
+			_lineDebug = new RenderLineDebug(_library);
 
-			_lineDebug = new RenderLineDebug(library);
+			_imageProvider = new ImageProvider::ImageProviderFactory();
 
 			return true;
 		}
 
 		Gapi::IDeviceBase* RenderSystem::GetDevice(void)
 		{
-			return device;
+			return _device;
 		}
 
 		bool RenderSystem::CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName)
 		{
-			Material* material = new Material(library, device);
-			if (material->Create(vertexShader, fragmentShader, textureName))
+			Material* material = new Material(_library, _device);
+			if (material->Create(vertexShader, fragmentShader, _imageProvider, textureName))
 			{
 				_materials.insert(IMaterialMap::value_type(name, material));
 				return true;
@@ -107,7 +121,7 @@ namespace Core
 		{
 			Core::Render::IRenderGeometryBase* geometry = nullptr;
 			geometry = new Core::Render::RenderGeometry(renderable);
-			geometry->BuildVBOs(library);
+			geometry->BuildVBOs(_library);
 			geometry->SetMaterial(material);
 
 			renderGeometries.push_back(geometry);
@@ -136,8 +150,8 @@ namespace Core
 		{
 			_numDisplayObjects = 0;
 
-			device->Clear(Gapi::CLEARFLAG::Color | Gapi::CLEARFLAG::Depth | Gapi::CLEARFLAG::Stencil);
-			device->SetClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			_device->SetClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			_device->Clear(Gapi::CLEAR_FLAG::Color | Gapi::CLEAR_FLAG::Depth | Gapi::CLEAR_FLAG::Stencil);
 
 			if (camera != nullptr)
 			{
@@ -173,7 +187,7 @@ namespace Core
 
 			_fontManager->DrawAll();
 
-			device->SwapChain();
+			_device->SwapChain();
 		}
 
 		int RenderSystem::GetNumDisplayObjects(void) const

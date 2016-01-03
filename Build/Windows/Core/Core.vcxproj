@@ -74,6 +74,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPFileHeader.h" />
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGAFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPLoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\DDSLoader.h" />

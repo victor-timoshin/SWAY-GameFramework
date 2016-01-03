@@ -10,12 +10,12 @@ namespace Gapi
 	class Texture : public ITextureBase
 	{
 	public:
-		static UInt GetTextureFormat(Gapi::TEXTURE_FORMAT format);
+		static UInt GetTextureFormat(TEXTURE_FORMAT format);
 
-		static UInt GetTextureTarget(Gapi::TEXTURE_TARGET target);
+		static UInt GetTextureTarget(TEXTURE_TARGET target);
 		static std::string GetTextureTargetToString(UInt target);
 
-		static UInt GetMipmapHint(Gapi::MIPMAPHINT hint);
+		static UInt GetMipmapHint(MIPMAPHINT hint);
 
 		/// <summary>Конструктор класса.</summary>
 		Texture(void);
@@ -23,7 +23,7 @@ namespace Gapi
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Texture(void);
 
-		virtual void Load(Gapi::TEXTURE_DESCRIPTION_PTR textureDesc);
+		virtual void Load(TEXTURE_DESCRIPTION_PTR textureDesc);
 
 		virtual void CreateNullTexture(int width, int height);
 
@@ -31,7 +31,7 @@ namespace Gapi
 
 		virtual void Upload(int level, int xOffset, int yOffset, int width, int height, TEXTURE_FORMAT format, const void* pixels);
 
-		virtual void GenerateMipmaps(Gapi::MIPMAPHINT hint);
+		virtual void GenerateMipmaps(MIPMAPHINT hint);
 
 		virtual void SetMipmapRange(int minLevel, int maxLevel);
 

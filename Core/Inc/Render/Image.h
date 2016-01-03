@@ -5,9 +5,9 @@
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Gapi/TextureBase.h"
 #include "../../../SDK/Gapi/TextureSamplerBase.h"
-#include "../../../SDK/Core/Imaging/LoaderBase.h"
 #include "../../../SDK/Platform.h"
 
+#include "../ImageProvider/ImageProviderFactory.h"
 #include "../Resource/Resource.h"
 
 namespace Core
@@ -19,7 +19,7 @@ namespace Core
 			UInt width;
 			UInt height;
 			UByte* byteData;
-		} LIMAGE_DATA, *PIMAGE_DATA;
+		} IMAGE_DATA, *IMAGE_DATA_PTR;
 
 		class Image : public Core::Resource::ResourceBase
 		{
@@ -30,17 +30,22 @@ namespace Core
 			/// <summary>Конструктор класса.</summary>
 			Image(void* library, Gapi::IDeviceBase* device);
 
-			Image(PIMAGE_DATA data);
+			Image(IMAGE_DATA_PTR data);
 
 			/// <summary>Деструктор класса.</summary>
 			virtual ~Image(void);
 
+			virtual void Load(ImageProvider::ImageProviderFactory* imageProvider, const std::string& name);
+
+			virtual void Unload(void);
+
+			virtual void Bind(UInt textureUnit);
+
+			virtual void Unbind(void);
+
 			virtual Gapi::ITextureBase* GetTexture(void);
 
 			virtual Gapi::ITextureSamplerBase* GetTextureSampler(void);
-
-			// Temp
-			void Apply(void);
 
 			virtual bool HasLoaded(void) const;
 

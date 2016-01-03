@@ -35,10 +35,10 @@ namespace Gapi
 	{
 		switch (type)
 		{
-		case PRIMITIVE_TYPE::PointList:        return GL_POINTS;
-		case PRIMITIVE_TYPE::LineList:         return GL_LINES;
+		case PRIMITIVE_TYPE::PointList:     return GL_POINTS;
+		case PRIMITIVE_TYPE::LineList:      return GL_LINES;
 		case PRIMITIVE_TYPE::LineStrip:     return GL_LINE_STRIP;
-		case PRIMITIVE_TYPE::TriangleList:     return GL_TRIANGLES;
+		case PRIMITIVE_TYPE::TriangleList:  return GL_TRIANGLES;
 		case PRIMITIVE_TYPE::TriangleStrip: return GL_TRIANGLE_STRIP;
 		default:
 			break;

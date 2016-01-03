@@ -116,11 +116,12 @@ namespace Core
 				// Получаем кол-во байтов необходимых для вмещения преобразованного ряда.
 				int rowBytes = png_get_rowbytes(png, info);
 
-				// Выделяем память под изображения.
-				png_byte* tempData = new png_byte[rowBytes * height];
+				// Выделяем памяти под данные изображения.
+				UByte* tempData = (UByte*)malloc(rowBytes * height);
 				if (NOT tempData)
 				{
 					png_destroy_read_struct(&png, &info, &endInfo);
+					free(tempData);
 					source.close();
 					return nullptr;
 				}
@@ -130,7 +131,8 @@ namespace Core
 				if (NOT rowPointers)
 				{
 					png_destroy_read_struct(&png, &info, &endInfo);
-					SAFE_DELETE_ARRAY(tempData);
+					free(tempData);
+					SAFE_DELETE_ARRAY(rowPointers);
 					source.close();
 					return nullptr;
 				}
@@ -154,19 +156,6 @@ namespace Core
 				source.close();
 
 				return textureDesc;
-			}
-
-			/// <summary>Загружает данные.</summary>
-			Gapi::TEXTURE_DESCRIPTION_PTR PNGLoader::LoadFromFile(const std::string& path)
-			{
-				if (NOT Core::Utils::FileExists(path))
-					return nullptr;
-
-				Core::Utils::FileStream stream;
-				if (NOT stream.OpenStream(path, Core::Utils::FILE_TYPE::Binary))
-					return nullptr;
-
-				return LoadFromStream(stream.GetStream());
 			}
 		}
 	}

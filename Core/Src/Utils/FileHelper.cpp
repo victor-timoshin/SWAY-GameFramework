@@ -1,4 +1,4 @@
-#include "../../../SDK/Core/Utils/File.h"
+﻿#include "../../../SDK/Core/Utils/File.h"
 
 namespace Core
 {
@@ -17,6 +17,8 @@ namespace Core
 			return false;
 		}
 
+		/// <summary>Получает расширение файла.</summary>
+		/// <param name="name">Имя файла.</param>
 		std::string GetFileExtension(std::string name)
 		{
 			//return name.substr(name.length() - 3);

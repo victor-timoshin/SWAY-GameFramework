@@ -19,6 +19,16 @@ namespace Core
 			SAFE_DELETE(_shader);
 		}
 
+		void Effect::Bind(void)
+		{
+			_shader->Bind();
+		}
+
+		void Effect::Unbind(void)
+		{
+			_shader->Unbind();
+		}
+
 		std::string Effect::AddCompatibilityPrefixToShaderCode(const char* code)
 		{
 			return std::string("SHADER_COMPATIBILITY_PREFIX") + code;

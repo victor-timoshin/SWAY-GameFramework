@@ -1,25 +1,23 @@
-#ifndef SCENEMANAGEMENT_H
+п»ї#ifndef SCENEMANAGEMENT_H
 #define SCENEMANAGEMENT_H
 
 #include "../../../SDK/Core/Scene/SceneManagementBase.h"
 #include "../../../SDK/Core/Scene/SceneStateBase.h"
 #include "../../../SDK/Platform.h"
 
-#include <vector>
-
 namespace Scene
 {
 	class SceneManagement: public ISceneManagementBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		SceneManagement(void) { }
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		SceneManagement(void) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~SceneManagement(void);
 
 		virtual void FrameStarted(OIS::IInputBase* event, float timeStep);
-		virtual void FrameEnded();
+		virtual void FrameEnded(void);
 
 		virtual void ChangeState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph);
 

@@ -38,7 +38,12 @@ typedef unsigned long long UInt64;
 #include "Core/Utils/LogLeveL.h"
 
 #include "Gapi/ClearFlag.h"
-#include "Gapi/CullFormat.h"
+#include "Gapi/FeatureType.h"
+#include "Gapi/CullFace.h"
+#include "Gapi/FrontFace.h"
+#include "Gapi/BlendFunction.h"
+#include "Gapi/CompareFunction.h"
+#include "Gapi/StencilOperation.h"
 #include "Gapi/ShaderType.h"
 #include "Gapi/BufferType.h"
 #include "Gapi/BufferUsage.h"

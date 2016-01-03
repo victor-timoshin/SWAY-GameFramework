@@ -17,7 +17,7 @@ namespace Core
 			/// <summary>Деструктор класса.</summary>
 			virtual ~IMaterialBase(void) {}
 
-			virtual bool Create(const char* vertexShader, const char* fragmentShader, const char* textureName) = 0;
+			//virtual bool Create(const char* vertexShader, const char* fragmentShader, const char* textureName) = 0;
 
 			virtual void Destroy(void) = 0;
 

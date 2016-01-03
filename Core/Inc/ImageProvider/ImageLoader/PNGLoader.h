@@ -27,17 +27,12 @@ namespace Core
 				/// <summary>Загружает данные.</summary>
 				virtual Gapi::TEXTURE_DESCRIPTION_PTR LoadFromStream(std::ifstream& source);
 
-				/// <summary>Загружает данные.</summary>
-				Gapi::TEXTURE_DESCRIPTION_PTR LoadFromFile(const std::string& path);
-
 			protected:
 				static void Error(png_structp png, png_const_charp message);
 
 				static void Warning(png_structp png, png_const_charp message);
 
 				static void ReadData(png_structp png, png_bytep data, png_size_t length);
-
-			private:
 			};
 		}
 	}

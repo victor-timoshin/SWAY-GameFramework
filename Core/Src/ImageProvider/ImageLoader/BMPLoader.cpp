@@ -1,5 +1,7 @@
 ﻿#include "../../../../Core/Inc/ImageProvider/ImageLoader/BMPLoader.h"
 
+#define BITMAP_ID 0x4D42
+
 namespace Core
 {
 	namespace ImageProvider
@@ -18,47 +20,59 @@ namespace Core
 
 			Gapi::TEXTURE_DESCRIPTION_PTR BMPLoader::LoadFromStream(std::ifstream& source)
 			{
-				LBITMAP_FILE_HEADER fileHeader;
-				LBITMAP_INFO_HEADER infoHeader;
-				LBITMAP_COLOR color;
+				BMP_FILE_HEADER fileHeader;
+				source.read((char*)&fileHeader, sizeof(BMP_FILE_HEADER));
 
-				source.read((char*)&fileHeader, sizeof(LBITMAP_FILE_HEADER));
-
-				int size = (fileHeader.size - fileHeader.offset);
-				char* image = new char[size];
-
-				//if file type = "BM"
-				//read rest of file
-				if (fileHeader.type == 19778)
+				if (fileHeader.type != BITMAP_ID OR fileHeader.offset != 54)
 				{
-					source.read((char*)&infoHeader, sizeof(LBITMAP_INFO_HEADER));
-					source.read((char*)&color, sizeof(LBITMAP_COLOR));
-					source.read(image, size);
-					//source.close();
+					source.close();
+					return nullptr;
 				}
-				else
-					std::cout << "ERROR: FILE NOT BITMAP" << std::endl;
+
+				BMP_INFO_HEADER infoHeader;
+				source.read((char*)&infoHeader, sizeof(BMP_INFO_HEADER));
+
+				if (infoHeader.size != 40 OR infoHeader.bitCount != 24 OR infoHeader.compression != 0)
+				{
+					source.close();
+					return nullptr;
+				}
+
+				BMP_COLOR color;
+				source.read((char*)&color, sizeof(BMP_COLOR));
+
+				// Выделяем памяти под данные растрового изображения.
+				UByte* tempData = (UByte*)malloc(infoHeader.imageSize);
+				if (NOT tempData)
+				{
+					free(tempData);
+					source.close();
+					return nullptr;
+				}
+
+				// Читаем данные растрового изображения.
+				source.read((char*)tempData, infoHeader.imageSize);
+
+				//// Меняем местами красный и синий компоненты.
+				//for (UInt i = 0; i < infoHeader.imageSize; i += 3)
+				//{
+				//	char tempColor = tempData[i];
+				//	tempData[i] = tempData[i + 2];
+				//	tempData[i + 2] = tempColor;
+				//}
 
 				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = (Gapi::TEXTURE_DESCRIPTION_PTR)malloc(sizeof(Gapi::TEXTURE_DESCRIPTION));
-				textureDesc->pixels = image;
-				textureDesc->width = (int)256;
-				textureDesc->height = (int)256;
+				textureDesc->pixels = tempData;
+				textureDesc->width = infoHeader.width;
+				textureDesc->height = infoHeader.height;
 				textureDesc->pitch = 0;
 				textureDesc->bpp = 0;
 				textureDesc->format = Gapi::TEXTURE_FORMAT::EFT_BGR;
 				textureDesc->internalFormat = Gapi::TEXTURE_FORMAT::EFT_RGB8;
 
+				source.close();
+
 				return textureDesc;
-			}
-
-			/// <summary>Загружает данные.</summary>
-			Gapi::TEXTURE_DESCRIPTION_PTR BMPLoader::LoadFromFile(const std::string& path)
-			{
-				Core::Utils::FileStream stream;
-				if (!stream.OpenStream(path, Core::Utils::FILE_TYPE::Binary))
-					return nullptr;
-
-				return LoadFromStream(stream.GetStream());
 			}
 		}
 	}

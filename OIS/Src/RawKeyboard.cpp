@@ -152,7 +152,7 @@ namespace OIS
 
 	bool RawKeyboard::HasKeyDownStr(const std::string& charCode) const
 	{
-		return HasKeyDown(OIS::GetKeycodeByName(charCode));
+		return HasKeyDown(GetKeycodeByName(charCode));
 	}
 
 	bool RawKeyboard::HasKeyUp(const KEY_CODE& keyCode) const

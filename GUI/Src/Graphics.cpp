@@ -36,7 +36,7 @@ namespace GUI
 
 		std::vector<Gapi::LVERTEX_ELEMENT_DESC> elements;
 		elements.push_back({ 0, Gapi::VERTEX_ELEMENT_TYPE::Position, Gapi::VERTEX_ELEMENT_FORMAT::Float3 });
-		elements.push_back({ 0, Gapi::VERTEX_ELEMENT_TYPE::Color, Gapi::VERTEX_ELEMENT_FORMAT::Float4 });
+		elements.push_back({ 0, Gapi::VERTEX_ELEMENT_TYPE::Color,    Gapi::VERTEX_ELEMENT_FORMAT::Float4 });
 		elements.push_back({ 0, Gapi::VERTEX_ELEMENT_TYPE::TexCoord, Gapi::VERTEX_ELEMENT_FORMAT::Float2 });
 
 		typedef Gapi::IBufferBase* VertexBufferCallback(void);
@@ -64,8 +64,6 @@ namespace GUI
 
 	void Graphics::PreRender(const Math::Color& color)
 	{
-		//glFrontFace(GL_CW);
-
 		Math::Matrix4F projectionMatrix;
 		projectionMatrix.OrthographicOffCenter(0, 0, 800, 600, 0.0f, 1.0f);
 

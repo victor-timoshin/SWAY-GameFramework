@@ -1,4 +1,4 @@
-#ifndef MUTEX_H
+﻿#ifndef MUTEX_H
 #define MUTEX_H
 
 #include "../../../SDK/Platform.h"
@@ -10,10 +10,10 @@ namespace Core
 		class Mutex
 		{
 		public:
-			/* Constructor. */
+			/// <summary>Конструктор класса.</summary>
 			Mutex(void);
 
-			/* Destructor. */
+			/// <summary>Деструктор класса.</summary>
 			~Mutex(void);
 
 			void Create(void);

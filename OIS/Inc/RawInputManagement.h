@@ -31,7 +31,7 @@ namespace OIS
 
 		virtual IMouse* GetMouse(void);
 
-		void AddBinding(std::string name, const PINPUT_BINDING bind)
+		void AddBinding(std::string name, const INPUT_BINDING_PTR bind)
 		{
 			_bindings.insert(std::make_pair(name, bind));
 		}
@@ -46,7 +46,7 @@ namespace OIS
 	private:
 		std::vector<IRawInputDevice*> rawInputDevices;
 
-		typedef std::map<std::string, PINPUT_BINDING> InputBindingMap;
+		typedef std::map<std::string, INPUT_BINDING_PTR> InputBindingMap;
 		InputBindingMap _bindings;
 	};
 }

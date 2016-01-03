@@ -78,6 +78,21 @@
     <Filter Include="Inc\ImageProvider\ImageLoader">
       <UniqueIdentifier>{8032a6b7-305d-4221-bcce-f264a07a2a45}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Render\Primitive">
+      <UniqueIdentifier>{8ddf6df0-613c-4f6d-bdf1-6206fe8aacd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\AudioProvider">
+      <UniqueIdentifier>{59fe3ee9-d2fc-4526-aa69-aa5ecaec9345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inc\AudioProvider\AudioLoader">
+      <UniqueIdentifier>{dfed8d22-c2d5-4c4d-b1f2-9be4e53234de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\AudioProvider">
+      <UniqueIdentifier>{312c7a44-361f-415f-b621-dfc985180c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\AudioProvider\AudioLoader">
+      <UniqueIdentifier>{544739e4-06fe-483e-9110-1a22b9077885}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
@@ -176,6 +191,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h">
       <Filter>Inc\ImageProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGAFileHeader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPFileHeader.h">
+      <Filter>Inc\ImageProvider\ImageLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

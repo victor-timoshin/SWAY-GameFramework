@@ -6,7 +6,7 @@
 #include "../../../SDK/Gapi/ShaderBase.h"
 #include "../../../SDK/Gapi/TextureBase.h"
 #include "../../../SDK/Gapi/TextureSamplerBase.h"
-#include "../../../SDK/Core/Imaging/LoaderBase.h"
+#include "../ImageProvider/ImageProviderFactory.h"
 #include "../../../Math/Inc/Matrix4F.h"
 
 #include "Effect.h"
@@ -38,7 +38,7 @@ namespace Core
 			/// <summary>Деструктор класса.</summary>
 			virtual ~Material(void);
 
-			virtual bool Create(const char* vertexShader, const char* fragmentShader, const char* textureName);
+			virtual bool Create(const char* vertexShader, const char* fragmentShader, ImageProvider::ImageProviderFactory* imageProvider, std::string textureName);
 
 			virtual void Destroy(void);
 
@@ -73,20 +73,12 @@ namespace Core
 			/// <summary>Получает указатель на шейдерную программу.</summary>
 			virtual Gapi::IShaderBase* GetShader(void);
 
-		protected:
-			void AddTexture(std::string textureName);
-
-			void AddShader(const char* vertexShader, const char* fragmentShader);
-
 		private:
 			Gapi::IDeviceBase* _renderDevice;
 
 			Effect* _effect;
-
-			std::vector<Image*> _images;
+			//std::vector<Image*> _images;
 			Image* _image;
-
-			std::list<std::string> _supportedExtensionTextures;
 
 			Xml::Document* _xmlDocument;
 		};

@@ -9,6 +9,8 @@
 
 #include "Debug/RenderLineDebug.h"
 
+#include "../ImageProvider/ImageProviderFactory.h"
+
 namespace Core
 {
 	namespace Render
@@ -50,8 +52,8 @@ namespace Core
 			virtual int GetNumDisplayObjects(void) const;
 
 		private:
-			void* library;
-			Gapi::IDeviceBase* device;
+			void* _library;
+			Gapi::IDeviceBase* _device;
 
 			typedef std::map<std::string, IMaterialBase*> IMaterialMap;
 			IMaterialMap _materials;
@@ -65,6 +67,8 @@ namespace Core
 			RenderLineDebug* _lineDebug;
 			//std::vector<GUI::IFontBase*> _fonts;
 			GUI::IFontManagerBase* _fontManager;
+
+			ImageProvider::ImageProviderFactory* _imageProvider;
 		};
 	}
 }

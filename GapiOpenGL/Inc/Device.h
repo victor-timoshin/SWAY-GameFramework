@@ -9,6 +9,13 @@ namespace Gapi
 	class Device : public IDeviceBase
 	{
 	public:
+		static UInt GetFeatureType(FEATURE_TYPE featureType);
+		static UInt GetFrontFace(FRONT_FACE face);
+		static UInt GetCullFace(CULL_FACE face);
+		static UInt GetBlendFunction(BLEND_FUNCTION blendFunction);
+		static UInt GetCompareFunction(COMPARE_FUNCTION compareFunction);
+		static UInt GetStencilOperation(STENCIL_OPERATION stencilOperation);
+
 		/// <summary>Конструктор класса.</summary>
 		/// <param name="handle">Хендл окна.</param>
 		Device(HWND handle);
@@ -26,15 +33,45 @@ namespace Gapi
 
 		virtual void DoneCurrentContext(void);
 
-		virtual void Clear(CLEARFLAG flags);
+#pragma region Features
 
-		virtual void SetClearDepth(int value);
+		virtual void EnableFeature(FEATURE_TYPE featureType);
 
-		virtual void SetClearStencil(int value);
+		virtual void DisableFeature(FEATURE_TYPE featureType);
+
+		virtual void SetFrontFace(FRONT_FACE frontFace);
+
+		virtual void SetCullFace(CULL_FACE cullFace);
+
+		virtual void SetBlendFunction(BLEND_FUNCTION sourceFunction, BLEND_FUNCTION destinationFunction);
+
+		virtual void SetDepthFunction(COMPARE_FUNCTION depthFunction);
+
+		virtual void SetStencilFunction(COMPARE_FUNCTION stencilFunction, int reference, UInt mask);
+
+		virtual void SetStencilOperation(STENCIL_OPERATION stencilFail, STENCIL_OPERATION depthFail, STENCIL_OPERATION depthPass);
+
+#pragma endregion
+
+#pragma region Masks
+
+		virtual void SetColorMask(bool red, bool green, bool blue, bool alpha);
+
+		virtual void SetDepthMask(bool depth);
+
+		virtual void SetStencilMask(UInt mask);
+
+#pragma endregion
 
 		virtual void SetClearColor(float red, float green, float blue, float alpha) const;
 
 		virtual void SetClearColor(const Math::Color& color) const;
+
+		virtual void Clear(CLEAR_FLAG flags);
+
+		virtual void SetClearDepth(int value);
+
+		virtual void SetClearStencil(int value);
 
 		virtual void SwapChain(void);
 
@@ -43,8 +80,6 @@ namespace Gapi
 		virtual void SetViewport(UInt width, UInt height);
 
 		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height);
-
-		virtual void SetCullFormat(CULL_FORMAT format);
 
 #pragma region Capabilities
 
@@ -63,19 +98,19 @@ namespace Gapi
 #pragma endregion
 
 	private:
-		HWND windowHandle;
-		HDC deviceContext;
-		HGLRC renderContext;
+		HWND _windowHandle;
+		HDC _deviceContext;
+		HGLRC _renderContext;
 
-		Utils::ILoggerBase* logger;
+		Utils::ILoggerBase* _logger;
 
 		const char* _version;
 		const char* _vendorName;
 		const char* _rendererName;
 		const char* _GLSLVersion;
 
-		int majorVersion;
-		int minorVersion;
+		int _majorVersion;
+		int _minorVersion;
 	};
 }
 

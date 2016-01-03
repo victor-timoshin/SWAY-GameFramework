@@ -27,15 +27,45 @@ namespace Gapi
 
 		virtual void DoneCurrentContext(void) = 0;
 
-		virtual void Clear(CLEARFLAG flags) = 0;
+#pragma region Features
 
-		virtual void SetClearDepth(int value) = 0;
+		virtual void EnableFeature(FEATURE_TYPE featureType) = 0;
 
-		virtual void SetClearStencil(int value) = 0;
+		virtual void DisableFeature(FEATURE_TYPE featureType) = 0;
+
+		virtual void SetFrontFace(FRONT_FACE frontFace) = 0;
+
+		virtual void SetCullFace(CULL_FACE cullFace) = 0;
+
+		virtual void SetBlendFunction(BLEND_FUNCTION sourceFunction, BLEND_FUNCTION destinationFunction) = 0;
+
+		virtual void SetDepthFunction(COMPARE_FUNCTION depthFunction) = 0;
+
+		virtual void SetStencilFunction(COMPARE_FUNCTION stencilFunction, int reference, UInt mask) = 0;
+
+		virtual void SetStencilOperation(STENCIL_OPERATION stencilFail, STENCIL_OPERATION depthFail, STENCIL_OPERATION depthPass) = 0;
+
+#pragma endregion
+
+#pragma region Masks
+
+		virtual void SetColorMask(bool red, bool green, bool blue, bool alpha) = 0;
+
+		virtual void SetDepthMask(bool depth) = 0;
+
+		virtual void SetStencilMask(UInt mask) = 0;
+
+#pragma endregion
 
 		virtual void SetClearColor(float red, float green, float blue, float alpha) const = 0;
 
 		virtual void SetClearColor(const Math::Color& color) const = 0;
+
+		virtual void Clear(CLEAR_FLAG flags) = 0;
+
+		virtual void SetClearDepth(int value) = 0;
+
+		virtual void SetClearStencil(int value) = 0;
 
 		virtual void SwapChain(void) = 0;
 
@@ -44,8 +74,6 @@ namespace Gapi
 		virtual void SetViewport(UInt width, UInt height) = 0;
 
 		virtual void SetScissor(UInt x, UInt y, UInt width, UInt height) = 0;
-
-		virtual void SetCullFormat(CULL_FORMAT format) = 0;
 
 #pragma region Capabilities
 

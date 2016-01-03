@@ -6,6 +6,9 @@ namespace Core
 	{
 		/// <summary>Конструктор класса.</summary>
 		Image::Image(void)
+			: _texture(nullptr)
+			, _textureSampler(nullptr)
+			, _isLoaded(false)
 		{
 		}
 
@@ -24,7 +27,7 @@ namespace Core
 		}
 
 		/// <summary>Конструктор класса.</summary>
-		Image::Image(PIMAGE_DATA data)
+		Image::Image(IMAGE_DATA_PTR data)
 			: _width(data->width)
 			, _height(data->height)
 			, _pitch(data->width)
@@ -61,6 +64,52 @@ namespace Core
 				_aligned_free(_data);
 		}
 
+		void Image::Load(ImageProvider::ImageProviderFactory* imageProvider, const std::string& name)
+		{
+			if (_isLoaded)
+				return;
+
+			Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = imageProvider->Give(name);
+			if (NOT textureDesc)
+				return;
+
+			_texture->Load(textureDesc);
+
+			_textureSampler->SetAnisotropicLevel(_texture, 0); // Устанавливаем уровень анизотропной фильтрации.
+			_textureSampler->SetWrapMode(_texture, Gapi::TEXTURE_WRAP::Repeat, Gapi::TEXTURE_WRAP::Repeat, Gapi::TEXTURE_WRAP::Repeat);
+			_textureSampler->SetFilterMode(_texture, Gapi::TEXTURE_FILTER::Nearest, Gapi::TEXTURE_FILTER::Nearest);
+
+			_isLoaded = true;
+		}
+
+		void Image::Unload(void)
+		{
+			if (NOT _isLoaded)
+				return;
+
+			SAFE_DELETE(_textureSampler);
+			SAFE_DELETE(_texture);
+
+			_isLoaded = false;
+		}
+
+		void Image::Bind(UInt textureUnit)
+		{
+			if (NOT _isLoaded)
+				return;
+
+			_texture->SetActive(textureUnit);
+			_texture->Bind();
+		}
+
+		void Image::Unbind(void)
+		{
+			if (NOT _isLoaded)
+				return;
+
+			_texture->Unbind();
+		}
+
 		Gapi::ITextureBase* Image::GetTexture(void)
 		{
 			return _texture;
@@ -69,21 +118,6 @@ namespace Core
 		Gapi::ITextureSamplerBase* Image::GetTextureSampler(void)
 		{
 			return _textureSampler;
-		}
-
-		void Image::Apply(void)
-		{
-			// Устанавливаем уровень анизотропной фильтрации.
-			_textureSampler->SetAnisotropicLevel(_texture, 0);
-
-			Gapi::TEXTURE_WRAP wrapS = Gapi::TEXTURE_WRAP::Repeat;
-			Gapi::TEXTURE_WRAP wrapT = Gapi::TEXTURE_WRAP::Repeat;
-			Gapi::TEXTURE_WRAP wrapR = Gapi::TEXTURE_WRAP::Repeat;
-			_textureSampler->SetWrapMode(_texture, wrapS, wrapT, wrapR);
-
-			Gapi::TEXTURE_FILTER minFilter = Gapi::TEXTURE_FILTER::Nearest;
-			Gapi::TEXTURE_FILTER magFilter = Gapi::TEXTURE_FILTER::Nearest;
-			_textureSampler->SetFilterMode(_texture, minFilter, magFilter);
 		}
 
 		bool Image::HasLoaded(void) const

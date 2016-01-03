@@ -8,14 +8,14 @@ namespace Gapi
 		Color   = 0xBAB5,
 		Depth   = 0x5068,
 		Stencil = 0xB435
-	} CLEARFLAG;
+	} CLEAR_FLAG;
 
-	inline CLEARFLAG operator | (CLEARFLAG l, CLEARFLAG r)
+	inline CLEAR_FLAG operator | (CLEAR_FLAG l, CLEAR_FLAG r)
 	{
-		return static_cast<CLEARFLAG>(static_cast<int>(l) | static_cast<int>(r));
+		return static_cast<CLEAR_FLAG>(static_cast<int>(l) | static_cast<int>(r));
 	}
 
-	inline bool operator & (CLEARFLAG l, CLEARFLAG r)
+	inline bool operator & (CLEAR_FLAG l, CLEAR_FLAG r)
 	{
 		return (static_cast<int>(l) & static_cast<int>(r)) != 0;
 	}
