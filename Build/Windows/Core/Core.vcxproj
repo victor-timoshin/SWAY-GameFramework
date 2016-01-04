@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVLoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGAFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h" />
@@ -114,6 +115,7 @@
     <None Include="Definitions.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Core\Src\AudioProvider\AudioLoader\WAVLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\DDSLoader.cpp" />

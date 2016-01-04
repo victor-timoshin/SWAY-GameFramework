@@ -1,4 +1,4 @@
-#ifndef DEVICEBASE_H
+п»ї#ifndef DEVICEBASE_H
 #define DEVICEBASE_H
 
 #include "../../Math/Inc/Color.h"
@@ -10,11 +10,11 @@ namespace Gapi
 	class IDeviceBase
 	{
 	public:
-		/// <summary>Конструктор класса.</summary>
-		/// <param name="handle">Хендл окна.</param>
+		/// <summary>РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
+		/// <param name="handle">РҐРµРЅРґР» РѕРєРЅР°.</param>
 		IDeviceBase(HWND handle) {}
 
-		/// <summary>Деструктор класса.</summary>
+		/// <summary>Р”РµСЃС‚СЂСѓРєС‚РѕСЂ РєР»Р°СЃСЃР°.</summary>
 		virtual ~IDeviceBase(void) {}
 
 		virtual bool Create(void) = 0;

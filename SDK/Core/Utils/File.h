@@ -1,4 +1,4 @@
-#ifndef FILE_H
+п»ї#ifndef FILE_H
 #define FILE_H
 
 #include "../../Platform.h"
@@ -11,8 +11,8 @@ namespace Core
 
 		CORE_API bool FileExists(const std::string& name);
 
-		/// <summary>Получает расширение файла.</summary>
-		/// <param name="name">Имя файла.</param>
+		/// <summary>РџРѕР»СѓС‡Р°РµС‚ СЂР°СЃС€РёСЂРµРЅРёРµ С„Р°Р№Р»Р°.</summary>
+		/// <param name="name">РРјСЏ С„Р°Р№Р»Р°.</param>
 		CORE_API std::string GetFileExtension(std::string name);
 	}
 }

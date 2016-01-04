@@ -13,7 +13,7 @@ namespace System
 
 		/// <summary>Конструктор класса.</summary>
 		/// <param name="desc">Описание окна.</param>
-		Win32Window(const LWINDOWDESC& desc);
+		Win32Window(const WINDOW_DESCRIPTION& desc);
 
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Win32Window(void);
@@ -67,16 +67,29 @@ namespace System
 
 		virtual bool IsEnabled(void);
 
-		virtual const LWINDOWDESC& GetWindowDesc(void) const;
+		virtual const WINDOW_DESCRIPTION& GetWindowDesc(void) const;
 
 		virtual OIS::IInputBase* GetInputManagement(void);
+
+#ifdef PLATFORM_WINDOW
 
 		LRESULT MessageProc(HWND handle, UInt message, WPARAM wParam, LPARAM lParam);
 		static LRESULT CALLBACK WindowProc(HWND handle, UInt message, WPARAM wParam, LPARAM lParam);
 
+#endif
+
 	private:
-		LWINDOWDESC windowDesc;
+		WINDOW_DESCRIPTION windowDesc;
+
+#ifdef PLATFORM_WINDOW
+
 		HINSTANCE hInstance;
+
+#elif PLATFORM_LINUX
+
+		XEvent _report;
+
+#endif
 	};
 }
 

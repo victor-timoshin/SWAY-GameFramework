@@ -1,8 +1,7 @@
 ﻿#ifndef IWINDOWBASE_H
 #define IWINDOWBASE_H
 
-#include "WindowModes.h"
-#include "WindowDesc.h"
+#include "WindowDescription.h"
 #include "MessageLoopState.h"
 
 #include "../OIS/InputBase.h"
@@ -15,7 +14,7 @@ namespace System
 	public:
 		/// <summary>Конструктор класса.</summary>
 		/// <param name="desc">Описание окна.</param>
-		IWindowBase(const LWINDOWDESC& desc) {}
+		IWindowBase(const WINDOW_DESCRIPTION& desc) {}
 
 		/// <summary>Деструктор класса.</summary>
 		virtual ~IWindowBase(void) {}
@@ -69,13 +68,18 @@ namespace System
 
 		virtual bool IsEnabled(void) = 0;
 
-		virtual const LWINDOWDESC& GetWindowDesc(void) const = 0;
+		virtual const WINDOW_DESCRIPTION& GetWindowDesc(void) const = 0;
 
 		virtual OIS::IInputBase* GetInputManagement(void) = 0;
 	};
 
-	CORE_API IWindowBase* RegisterWindow(const LWINDOWDESC& desc);
+#ifdef PLATFORM_WINDOW
+
 	CORE_API LRESULT WINAPI ProcessEvent(HWND handle, UInt message, WPARAM wParam, LPARAM lParam);
+
+#endif
+
+	CORE_API IWindowBase* RegisterWindow(const WINDOW_DESCRIPTION& desc);
 }
 
 #endif // IWINDOWBASE_H

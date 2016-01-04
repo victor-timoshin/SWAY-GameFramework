@@ -81,8 +81,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System", "System", "{EC6D06
 		..\..\SDK\System\MessageLoopState.h = ..\..\SDK\System\MessageLoopState.h
 		..\..\SDK\System\TimerBase.h = ..\..\SDK\System\TimerBase.h
 		..\..\SDK\System\WindowBase.h = ..\..\SDK\System\WindowBase.h
-		..\..\SDK\System\WindowDesc.h = ..\..\SDK\System\WindowDesc.h
-		..\..\SDK\System\WindowModes.h = ..\..\SDK\System\WindowModes.h
+		..\..\SDK\System\WindowDescription.h = ..\..\SDK\System\WindowDescription.h
+		..\..\SDK\System\WindowMode.h = ..\..\SDK\System\WindowMode.h
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OIS", "OIS\OIS.vcxproj", "{FA1286D8-C147-40FE-A9BC-8EE010A4BFA5}"

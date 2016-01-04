@@ -1,11 +1,56 @@
 ﻿#ifndef PLATFORM_H
 #define PLATFORM_H
 
-#define WIN32_LEAN_AND_MEAN 1
-#define NOMINMAX
+#if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__) || defined(WIN32)
+	#define PLATFORM_WINDOW
 
-#include <windows.h>
-#include <windowsx.h>
+	#define WIN32_LEAN_AND_MEAN 1
+	#define NOMINMAX
+
+	#ifdef BUILDING_CORE
+		#define CORE_API __declspec(dllexport)
+	#else
+		#define CORE_API __declspec(dllimport)
+	#endif
+
+	#include <windows.h>
+	#include <windowsx.h>
+#elif defined(__linux__)
+	#define PLATFORM_LINUX
+	#define PLATFORM_UNIX
+
+	#ifdef __cplusplus
+		#define CORE_API extern "C"
+	#else
+		#define CORE_API extern
+	#endif
+
+	#include <stdlib.h>
+	#include <dirent.h>
+	#include <dlfcn.h>
+	#include <stddef.h>
+	#include <unistd.h>
+
+	#include <X11/X.h>
+	#include <X11/Xlib.h>
+	#include <X11/Xutil.h>
+#elif defined(__APPLE__)
+	#define PLATFORM_UNIX
+
+	#if TARGET_OS_IPHONE
+		#define PLATFORM_IPHONE
+	#elif TARGET_IPHONE_SIMULATOR
+		#define PLATFORM_IPHONE_SIMULATOR
+	#elif TARGET_OS_MAC
+		#define PLATFORM_MAC_OS_X
+		#define PLATFORM_OSX
+		#define PLATFORM_UNIX
+	#endif
+#elif defined(__ANDROID__)
+	#define PLATFORM_ANDROID
+#else
+	#error "platform not supported"
+#endif
 
 #include <stdlib.h>
 #include <string> // std::string

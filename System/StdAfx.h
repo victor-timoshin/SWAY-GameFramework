@@ -2,7 +2,13 @@
 #define STDAFX_H
 
 #include "../SDK/Platform.h"
-#include <time.h>
+
+#ifdef PLATFORM_WINDOW
+	#include <time.h>
+#elif PLATFORM_LINUX
+	#include <sys/time.h>
+	#include <sys/mman.h>
+#endif
 
 #pragma comment(lib, "OIS_Win32_Debug")
 

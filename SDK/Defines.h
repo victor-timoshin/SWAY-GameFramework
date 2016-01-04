@@ -5,12 +5,6 @@
 #define AND && // Логическая операция И.
 #define NOT !  // Логическая операция НЕ.
 
-#ifdef BUILDING_CORE
-	#define CORE_API __declspec(dllexport)
-#else
-	#define CORE_API __declspec(dllimport)
-#endif
-
 #ifndef __FUNCTION_NAME__
 	#ifdef WIN32
 		#define __FUNCTION_NAME__ __FUNCTION__
@@ -29,6 +23,14 @@
 #define CASE_VALUE_TOSTRING(x) case x: return #x
 
 #define SOURCE_LOCATION __FILE__ ":" TOSTRING(__LINE__)
+
+#ifdef _MSC_VER
+	#define PACK(__Declaration__) __pragma(pack(push, 1)) __Declaration__ __pragma(pack(pop))
+#elif __GNUC__>=4 && __GNUC_MINOR__ >=6  || defined(__llvm__)
+	#define PACK( __Declaration__ ) __Declaration__ __attribute__((__packed__))
+#else
+	#error "compiler not supported"
+#endif
 
 #define DECL_VAR(type, location) \
 	public: \

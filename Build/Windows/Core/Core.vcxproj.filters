@@ -198,6 +198,9 @@
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPFileHeader.h">
       <Filter>Inc\ImageProvider\ImageLoader</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVLoader.h">
+      <Filter>Inc\AudioProvider\AudioLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -295,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp">
       <Filter>Src\ImageProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\AudioProvider\AudioLoader\WAVLoader.cpp">
+      <Filter>Src\AudioProvider\AudioLoader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
