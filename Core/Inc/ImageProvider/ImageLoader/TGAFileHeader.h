@@ -9,9 +9,7 @@ namespace Core
 	{
 		namespace ImageLoader
 		{
-#pragma pack(1)
-
-			typedef struct TGAHeader
+			PACK(typedef struct TGAHeader
 			{
 				UByte idLength;
 				UByte colorMapType;
@@ -25,9 +23,7 @@ namespace Core
 				UInt16 imageHeight;
 				UByte bitPerPixel;
 				UByte descriptor;
-			} TGA_FILE_HEADER, *TGA_FILE_HEADER_PTR;
-
-#pragma pack()
+			} TGA_FILE_HEADER, *TGA_FILE_HEADER_PTR);
 		}
 	}
 }

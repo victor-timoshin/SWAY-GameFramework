@@ -1,19 +1,38 @@
 ﻿#include "../Inc/Sound.h"
+#include "../Inc/Buffer.h"
 
 namespace Sapi
 {
 	/// <summary>Конструктор класса.</summary>
 	Sound::Sound(void)
 		: _source(0)
+		, _buffer(nullptr)
 		, _isLooping(false)
 	{
+		alGenSources(1, &_source);
 	}
 
 	/// <summary>Деструктор класса.</summary>
 	Sound::~Sound(void)
 	{
 		alDeleteSources(1, &_source);
-		//alDeleteBuffers(1, &_buffer);
+	}
+
+	void Sound::SetALBuffer(IBufferBase* buffer)
+	{
+		Buffer* internalBuffer = dynamic_cast<Buffer*>(buffer);
+		if (NOT internalBuffer)
+			return;
+
+		if (HasPlaying())
+			Stop();
+
+		if (buffer)
+			alSourcei(_source, AL_BUFFER, internalBuffer->GetBuffer());
+		else
+			alSourcei(_source, AL_BUFFER, AL_NONE);
+
+		_buffer = internalBuffer;
 	}
 
 	/// <summary>Запускает воспроизведение звука.</summary>
@@ -127,5 +146,10 @@ namespace Sapi
 	{
 		_listenerVelocity = velocity;
 		alListener3f(AL_VELOCITY, _listenerVelocity.GetX(), _listenerVelocity.GetY(), _listenerVelocity.GetZ());
+	}
+
+	ISoundBase* RegisterSound(void)
+	{
+		return new Sound();
 	}
 }

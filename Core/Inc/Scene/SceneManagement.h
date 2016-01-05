@@ -11,7 +11,7 @@ namespace Scene
 	{
 	public:
 		/// <summary>Конструктор класса.</summary>
-		SceneManagement(void) {}
+		SceneManagement(void);
 
 		/// <summary>Деструктор класса.</summary>
 		virtual ~SceneManagement(void);
@@ -26,7 +26,7 @@ namespace Scene
 		virtual void PopState(void);
 
 	private:
-		std::vector<ISceneStateBase*> stateStack;
+		std::vector<ISceneStateBase*> _stateStack;
 	};
 
 }

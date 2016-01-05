@@ -45,7 +45,7 @@ namespace Gapi
 			CASE_VALUE_TOSTRING(GL_TEXTURE_RECTANGLE);
 			CASE_VALUE_TOSTRING(GL_TEXTURE_CUBE_MAP);
 		default:
-			return "Unknown texture target " + IntToStr(target);
+			return "Unknown texture target " + std::to_string(target);
 		}
 	}
 

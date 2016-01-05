@@ -99,7 +99,7 @@ namespace OIS
 
 	static KEY_CODE GetKeycodeByName(std::string charCode)
 	{
-		//Core::Utils::ToLowercase(name);
+		//Core::Utils::CompareCaseInsensitive(keyMapping.charCode, charCode);
 
 		for (const KEY_MAPPING& keyMapping : KeyMappingList)
 		{

@@ -54,7 +54,7 @@ namespace Sapi
 	{
 		alcMakeContextCurrent(nullptr);
 
-		if (_context != nullptr && _device != nullptr)
+		if (_context != nullptr AND _device != nullptr)
 		{
 			alcDestroyContext(_context);
 			_context = nullptr;

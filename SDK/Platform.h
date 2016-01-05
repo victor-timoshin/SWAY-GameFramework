@@ -75,7 +75,6 @@ typedef unsigned long UInt32;
 typedef unsigned long long UInt64;
 
 #include "Defines.h"
-#include "Conversion.h"
 
 //#include "Core/Utils/File.h"
 #include "Core/Utils/FileType.h"

@@ -1,2 +1,4 @@
 EXPORTS
 	RegisterDevice
+	RegisterBuffer
+	RegisterSound

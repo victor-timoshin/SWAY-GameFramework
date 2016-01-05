@@ -2,57 +2,62 @@
 
 namespace Scene
 {
+	/// <summary>Конструктор класса.</summary>
+	SceneManagement::SceneManagement(void)
+	{
+	}
+
 	/// <summary>Деструктор класса.</summary>
 	SceneManagement::~SceneManagement(void)
 	{
-		while (!stateStack.empty())
+		while (NOT _stateStack.empty())
 		{
-			stateStack.back()->Exit();
-			stateStack.pop_back();
+			_stateStack.back()->Exit();
+			_stateStack.pop_back();
 		}
 	}
 
 	void SceneManagement::FrameStarted(OIS::IInputBase* event, float timeStep)
 	{
-		stateStack.back()->FrameStarted(event, timeStep);
+		_stateStack.back()->FrameStarted(event, timeStep);
 	}
 
 	void SceneManagement::FrameEnded(void)
 	{
-		stateStack.back()->FrameEnded();
+		_stateStack.back()->FrameEnded();
 	}
 
 	void SceneManagement::ChangeState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
-		while (!stateStack.empty())
+		while (NOT _stateStack.empty())
 		{
-			stateStack.back()->Exit();
-			stateStack.pop_back();
+			_stateStack.back()->Exit();
+			_stateStack.pop_back();
 		}
 
-		stateStack.push_back(sceneState);
-		stateStack.back()->Enter(renderSystem, sceneGraph);
+		_stateStack.push_back(sceneState);
+		_stateStack.back()->Enter(renderSystem, sceneGraph);
 	}
 
 	void SceneManagement::PushState(ISceneStateBase* sceneState, Core::Render::IRenderSystemBase* renderSystem, ISceneGraphBase* sceneGraph)
 	{
-		if (!stateStack.empty())
-			stateStack.back()->Pause();
+		if (NOT _stateStack.empty())
+			_stateStack.back()->Pause();
 
-		stateStack.push_back(sceneState);
-		stateStack.back()->Enter(renderSystem, sceneGraph);
+		_stateStack.push_back(sceneState);
+		_stateStack.back()->Enter(renderSystem, sceneGraph);
 	}
 
 	void SceneManagement::PopState(void)
 	{
-		while (!stateStack.empty())
+		while (NOT _stateStack.empty())
 		{
-			stateStack.back()->Exit();
-			stateStack.pop_back();
+			_stateStack.back()->Exit();
+			_stateStack.pop_back();
 		}
 
-		if (!stateStack.empty())
-			stateStack.back()->Resume();
+		if (NOT _stateStack.empty())
+			_stateStack.back()->Resume();
 	}
 
 	ISceneManagementBase* RegisterSceneManagement(void)

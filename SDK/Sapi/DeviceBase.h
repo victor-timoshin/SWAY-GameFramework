@@ -1,5 +1,5 @@
-﻿#ifndef DEVICEBASE_H
-#define DEVICEBASE_H
+﻿#ifndef ALDEVICEBASE_H
+#define ALDEVICEBASE_H
 
 #include "../Platform.h"
 

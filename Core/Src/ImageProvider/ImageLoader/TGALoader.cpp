@@ -65,7 +65,7 @@ namespace Core
 					tempData[i + 2] = temp;
 				}
 
-				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc;
+				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = nullptr;
 				textureDesc = (Gapi::TEXTURE_DESCRIPTION_PTR)malloc(sizeof(Gapi::TEXTURE_DESCRIPTION));
 				textureDesc->pixels = tempData;
 				textureDesc->width = (int)fileHeader.imageWidth;

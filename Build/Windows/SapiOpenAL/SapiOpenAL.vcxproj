@@ -73,11 +73,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\SapiOpenAL\Inc\Buffer.h" />
     <ClInclude Include="..\..\..\SapiOpenAL\Inc\Sound.h" />
     <ClInclude Include="..\..\..\SapiOpenAL\Inc\Device.h" />
     <ClInclude Include="..\..\..\SapiOpenAL\StdAfx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\SapiOpenAL\Src\Buffer.cpp" />
     <ClCompile Include="..\..\..\SapiOpenAL\Src\Sound.cpp" />
     <ClCompile Include="..\..\..\SapiOpenAL\Src\Device.cpp" />
   </ItemGroup>

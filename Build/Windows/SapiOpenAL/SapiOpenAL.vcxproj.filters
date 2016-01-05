@@ -18,12 +18,18 @@
     <ClInclude Include="..\..\..\SapiOpenAL\Inc\Sound.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\SapiOpenAL\Inc\Buffer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\SapiOpenAL\Src\Device.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\SapiOpenAL\Src\Sound.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SapiOpenAL\Src\Buffer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

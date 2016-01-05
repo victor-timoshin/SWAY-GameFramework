@@ -3,12 +3,14 @@
 
 #include "Vector3.h"
 
+#include "../../SDK/Sapi/SoundBase.h"
 #include "../../SDK/Platform.h"
+
 #include "../StdAfx.h"
 
 namespace Sapi
 {
-	class Sound
+	class Sound : public ISoundBase
 	{
 	public:
 		/// <summary>Конструктор класса.</summary>
@@ -16,6 +18,8 @@ namespace Sapi
 
 		/// <summary>Деструктор класса.</summary>
 		virtual ~Sound(void);
+
+		virtual void SetALBuffer(IBufferBase* buffer);
 
 		/// <summary>Запускает воспроизведение звука.</summary>
 		virtual void Play(void);
@@ -61,7 +65,7 @@ namespace Sapi
 
 	private:
 		ALuint _source;
-		ALuint _buffer;
+		IBufferBase* _buffer;
 
 		Math::Vec3F _sourcePosition; // Координаты источника звука.
 		Math::Vec3F _sourceVelocity;

@@ -9,7 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Core\Core.vcxproj",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SDK", "_SDK", "{D643DD03-23C9-427F-A4A9-57571D238E47}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\SDK\Conversion.h = ..\..\SDK\Conversion.h
 		..\..\SDK\Defines.h = ..\..\SDK\Defines.h
 		..\..\SDK\Platform.h = ..\..\SDK\Platform.h
 	EndProjectSection
@@ -133,7 +132,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SapiOpenAL", "SapiOpenAL\Sa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sapi", "Sapi", "{73879476-87FE-409C-9EC2-3BF991609DCD}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\SDK\Sapi\AudioDescription.h = ..\..\SDK\Sapi\AudioDescription.h
+		..\..\SDK\Sapi\BufferBase.h = ..\..\SDK\Sapi\BufferBase.h
+		..\..\SDK\Sapi\BufferFormat.h = ..\..\SDK\Sapi\BufferFormat.h
 		..\..\SDK\Sapi\DeviceBase.h = ..\..\SDK\Sapi\DeviceBase.h
+		..\..\SDK\Sapi\SoundBase.h = ..\..\SDK\Sapi\SoundBase.h
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageLoader", "ImageLoader", "{11C90938-1A3D-4CBE-AC92-9A7C9E2BABFE}"

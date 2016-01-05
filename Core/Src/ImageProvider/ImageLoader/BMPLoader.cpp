@@ -61,7 +61,8 @@ namespace Core
 				//	tempData[i + 2] = tempColor;
 				//}
 
-				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = (Gapi::TEXTURE_DESCRIPTION_PTR)malloc(sizeof(Gapi::TEXTURE_DESCRIPTION));
+				Gapi::TEXTURE_DESCRIPTION_PTR textureDesc = nullptr;
+				textureDesc = (Gapi::TEXTURE_DESCRIPTION_PTR)malloc(sizeof(Gapi::TEXTURE_DESCRIPTION));
 				textureDesc->pixels = tempData;
 				textureDesc->width = infoHeader.width;
 				textureDesc->height = infoHeader.height;

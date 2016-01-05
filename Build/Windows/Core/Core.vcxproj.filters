@@ -201,6 +201,9 @@
     <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVLoader.h">
       <Filter>Inc\AudioProvider\AudioLoader</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVFileHeader.h">
+      <Filter>Inc\AudioProvider\AudioLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
