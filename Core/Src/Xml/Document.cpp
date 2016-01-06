@@ -5,7 +5,7 @@ namespace Xml
 {
 	/// <summary>Конструктор класса.</summary>
 	Document::Document(void)
-		: _documentPtr(new rapidxml::xml_document<>)
+		: _xmlString(0)
 	{
 	}
 
@@ -14,26 +14,29 @@ namespace Xml
 	{
 	}
 
-	void Document::Load(Core::Utils::FileStream stream)
+	void Document::Parse(const std::string& fileName, bool isParseComments)
 	{
-		_documentPtr->clear();
+		std::ifstream file(fileName);
+		std::vector<char> buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		buffer.push_back(0);
 
-		char* xml_string = _documentPtr->allocate_string(0, stream.GetFileLength() + 1);
+		std::string content(buffer.data());
 
-		//sr.loadData(xml_string, sr.size());
-		//xml_string[sr.size()] = 0;
+		_xmlString = _document.allocate_string(content.c_str(), content.size() + 1);
+		if (_xmlString)
+		{
+			const int flags = rapidxml::parse_trim_whitespace | rapidxml::parse_validate_closing_tags;
+
+			if (isParseComments)
+				_document.parse<flags | rapidxml::parse_comment_nodes>(&buffer[0]);
+			else
+				_document.parse<flags>(_xmlString);
+		}
 	}
 
-	void Document::Save(const char* fileName)
+	/// <summary>Получает корневой узел.</summary>
+	Node Document::GetRootNode(void) const
 	{
-
-	}
-
-	Node Document::AddChild(const char* name, const char* value) const
-	{
-		rapidxml::xml_node<>* node = _documentPtr->allocate_node(rapidxml::node_element, name, value);
-		_documentPtr->append_node(node);
-
-		return Node(_documentPtr.get(), node);
+		return Node(_document.first_node(0));
 	}
 }

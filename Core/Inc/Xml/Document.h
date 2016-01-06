@@ -2,9 +2,7 @@
 #define DOCUMENT_H
 
 #include "../Utils/FileStream.h"
-#include "../../../SDK/Platform.h"
-
-#include "../../../External/RapidXml/rapidxml.hpp"
+#include "../../StdAfx.h"
 
 namespace Xml
 {
@@ -18,14 +16,14 @@ namespace Xml
 		/// <summary>Деструктор класса.</summary>
 		~Document(void);
 
-		void Load(Core::Utils::FileStream stream);
+		void Parse(const std::string& fileName, bool isParseComments);
 
-		void Save(const char* fileName);
-
-		Node AddChild(const char* name, const char* value) const;
+		/// <summary>Получает корневой узел.</summary>
+		Node GetRootNode(void) const;
 
 	private:
-		std::unique_ptr<rapidxml::xml_document<char>> _documentPtr;
+		rapidxml::xml_document<> _document;
+		char* _xmlString;
 	};
 }
 

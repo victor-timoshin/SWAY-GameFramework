@@ -4,15 +4,13 @@ namespace Xml
 {
 	/// <summary>Конструктор класса.</summary>
 	Node::Node(void)
-		: _document(nullptr)
-		, _nodePtr(nullptr)
+		: _node(0)
 	{
 	}
 
 	/// <summary>Конструктор класса.</summary>
-	Node::Node(rapidxml::xml_document<char>* document, rapidxml::xml_node<char>* node)
-		: _document(document)
-		, _nodePtr(node)
+	Node::Node(rapidxml::xml_node<>* node)
+		: _node(node)
 	{
 	}
 
@@ -21,18 +19,58 @@ namespace Xml
 	{
 	}
 
-	void Node::AddAttribute(const char* name, const char* value)
+	/// <summary>Получает указатель на объект класса.</summary>
+	rapidxml::xml_node<>* Node::GetRapidXMLNode(void)
 	{
-		_nodePtr->append_attribute(_document->allocate_attribute(name, value));
+		return _node;
 	}
 
+	const char* Node::GetAttribute(const char* name) const
+	{
+		rapidxml::xml_attribute<>* attribute = _node->first_attribute(name);
+		return (const char*)attribute->value();
+	}
+
+	Node Node::GetFirstNode(const char* name) const
+	{
+		return Node(_node->first_node(name));
+	}
+
+#ifdef GetNextSibling
+#define GET_NEXT_SIBLING_DEFINED
+#pragma push_macro("GetNextSibling")
+#undef GetNextSibling
+#endif // GetNextSibling
+
+	Node Node::GetNextSibling(const char* name) const
+	{
+		return Node(_node->next_sibling(name));
+	}
+
+#ifdef GET_NEXT_SIBLING_DEFINED
+#undef GET_NEXT_SIBLING_DEFINED
+#pragma pop_macro("GetNextSibling")
+#endif // GET_NEXT_SIBLING_DEFINED
+
+	Attribute Node::GetFirstAttribute(void)
+	{
+		return Attribute(_node->first_attribute(0));
+	}
+
+	/// <summary>Получает имя узла.</summary>
 	const char* Node::GetName(void) const
 	{
-		return _nodePtr->name();
+		return _node->name();
 	}
 
+	/// <summary>Получает значение узла.</summary>
 	const char* Node::GetValue(void) const
 	{
-		return _nodePtr->value();
+		return _node->value();
+	}
+
+	bool Node::IsValid(void) const
+	{
+		return _node != 0;
 	}
 }
