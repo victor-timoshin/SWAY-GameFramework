@@ -192,7 +192,7 @@ namespace System
 			if (message.message == WM_QUIT)
 				messageLoopState = MESSAGE_LOOP_STATE::End;
 
-			if (!TranslateAccelerator(windowDesc.handle, accelTable, &message))
+			if (NOT TranslateAccelerator(windowDesc.handle, accelTable, &message))
 			{
 				TranslateMessage(&message); // Преобразует ввод клавиш.
 				DispatchMessage(&message); // Отправляет сообщения в обработчик.

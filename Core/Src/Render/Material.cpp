@@ -33,20 +33,22 @@ namespace Core
 			Destroy();
 		}
 
-		bool Material::Create(const char* vertexShader, const char* fragmentShader, ImageProvider::ImageProviderFactory* imageProvider, std::string textureName)
+		void Material::Load(ImageProvider::ImageProviderFactory* imageProvider, Xml::Node node)
 		{
-			_xmlDocument = new Xml::Document();
+			_effect->Load(node.GetAttribute("vs_source"), node.GetAttribute("fs_source"));
+			if (NOT _effect->HasLoaded())
+				return;
 
-			if (_effect->GetShader()->Create())
-			{
-				std::vector<UInt> shaders;
-				shaders.push_back(_effect->GetShader()->Compile(Gapi::SHADER_TYPE::Vertex, _effect->GetShader()->Load(vertexShader)));
-				shaders.push_back(_effect->GetShader()->Compile(Gapi::SHADER_TYPE::Fragment, _effect->GetShader()->Load(fragmentShader)));
+			_image->Load(imageProvider, node.GetAttribute("texture"));
+			if (NOT _image->HasLoaded())
+				return;
+		}
 
-				_effect->GetShader()->Attach(shaders);
-				_effect->GetShader()->Link();
-				_effect->GetShader()->Validate();
-			}
+		bool Material::Create(ImageProvider::ImageProviderFactory* imageProvider, const char* vertexShader, const char* fragmentShader, std::string textureName)
+		{
+			_effect->Load(vertexShader, fragmentShader);
+			if (NOT _effect->HasLoaded())
+				return false;
 
 			_image->Load(imageProvider, textureName);
 			if (NOT _image->HasLoaded())

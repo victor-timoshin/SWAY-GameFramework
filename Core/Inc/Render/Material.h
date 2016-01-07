@@ -13,11 +13,10 @@
 #include "Image.h"
 
 #include "../Xml/Document.h"
+#include "../Xml/Node.h"
+#include "../Xml/Attribute.h"
 
 #include "../../../SDK/Platform.h"
-
-#include <vector>
-#include <list>
 
 #include <functional> // std::function
 
@@ -38,7 +37,9 @@ namespace Core
 			/// <summary>Деструктор класса.</summary>
 			virtual ~Material(void);
 
-			virtual bool Create(const char* vertexShader, const char* fragmentShader, ImageProvider::ImageProviderFactory* imageProvider, std::string textureName);
+			virtual void Load(ImageProvider::ImageProviderFactory* imageProvider, Xml::Node node);
+
+			virtual bool Create(ImageProvider::ImageProviderFactory* imageProvider, const char* vertexShader, const char* fragmentShader, std::string textureName);
 
 			virtual void Destroy(void);
 
@@ -79,8 +80,6 @@ namespace Core
 			Effect* _effect;
 			//std::vector<Image*> _images;
 			Image* _image;
-
-			Xml::Document* _xmlDocument;
 		};
 	}
 }

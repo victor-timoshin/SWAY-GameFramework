@@ -21,6 +21,7 @@ namespace Core
 		/// <summary>Деструктор класса.</summary>
 		ImageProviderFactory::~ImageProviderFactory(void)
 		{
+			_imageLoaders.clear();
 		}
 
 		void ImageProviderFactory::Register(const std::string name, ImageLoader::IImageLoaderBase* loader)
@@ -47,6 +48,8 @@ namespace Core
 
 				return i->second->LoadFromStream(stream.GetStream());
 			}
+
+			return nullptr;
 		}
 	}
 }

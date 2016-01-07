@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Render", "Render", "{609A46
 	ProjectSection(SolutionItems) = preProject
 		..\..\SDK\Core\Render\MaterialBase.h = ..\..\SDK\Core\Render\MaterialBase.h
 		..\..\SDK\Core\Render\MaterialDesc.h = ..\..\SDK\Core\Render\MaterialDesc.h
+		..\..\SDK\Core\Render\MaterialManagerBase.h = ..\..\SDK\Core\Render\MaterialManagerBase.h
 		..\..\SDK\Core\Render\RenderGeometryBase.h = ..\..\SDK\Core\Render\RenderGeometryBase.h
 		..\..\SDK\Core\Render\RenderSystemBase.h = ..\..\SDK\Core\Render\RenderSystemBase.h
 	EndProjectSection

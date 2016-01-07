@@ -80,12 +80,12 @@
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGAFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPLoader.h" />
-    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\DDSLoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\PNGLoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGALoader.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Debug\RenderLineDebug.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Effect.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Atlas.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Render\MaterialManager.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\SpriteBatch.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Image.h" />
     <ClInclude Include="..\..\..\Core\Inc\Render\Emitter.h" />
@@ -108,6 +108,7 @@
     <ClInclude Include="..\..\..\Core\Inc\Utils\StreamLogger.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\FileLogger.h" />
     <ClInclude Include="..\..\..\Core\Inc\Utils\FileStream.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Xml\Attribute.h" />
     <ClInclude Include="..\..\..\Core\Inc\Xml\Node.h" />
     <ClInclude Include="..\..\..\Core\Inc\Xml\Document.h" />
     <ClInclude Include="..\..\..\Core\StdAfx.h" />
@@ -119,12 +120,12 @@
     <ClCompile Include="..\..\..\Core\Src\AudioProvider\AudioLoader\WAVLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp" />
-    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\DDSLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\PNGLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\TGALoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Debug\RenderLineDebug.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Effect.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Atlas.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Render\MaterialManager.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\SpriteBatch.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Image.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Render\Emitter.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="..\..\..\Core\Src\Utils\FileStream.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\FileDirectory.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Utils\StringHelper.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Xml\Attribute.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Xml\Node.cpp" />
     <ClCompile Include="..\..\..\Core\Src\Xml\Document.cpp" />
   </ItemGroup>

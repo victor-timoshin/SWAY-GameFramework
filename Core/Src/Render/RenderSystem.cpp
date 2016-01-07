@@ -1,9 +1,12 @@
 ﻿#include "../../../Core/Inc/Render/RenderSystem.h"
 #include "../../../Core/Inc/Render/Material.h"
+#include "../../../Core/Inc/Render/MaterialManager.h"
 #include "../../../Core/Inc/Render/RenderGeometry.h"
 #include "../../../Core/Inc/Utils/StreamLogger.h"
 #include "../../../SDK/Core/Scene/RenderableBase.h"
 #include "../../../Math/Inc/Frustum.h"
+
+#include "../../../Core/Inc/AudioProvider/AudioLoader/WAVLoader.h"
 
 namespace Core
 {
@@ -18,15 +21,10 @@ namespace Core
 		/// <summary>Деструктор класса.</summary>
 		RenderSystem::~RenderSystem(void)
 		{
+			SAFE_DELETE(_audio);
 			SAFE_DELETE(_device);
 
-			for (IMaterialMap::iterator i = _materials.begin(); i != _materials.end(); ++i)
-			{
-				IMaterialBase* Object = i->second;
-				delete Object;
-			}
-
-			_materials.clear();
+			SAFE_DELETE(_materialManager);
 
 			FreeLibrary((HMODULE)_library);
 
@@ -72,11 +70,26 @@ namespace Core
 			_device->SetDepthMask(true);
 			_device->SetStencilMask(0xFFFFFFFF);
 
+			_materialManager = new MaterialManager(_library, _device);
+
 			_fontManager = GUI::RegisterFontManager();
 
 			_lineDebug = new RenderLineDebug(_library);
 
-			_imageProvider = new ImageProvider::ImageProviderFactory();
+			_audio = Sapi::RegisterDevice();
+			_audio->Create("");
+
+			AudioProvider::AudioLoader::WAVLoader* loader = new AudioProvider::AudioLoader::WAVLoader();
+
+			Core::Utils::FileStream stream;
+			stream.OpenStream("../../../Assets/Sounds/test.wav", Core::Utils::FILE_TYPE::Binary);
+
+			_audioBuffer = Sapi::RegisterBuffer();
+			_audioBuffer->Fill(loader->LoadFromStream(stream.GetStream()));
+
+			_audioSound = Sapi::RegisterSound();
+			_audioSound->SetALBuffer(_audioBuffer);
+			_audioSound->Play();
 
 			return true;
 		}
@@ -86,25 +99,9 @@ namespace Core
 			return _device;
 		}
 
-		bool RenderSystem::CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName)
+		IMaterialManagerBase* RenderSystem::GetMaterialManager(void)
 		{
-			Material* material = new Material(_library, _device);
-			if (material->Create(vertexShader, fragmentShader, _imageProvider, textureName))
-			{
-				_materials.insert(IMaterialMap::value_type(name, material));
-				return true;
-			}
-
-			return false;
-		}
-
-		IMaterialBase* RenderSystem::GetMaterialByName(const char* name)
-		{
-			IMaterialMap::iterator i = _materials.find(name);
-			if (i != _materials.end())
-				return i->second;
-
-			return nullptr;
+			return _materialManager;
 		}
 
 		GUI::IFontBase* RenderSystem::CreateTTFont(const char* name, const char* filename)

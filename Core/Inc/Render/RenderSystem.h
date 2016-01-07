@@ -5,11 +5,13 @@
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../SDK/Core/Render/MaterialBase.h"
 #include "../../../SDK/Gapi/DeviceBase.h"
+#include "../../../SDK/Sapi/DeviceBase.h"
+#include "../../../SDK/Sapi/BufferBase.h"
+#include "../../../SDK/Sapi/SoundBase.h"
+#pragma comment(lib, "SapiOpenAL_Win32_Debug")
 #include "../../../SDK/Platform.h"
 
 #include "Debug/RenderLineDebug.h"
-
-#include "../ImageProvider/ImageProviderFactory.h"
 
 namespace Core
 {
@@ -33,9 +35,7 @@ namespace Core
 
 			virtual Gapi::IDeviceBase* GetDevice(void);
 
-			virtual bool CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName);
-
-			virtual IMaterialBase* GetMaterialByName(const char* name);
+			virtual IMaterialManagerBase* GetMaterialManager(void);
 
 			virtual GUI::IFontBase* CreateTTFont(const char* name, const char* filename);
 
@@ -55,8 +55,11 @@ namespace Core
 			void* _library;
 			Gapi::IDeviceBase* _device;
 
-			typedef std::map<std::string, IMaterialBase*> IMaterialMap;
-			IMaterialMap _materials;
+			Sapi::IDeviceBase* _audio;
+			Sapi::IBufferBase* _audioBuffer;
+			Sapi::ISoundBase* _audioSound;
+
+			IMaterialManagerBase* _materialManager;
 
 			std::vector<IRenderGeometryBase*> renderGeometries;
 			int _numDisplayObjects;
@@ -67,8 +70,6 @@ namespace Core
 			RenderLineDebug* _lineDebug;
 			//std::vector<GUI::IFontBase*> _fonts;
 			GUI::IFontManagerBase* _fontManager;
-
-			ImageProvider::ImageProviderFactory* _imageProvider;
 		};
 	}
 }

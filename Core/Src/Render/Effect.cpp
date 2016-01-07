@@ -8,6 +8,7 @@ namespace Core
 		Effect::Effect(void* library, Gapi::IDeviceBase* device)
 			: _renderDevice(device)
 			, _shader(nullptr)
+			, _isLoaded(false)
 		{
 			typedef Gapi::IShaderBase* IShaderCallback(void);
 			_shader = reinterpret_cast<IShaderCallback*>(GetProcAddress((HMODULE)library, "RegisterShaderProgram"))();
@@ -17,6 +18,27 @@ namespace Core
 		Effect::~Effect(void)
 		{
 			SAFE_DELETE(_shader);
+		}
+
+		void Effect::Load(const char* vertexShader, const char* fragmentShader)
+		{
+			if (NOT _shader->Create())
+				return;
+
+			std::vector<UInt> shaders;
+			shaders.push_back(_shader->Compile(Gapi::SHADER_TYPE::Vertex, _shader->Load(vertexShader)));
+			shaders.push_back(_shader->Compile(Gapi::SHADER_TYPE::Fragment, _shader->Load(fragmentShader)));
+
+			if (NOT _shader->Attach(shaders))
+				return;
+
+			if (NOT _shader->Link())
+				return;
+
+			if (NOT _shader->Validate())
+				return;
+
+			_isLoaded = true;
 		}
 
 		void Effect::Bind(void)
@@ -32,6 +54,16 @@ namespace Core
 		std::string Effect::AddCompatibilityPrefixToShaderCode(const char* code)
 		{
 			return std::string("SHADER_COMPATIBILITY_PREFIX") + code;
+		}
+
+		Gapi::IShaderBase* Effect::GetShader(void)
+		{
+			return _shader;
+		}
+
+		bool Effect::HasLoaded(void) const
+		{
+			return _isLoaded;
 		}
 	}
 }

@@ -180,9 +180,6 @@
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPLoader.h">
       <Filter>Inc\ImageProvider\ImageLoader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\DDSLoader.h">
-      <Filter>Inc\ImageProvider\ImageLoader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\PNGLoader.h">
       <Filter>Inc\ImageProvider\ImageLoader</Filter>
     </ClInclude>
@@ -203,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVFileHeader.h">
       <Filter>Inc\AudioProvider\AudioLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Xml\Attribute.h">
+      <Filter>Inc\Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Render\MaterialManager.h">
+      <Filter>Inc\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +293,6 @@
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp">
       <Filter>Src\ImageProvider\ImageLoader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\DDSLoader.cpp">
-      <Filter>Src\ImageProvider\ImageLoader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\PNGLoader.cpp">
       <Filter>Src\ImageProvider\ImageLoader</Filter>
     </ClCompile>
@@ -304,6 +304,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\AudioProvider\AudioLoader\WAVLoader.cpp">
       <Filter>Src\AudioProvider\AudioLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Xml\Attribute.cpp">
+      <Filter>Src\Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Render\MaterialManager.cpp">
+      <Filter>Src\Render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

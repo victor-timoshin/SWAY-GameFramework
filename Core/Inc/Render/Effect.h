@@ -20,19 +20,23 @@ namespace Core
 			/// <summary>Деструктор класса.</summary>
 			virtual ~Effect(void);
 
+			virtual void Load(const char* vertexShader, const char* fragmentShader);
+
 			virtual void Bind(void);
 
 			virtual void Unbind(void);
 
 			virtual std::string AddCompatibilityPrefixToShaderCode(const char* code);
 
-			virtual Gapi::IShaderBase* GetShader(void) {
-				return _shader;
-			}
+			virtual Gapi::IShaderBase* GetShader(void);
+
+			virtual bool HasLoaded(void) const;
 
 		private:
 			Gapi::IDeviceBase* _renderDevice;
 			Gapi::IShaderBase* _shader;
+
+			bool _isLoaded;
 		};
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "../../../SDK/Gapi/DeviceBase.h"
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
+#include "../../../SDK/Core/Render/MaterialManagerBase.h"
 #include "../../../SDK/SceneGraph/CameraBase.h"
 #include "../../../SDK/GUI/FontManagerBase.h"
 #include "../../../SDK/GUI/FontBase.h"
@@ -30,9 +31,7 @@ namespace Core
 
 			virtual Gapi::IDeviceBase* GetDevice(void) = 0;
 
-			virtual bool CreateMaterial(const char* name, const char* vertexShader, const char* fragmentShader, const char* textureName) = 0;
-
-			virtual IMaterialBase* GetMaterialByName(const char* name) = 0;
+			virtual IMaterialManagerBase* GetMaterialManager(void) = 0;
 
 			virtual GUI::IFontBase* CreateTTFont(const char* name, const char* filename) = 0;
 
