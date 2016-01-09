@@ -5,10 +5,6 @@
 #include "../../../SDK/Core/Render/RenderGeometryBase.h"
 #include "../../../SDK/Core/Render/MaterialBase.h"
 #include "../../../SDK/Gapi/DeviceBase.h"
-#include "../../../SDK/Sapi/DeviceBase.h"
-#include "../../../SDK/Sapi/BufferBase.h"
-#include "../../../SDK/Sapi/SoundBase.h"
-#pragma comment(lib, "SapiOpenAL_Win32_Debug")
 #include "../../../SDK/Platform.h"
 
 #include "Debug/RenderLineDebug.h"
@@ -55,10 +51,6 @@ namespace Core
 			void* _library;
 			Gapi::IDeviceBase* _device;
 
-			Sapi::IDeviceBase* _audio;
-			Sapi::IBufferBase* _audioBuffer;
-			Sapi::ISoundBase* _audioSound;
-
 			IMaterialManagerBase* _materialManager;
 
 			std::vector<IRenderGeometryBase*> renderGeometries;
@@ -66,9 +58,7 @@ namespace Core
 
 			Scene::IRenderableBase* renderableComponent;
 
-
 			RenderLineDebug* _lineDebug;
-			//std::vector<GUI::IFontBase*> _fonts;
 			GUI::IFontManagerBase* _fontManager;
 		};
 	}

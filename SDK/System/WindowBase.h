@@ -7,6 +7,9 @@
 #include "../OIS/InputBase.h"
 #include "../Platform.h"
 
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
 namespace System
 {
 	class IWindowBase

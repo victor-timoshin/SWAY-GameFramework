@@ -1,8 +1,7 @@
 EXPORTS
+	RegisterFramework
 	RegisterFileLogger
 	RegisterStreamLogger
 	StreamLoggerWrite
-
 	RegisterRenderSystem
-
 	RegisterSceneManagement

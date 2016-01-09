@@ -6,8 +6,6 @@
 #include "../../../SDK/Core/Scene/RenderableBase.h"
 #include "../../../Math/Inc/Frustum.h"
 
-#include "../../../Core/Inc/AudioProvider/AudioLoader/WAVLoader.h"
-
 namespace Core
 {
 	namespace Render
@@ -21,7 +19,6 @@ namespace Core
 		/// <summary>Деструктор класса.</summary>
 		RenderSystem::~RenderSystem(void)
 		{
-			SAFE_DELETE(_audio);
 			SAFE_DELETE(_device);
 
 			SAFE_DELETE(_materialManager);
@@ -75,21 +72,6 @@ namespace Core
 			_fontManager = GUI::RegisterFontManager();
 
 			_lineDebug = new RenderLineDebug(_library);
-
-			_audio = Sapi::RegisterDevice();
-			_audio->Create("");
-
-			AudioProvider::AudioLoader::WAVLoader* loader = new AudioProvider::AudioLoader::WAVLoader();
-
-			Core::Utils::FileStream stream;
-			stream.OpenStream("../../../Assets/Sounds/test.wav", Core::Utils::FILE_TYPE::Binary);
-
-			_audioBuffer = Sapi::RegisterBuffer();
-			_audioBuffer->Fill(loader->LoadFromStream(stream.GetStream()));
-
-			_audioSound = Sapi::RegisterSound();
-			_audioSound->SetALBuffer(_audioBuffer);
-			_audioSound->Play();
 
 			return true;
 		}

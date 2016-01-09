@@ -56,7 +56,7 @@
       <ModuleDefinitionFile>Definitions.def</ModuleDefinitionFile>
       <ProgramDatabaseFile>$(TargetDir)\Bin\$(TargetName)_Win32_Debug.pdb</ProgramDatabaseFile>
       <ImportLibrary>$(OutDir)\Libs\$(TargetName)_Win32_Debug.lib</ImportLibrary>
-      <AdditionalDependencies>Math_Win32_Debug.lib;GUI_Win32_Debug.lib;Libpng16_Win32_Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>System_Win32_Debug.lib;SceneGraph_Win32_Debug.lib;Math_Win32_Debug.lib;GUI_Win32_Debug.lib;Libpng16_Win32_Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\AudioProvider\AudioLoader\WAVLoader.h" />
+    <ClInclude Include="..\..\..\Core\Inc\Framework.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\BMPFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageLoader\TGAFileHeader.h" />
     <ClInclude Include="..\..\..\Core\Inc\ImageProvider\ImageProviderFactory.h" />
@@ -118,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Core\Src\AudioProvider\AudioLoader\WAVLoader.cpp" />
+    <ClCompile Include="..\..\..\Core\Src\Framework.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageProviderFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\BMPLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Src\ImageProvider\ImageLoader\PNGLoader.cpp" />

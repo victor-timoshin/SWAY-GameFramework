@@ -207,6 +207,9 @@
     <ClInclude Include="..\..\..\Core\Inc\Render\MaterialManager.h">
       <Filter>Inc\Render</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Core\Inc\Framework.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Definitions.def" />
@@ -310,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Src\Render\MaterialManager.cpp">
       <Filter>Src\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Src\Framework.cpp">
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
